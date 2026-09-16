@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>eSIMglobal Admin Preview</title>
+  <meta name="description" content="eSIMglobal 주문, 결제, eSIM 발급, 환불 및 SkySIM 정산 통합 관리자 화면 예시">
+  <meta name="admin-preview-revision" content="ADMIN-OPS-R16">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark">e</span><span>eSIMglobal</span></div>
+    <nav aria-label="관리자 메뉴">
+      <button class="nav-item" data-view="dashboard"><span>⌂</span> Dashboard</button>
+      <button class="nav-item" data-view="products"><span>◇</span> Products</button>
+      <button class="nav-item active" data-view="orders"><span>▣</span> Orders</button>
+      <button class="nav-item" data-view="members"><span>♙</span> Members</button>
+      <button class="nav-item" data-view="payments"><span>▤</span> Payments</button>
+      <button class="nav-item" data-view="esims"><span>◫</span> eSIM Management</button>
+      <button class="nav-item" data-view="exchange"><span>↔</span> Exchange</button>
+      <button class="nav-item" data-view="banners"><span>▧</span> Banners</button>
+      <button class="nav-item" data-view="content"><span>≡</span> Content</button>
+      <button class="nav-item" data-view="audit"><span>✓</span> Audit Log</button>
+      <button class="nav-item" data-view="notices"><span>♢</span> Notices</button>
+      <button class="nav-item" data-view="settlement"><span>₩</span> Settlement</button>
+      <button class="nav-item" data-view="admins"><span>♙</span> Admin Users</button>
+      <button class="nav-item" data-view="roles"><span>✓</span> Roles</button>
+      <button class="nav-item" data-view="settings"><span>⚙</span> Settings</button>
+    </nav>
+    <div class="sidebar-foot"><span class="avatar">AD</span><div class="sidebar-user"><strong>Administrator</strong><small>Operations</small></div><button id="logoutButton" type="button">Logout</button></div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <button class="mobile-menu" aria-label="메뉴 열기">☰</button>
+      <div class="breadcrumb">ADMIN <span>/</span> <strong id="crumb">Orders</strong></div>
+      <div class="top-actions"><button class="icon-button" aria-label="알림">♢</button><span class="environment">PREVIEW R16</span></div>
+    </header>
+
+    <section id="dashboardView" class="view">
+      <div class="page-heading">
+        <div><h1>Dashboard</h1><p>오늘의 판매와 운영상 확인이 필요한 항목을 요약합니다.</p></div>
+        <div class="page-actions"><button class="secondary-button" data-preview-action="대시보드 데이터를 새로고침했습니다.">Refresh</button></div>
+      </div>
+      <div class="metric-grid dashboard-metrics">
+        <article><span>Paid Orders</span><strong>128</strong><small>오늘 결제완료 · 전일 대비 +12%</small></article>
+        <article><span>Actual Paid USD</span><strong>$1,842.60</strong><small>포인트 차감 후 실결제</small></article>
+        <article><span>eSIM Issued</span><strong>121</strong><small>발급 성공률 98.4%</small></article>
+        <article><span>Admin Refund In Progress</span><strong class="amber">2</strong><small>수동환불 완료 확인 대기</small></article>
+        <article><span>System Check</span><strong class="red">3</strong><small>결제·발급 불일치</small></article>
+        <article><span>SkySIM Credit</span><strong class="green">₩42,800</strong><small>이번 달 취소 차감</small></article>
+      </div>
+      <div class="dashboard-grid">
+        <section class="table-card">
+          <header class="card-heading"><div><h2>Operational Alerts</h2><p>우선 확인이 필요한 주문입니다.</p></div><button class="text-button" data-view-jump="orders">View Orders</button></header>
+          <table class="compact-table"><thead><tr><th>Order</th><th>Issue</th><th>Age</th><th>Status</th></tr></thead><tbody>
+            <tr><td><b>ORD-260904-1188</b></td><td>결제 완료 · eSIM 미발급</td><td>18m</td><td><span class="badge failed">확인 필요</span></td></tr>
+            <tr><td><b>ORD-260906-1240</b></td><td>미결제 · eSIM 발급</td><td>42m</td><td><span class="badge failed">확인 필요</span></td></tr>
+            <tr><td><b>ORD-260824-1027</b></td><td>환불 완료 · SkySIM 처리중</td><td>2d</td><td><span class="badge pending">처리중</span></td></tr>
+          </tbody></table>
+        </section>
+        <section class="panel-card">
+          <header class="card-heading"><div><h2>Today by Payment Method</h2><p>실제 결제 USD 기준</p></div></header>
+          <div class="bar-list">
+            <div><span>TON <b>$812.40</b></span><i><em style="width:72%"></em></i></div>
+            <div><span>Stars <b>$624.20</b></span><i><em style="width:56%"></em></i></div>
+            <div><span>ForumPay <b>$406.00</b></span><i><em style="width:38%"></em></i></div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section id="productsView" class="view">
+      <div class="page-heading">
+        <div><h1>Products</h1><p>기존 상품 데이터·가격·노출 설정과 공급사 동기화 기능을 그대로 관리합니다.</p></div>
+        <div class="page-actions"><button class="secondary-button" data-preview-action="SkySIM 상품 동기화를 시작합니다.">Sync from Supplier</button><button class="secondary-button" data-admin-form="product-import">Upload Excel</button><button class="secondary-button" data-preview-action="상품 Excel 템플릿을 다운로드합니다.">Download Template</button><button class="secondary-button" data-preview-action="현재 상품 검색 조건으로 Excel을 생성합니다.">Export Excel</button><button class="secondary-button" data-admin-form="product-history">Import History</button></div>
+      </div>
+      <section class="filter-card standard-filter">
+        <label><span>Region</span><select><option>All Regions</option><option>Asia</option><option>Europe</option><option>Americas</option><option>Oceania</option><option>Middle East</option></select></label>
+        <label class="search-label"><span>Search</span><input type="search" placeholder="Product code / name / country / region"></label>
+        <button class="search-button">Search</button>
+      </section>
+      <div class="summary-strip"><div><span>Total Products</span><strong>428</strong></div><div><span>Active</span><strong class="green">401</strong></div><div><span>Inactive</span><strong>27</strong></div><p>기존 상품 필드와 정렬·활성화·추천·인기 설정을 보존합니다.</p></div>
+      <section class="table-card"><div class="table-scroll"><table><thead><tr><th>Code</th><th>Name</th><th>Country</th><th>Region</th><th>Normal KRW</th><th>Recommended KRW</th><th>Supply KRW</th><th>Selling USD</th><th>Active</th><th>Recommended</th><th>Popular</th><th>Actions</th></tr></thead><tbody>
+        <tr><td><b>CM-500M-D1</b></td><td>China 500MB · 1 Day</td><td>China</td><td>Asia</td><td>₩1,500</td><td>₩1,300</td><td>₩980</td><td>$1.29</td><td><span class="badge paid">YES</span></td><td><span class="badge paid">ON</span></td><td><span class="badge pending">OFF</span></td><td><div class="row-actions"><button class="view-button" data-admin-form="product">View Details</button><button class="mini-action" data-preview-action="상품 활성 상태를 변경합니다.">Deactivate</button><button class="mini-action" data-admin-form="product">Edit</button><button class="danger-link" data-preview-action="삭제 확인 후 상품을 삭제합니다.">Delete</button></div></td></tr>
+        <tr><td><b>JP-3G-F15</b></td><td>Japan 3GB · 15 Days</td><td>Japan</td><td>Asia</td><td>₩5,900</td><td>₩5,500</td><td>₩3,900</td><td>$4.20</td><td><span class="badge paid">YES</span></td><td><span class="badge pending">OFF</span></td><td><span class="badge paid">ON</span></td><td><div class="row-actions"><button class="view-button" data-admin-form="product">View Details</button><button class="mini-action" data-preview-action="상품 활성 상태를 변경합니다.">Deactivate</button><button class="mini-action" data-admin-form="product">Edit</button><button class="danger-link" data-preview-action="삭제 확인 후 상품을 삭제합니다.">Delete</button></div></td></tr>
+        <tr><td><b>SKT-KR-UL</b></td><td>SKT Korea Unlimited</td><td>Korea</td><td>Asia</td><td>₩10,900</td><td>₩9,900</td><td>₩7,400</td><td>$8.00</td><td><span class="badge paid">YES</span></td><td><span class="badge paid">ON</span></td><td><span class="badge paid">ON</span></td><td><div class="row-actions"><button class="view-button" data-admin-form="product">View Details</button><button class="mini-action" data-preview-action="상품 활성 상태를 변경합니다.">Deactivate</button><button class="mini-action" data-admin-form="product">Edit</button><button class="danger-link" data-preview-action="삭제 확인 후 상품을 삭제합니다.">Delete</button></div></td></tr>
+      </tbody></table></div></section>
+    </section>
+
+    <section id="ordersView" class="view active-view">
+      <div class="page-heading">
+        <div><h1>Orders</h1><p>주문을 기준으로 결제, eSIM 발급, 환불 상태를 함께 확인합니다.</p></div>
+        <button class="primary-button" id="exportOrders">Export Excel</button>
+      </div>
+
+      <div class="status-tabs" role="tablist" aria-label="주문 상태">
+        <button class="status-tab active" data-status="ALL">ALL <b>1,284</b></button>
+        <button class="status-tab" data-status="PAYMENT_PENDING">PAYMENT_PENDING <b>9</b></button>
+        <button class="status-tab" data-status="PAYMENT_PAID">PAYMENT_PAID <b>1,211</b></button>
+        <button class="status-tab" data-status="PAYMENT_FAILED">PAYMENT_FAILED <b>12</b></button>
+        <button class="status-tab" data-status="REFUNDED">REFUNDED <b>30</b></button>
+      </div>
+      <div class="notice-box event-date-guide"><strong>주문·환불 상태 분리 기준</strong><span>고객 Mini App의 취소·환불 요청 기능은 제공하지 않습니다. 관리자가 Order Detail에서 환불을 시작하며, 진행 중에는 주문 상태를 바꾸지 않고 별도 Refund Status로 관리합니다. 외부 환불이 실제 완료된 경우에만 주문을 REFUNDED로 변경합니다.</span></div>
+
+      <section class="filter-card" aria-label="주문 검색 조건">
+        <label><span>기간 기준</span><select id="orderDateBasis"><option value="CREATED">주문 생성일</option><option value="COMPLETED">결제 완료일</option></select></label>
+        <label><span>기간</span><div class="date-group"><input id="orderStartDate" type="date" value="2026-09-01"><i>–</i><input id="orderEndDate" type="date" value="2026-09-30"></div></label>
+        <label><span>결제수단</span><select id="orderPaymentMethod"><option value="ALL">All Methods</option><option value="TON">TON</option><option value="Stars">Stars</option><option value="ForumPay">ForumPay</option></select></label>
+        <label><span>eSIM 상태</span><select id="esimFilter"><option value="ALL">All eSIM</option><option value="NOT_ISSUED">NOT_ISSUED</option><option value="UNINSTALLED">UNINSTALLED</option><option value="INSTALLED">INSTALLED</option><option value="ACTIVE">ACTIVE</option><option value="EXPIRED">EXPIRED</option></select></label>
+        <label><span>이상 주문</span><select id="anomalyFilter"><option value="ALL">All Checks</option><option value="NORMAL">정상</option><option value="ISSUE">확인 필요</option></select></label>
+        <label class="search-label"><span>통합 검색</span><input id="searchInput" type="search" placeholder="Username / Order / Payment ID / ICCID"></label>
+        <button class="search-button" id="searchButton">Search</button>
+      </section>
+
+      <div class="summary-strip">
+        <div><span>조회 주문</span><strong id="visibleCount">5</strong></div>
+        <div><span>정상</span><strong class="green">2</strong></div>
+        <div><span>확인 필요</span><strong class="red">3</strong></div>
+        <p><span class="pulse"></span> 결제와 eSIM 상태가 일치하지 않는 주문을 우선 확인하세요.</p>
+      </div>
+
+      <section class="table-card">
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Order / Payment ID</th><th>Order Created</th><th>Customer / Product</th><th>Order Status</th><th>Payment</th><th>Price / Points / Paid</th><th>Payment Completed</th><th>eSIM / ICCID</th><th>Issued At</th><th>Refund</th><th>System Check</th><th></th></tr></thead>
+            <tbody id="ordersBody"></tbody>
+          </table>
+        </div>
+        <footer class="table-footer"><span>Showing <b id="showingCount">5</b> of 1,284</span><div><button disabled>Prev</button><button>1</button><button>2</button><button>Next</button></div></footer>
+      </section>
+    </section>
+
+    <section id="membersView" class="view">
+      <div class="page-heading"><div><h1>Members</h1><p>기존 회원 조회·상태 관리·주문/eSIM/포인트 이력을 동일한 UI에서 유지합니다.</p></div></div>
+      <section class="filter-card simple-filter">
+        <label><span>Status</span><select><option>All</option><option>Active</option><option>Banned</option></select></label>
+        <label class="search-label"><span>Search</span><input type="search" placeholder="Telegram ID / username / name"></label><button class="search-button">Search</button>
+      </section>
+      <section class="table-card"><div class="table-scroll"><table><thead><tr><th>Telegram ID</th><th>Name / Username</th><th>Language</th><th>Orders</th><th>Registered</th><th>Status</th><th></th></tr></thead><tbody>
+        <tr><td><b>692617424</b></td><td>Traveler One<small>@traveler01</small></td><td>en</td><td>8</td><td>2026-07-18</td><td><span class="badge paid">ACTIVE</span></td><td><button class="view-button" data-admin-form="member">View</button></td></tr>
+        <tr><td><b>701284923</b></td><td>Seoul Trip<small>@seoultrip</small></td><td>ko</td><td>3</td><td>2026-08-22</td><td><span class="badge paid">ACTIVE</span></td><td><button class="view-button" data-admin-form="member">View</button></td></tr>
+        <tr><td><b>681302145</b></td><td>Global Nomad<small>@globalnomad</small></td><td>en</td><td>12</td><td>2026-06-09</td><td><span class="badge paid">ACTIVE</span></td><td><button class="view-button" data-admin-form="member">View</button></td></tr>
+        <tr><td><b>728193440</b></td><td>Blocked User<small>@blockedtest</small></td><td>en</td><td>0</td><td>2026-09-10</td><td><span class="badge failed">BANNED</span></td><td><button class="view-button" data-admin-form="member">View</button></td></tr>
+      </tbody></table></div></section>
+    </section>
+
+    <section id="paymentsView" class="view">
+      <div class="page-heading">
+        <div><h1>Payments</h1><p>결제 원본 상태와 실제 수령금액, 환불 및 검증 결과를 확인합니다.</p></div>
+        <button class="primary-button">Export Excel</button>
+      </div>
+      <section class="filter-card payments-filter" aria-label="결제 검색 조건">
+        <label><span>결제 완료 기간</span><div class="date-group"><input id="paymentStartDate" type="date"><i>–</i><input id="paymentEndDate" type="date"></div></label>
+        <label><span>결제수단</span><select id="paymentMethodFilter"><option value="ALL">All Methods</option><option value="TON">TON</option><option value="Stars">Stars</option><option value="ForumPay">ForumPay</option></select></label>
+        <label><span>결제 상태</span><select id="paymentStatusFilter"><option value="ALL">All Status</option><option value="PENDING">PENDING</option><option value="COMPLETED">COMPLETED</option><option value="FAILED">FAILED</option><option value="REFUNDED">REFUNDED</option></select></label>
+        <label><span>검증 결과</span><select id="paymentVerifyFilter"><option value="ALL">All Checks</option><option value="NORMAL">NORMAL</option><option value="ISSUE">확인 필요</option></select></label>
+        <label class="search-label"><span>통합 검색</span><input id="paymentSearchInput" type="search" placeholder="Payment ID / Order Number"></label>
+        <button class="search-button" id="paymentSearchButton">Search</button>
+      </section>
+      <div class="summary-strip">
+        <div><span>조회 결제</span><strong id="paymentVisibleCount">6</strong></div>
+        <div><span>정상</span><strong class="green" id="paymentNormalCount">2</strong></div>
+        <div><span>확인 필요</span><strong class="red" id="paymentIssueCount">4</strong></div>
+        <p><span class="pulse"></span> 현재 결제 상태가 REFUNDED로 바뀌어도 성공 결제 이력과 완료일은 별도 이벤트로 보존합니다.</p>
+      </div>
+      <section class="table-card">
+        <div class="table-scroll"><table>
+          <thead><tr><th>Payment ID</th><th>Order</th><th>Method</th><th>Actual Amount</th><th>Actual Paid USD</th><th>Payment Status</th><th>Refund Status</th><th>Payment Completed At</th><th>Verification</th><th></th></tr></thead>
+          <tbody id="paymentsBody"></tbody>
+        </table></div>
+      </section>
+    </section>
+
+    <section id="esimsView" class="view">
+      <div class="page-heading">
+        <div><h1>eSIM Management</h1><p>발급된 eSIM과 SkySIM 식별정보, 설치 상태를 기술적으로 확인합니다.</p></div>
+        <button class="primary-button">Export Excel</button>
+      </div>
+      <section class="filter-card esims-filter" aria-label="eSIM 검색 조건">
+        <label><span>발급 기간</span><div class="date-group"><input id="esimStartDate" type="date" value="2026-08-01"><i>–</i><input id="esimEndDate" type="date" value="2026-09-30"></div></label>
+        <label><span>eSIM 상태</span><select id="esimManagerStatusFilter"><option value="ALL">All Status</option><option value="NOT_ISSUED">NOT_ISSUED</option><option value="ISSUING">ISSUING</option><option value="UNINSTALLED">UNINSTALLED</option><option value="INSTALLED">INSTALLED</option><option value="ACTIVE">ACTIVE</option><option value="EXPIRED">EXPIRED</option><option value="FAILED">FAILED</option></select></label>
+        <label><span>상품</span><select id="esimProductFilter"><option value="ALL">All Products</option><option value="SKT">SKT Products</option><option value="GLOBAL">Global Products</option></select></label>
+        <label class="search-label"><span>통합 검색</span><input id="esimManagerSearchInput" type="search" placeholder="Order / ICCID / SkySIM Sale ID / Customer"></label>
+        <button class="search-button" id="esimManagerSearchButton">Search</button>
+      </section>
+      <div class="notice-box event-date-guide"><strong>기간 기준 안내</strong><span>발급된 eSIM은 Issued At 기준이며, 아직 발급되지 않은 FAILED·NOT_ISSUED 항목은 주문 생성일 기준으로 조회합니다.</span></div>
+      <div class="summary-strip">
+        <div><span>조회 eSIM</span><strong id="esimManagerVisibleCount">5</strong></div>
+        <div><span>정상</span><strong class="green" id="esimManagerNormalCount">4</strong></div>
+        <div><span>확인 필요</span><strong class="red" id="esimManagerIssueCount">1</strong></div>
+        <p><span class="pulse"></span> SKT 상품은 ICCID 없이 정상 발급될 수 있으며 `SKTeSIM`으로 구분합니다.</p>
+      </div>
+      <section class="table-card">
+        <div class="table-scroll"><table>
+          <thead><tr><th>eSIM / Order</th><th>Plan / Destination</th><th>Customer</th><th>eSIM Status</th><th>ICCID / Sale ID</th><th>Usage</th><th>Activated</th><th>Expires</th><th>Issued At</th><th>System Check</th><th></th></tr></thead>
+          <tbody id="esimManagerBody"></tbody>
+        </table></div>
+      </section>
+    </section>
+
+    <section id="exchangeView" class="view">
+      <div class="page-heading"><div><h1>Exchange Rate</h1><p>기존 KRW → USD 판매가 환산 설정과 변경 이력을 유지합니다.</p></div><button class="primary-button" data-admin-form="exchange">Save Settings</button></div>
+      <section class="panel-card exchange-current"><header class="card-heading"><div><h2>Exchange Rate (KRW → USD)</h2><p>Selling price = normalPriceKrw / exchangeRate</p></div></header><div class="setting-fields"><label><span>KRW / USD</span><input type="number" value="1360"></label></div><div class="notice-box"><strong>계산 예시</strong><span>₩10,000 → $7.35 USD</span></div></section>
+      <div class="page-heading section-heading-gap"><div><h2>Rate History</h2></div></div>
+      <section class="filter-card simple-filter"><label><span>From / To</span><div class="date-group"><input type="date" value="2026-09-01"><i>–</i><input type="date" value="2026-09-15"></div></label><button class="search-button">Search</button></section>
+      <section class="table-card"><div class="table-scroll"><table><thead><tr><th>Date</th><th>Prev Rate</th><th>New Rate</th><th>Type</th></tr></thead><tbody>
+        <tr><td>2026-09-15 15:00</td><td>1,365.00</td><td><b>1,360.00</b></td><td>Auto</td></tr>
+        <tr><td>2026-09-12 09:30</td><td>1,370.00</td><td><b>1,365.00</b></td><td>Manual</td></tr>
+      </tbody></table></div></section>
+    </section>
+
+    <section id="bannersView" class="view">
+      <div class="page-heading"><div><h1>Banners</h1><p>기존 배너 콘텐츠·다국어 번역·노출 순서와 활성 상태를 관리합니다.</p></div><button class="primary-button" data-admin-form="banner">+ New Banner</button></div>
+      <section class="table-card"><div class="table-scroll"><table><thead><tr><th>Title</th><th>Position</th><th>Sort</th><th>Active</th><th>Actions</th></tr></thead><tbody>
+        <tr><td><b>Japan Autumn Data</b><small>Japan destination promotion</small></td><td>home</td><td>1</td><td><span class="badge paid">YES</span></td><td><div class="row-actions"><button class="view-button" data-admin-form="banner">Edit</button><button class="danger-link" data-preview-action="삭제 확인 후 배너를 삭제합니다.">Delete</button></div></td></tr>
+        <tr><td><b>Europe 30 Days</b><small>Regional plan promotion</small></td><td>home</td><td>2</td><td><span class="badge paid">YES</span></td><td><div class="row-actions"><button class="view-button" data-admin-form="banner">Edit</button><button class="danger-link" data-preview-action="삭제 확인 후 배너를 삭제합니다.">Delete</button></div></td></tr>
+      </tbody></table></div></section>
+    </section>
+
+    <section id="contentView" class="view">
+      <div class="page-heading"><div><h1>Content</h1><p>기존 문서, FAQ, 검색 키워드와 변경 이력을 동일한 데이터 구조로 관리합니다.</p></div><button class="primary-button" data-admin-form="content">+ New Document</button></div>
+      <div class="status-tabs"><button class="status-tab active">Documents</button><button class="status-tab">FAQ</button><button class="status-tab">Search Keywords</button><button class="status-tab">Audit Log</button></div>
+      <section class="filter-card simple-filter"><label><span>Kind</span><select><option>All Kinds</option><option>about</option><option>terms</option><option>privacy</option><option>refund</option><option>payment</option><option>search</option><option>guide</option></select></label><label><span>Language</span><select><option>All Languages</option><option>en</option><option>ko</option><option>zh</option><option>ja</option><option>fr</option></select></label><label class="search-label"><span>검색</span><input type="search" placeholder="Title"></label><button class="search-button">Search</button></section>
+      <section class="table-card"><div class="table-scroll"><table><thead><tr><th>Kind</th><th>Language</th><th>Title</th><th>Version</th><th>Status</th><th>Updated At</th><th>Actions</th></tr></thead><tbody>
+        <tr><td>guide</td><td>en</td><td><b>How to install your eSIM</b></td><td>3</td><td><span class="badge paid">PUBLISHED</span></td><td>2026-09-01</td><td><button class="view-button" data-admin-form="content">Edit</button></td></tr>
+        <tr><td>guide</td><td>ko</td><td><b>eSIM 설치 방법</b></td><td>3</td><td><span class="badge paid">PUBLISHED</span></td><td>2026-09-01</td><td><button class="view-button" data-admin-form="content">Edit</button></td></tr>
+        <tr><td>refund</td><td>en</td><td><b>Refund Policy</b></td><td>2</td><td><span class="badge pending">DRAFT</span></td><td>2026-08-28</td><td><button class="view-button" data-admin-form="content">Edit</button></td></tr>
+      </tbody></table></div></section>
+    </section>
+
+    <section id="auditView" class="view">
+      <div class="page-heading"><div><h1>Audit Log</h1><p>관리자의 중요 조회·변경·다운로드 이력과 실패 로그를 확인합니다.</p></div></div>
+      <div class="status-tabs"><button class="status-tab active">Audit Logs</button><button class="status-tab">Error Logs</button></div>
+      <section class="filter-card simple-filter"><label><span>Resource</span><select><option>All</option><option>product</option><option>order</option><option>user</option><option>exchange_rate</option><option>banner</option><option>system</option></select></label><label><span>Action</span><select><option>All</option><option>CREATE</option><option>UPDATE</option><option>DELETE</option><option>EXPORT</option></select></label><div class="filter-count"><b>128 total</b><span>showing 50</span></div></section>
+      <section class="table-card"><div class="table-scroll"><table><thead><tr><th>Time</th><th>Action</th><th>Resource</th><th>Resource ID</th><th>Admin</th><th>IP</th><th>Changes</th></tr></thead><tbody>
+        <tr><td>2026-09-15 14:22</td><td>UPDATE</td><td>order</td><td>ORD-260812-0874</td><td>admin01</td><td>203.0.113.24</td><td><button class="view-button" data-preview-action="변경 전·후 JSON을 표시합니다.">View changes</button></td></tr>
+        <tr><td>2026-09-15 13:10</td><td>EXPORT</td><td>settlement</td><td>2026-09</td><td>finance01</td><td>203.0.113.18</td><td><button class="view-button" data-preview-action="Export 조건과 결과 건수를 표시합니다.">View changes</button></td></tr>
+        <tr><td>2026-09-15 11:02</td><td>UPDATE</td><td>exchange_rate</td><td>KRW-USD</td><td>admin01</td><td>203.0.113.24</td><td><button class="view-button" data-preview-action="변경 전·후 JSON을 표시합니다.">View changes</button></td></tr>
+      </tbody></table></div></section>
+    </section>
+
+    <section id="noticesView" class="view">
+      <div class="page-heading"><div><h1>Notices</h1><p>기존 공지 제목·내용·언어·활성 상태와 Telegram 발송을 관리합니다.</p></div><button class="primary-button" data-admin-form="notice">+ New Notice</button></div>
+      <section class="table-card"><div class="table-scroll"><table><thead><tr><th>Title</th><th>Language</th><th>Active</th><th>Created</th><th>Sent At</th><th>Actions</th></tr></thead><tbody>
+        <tr><td><b>TON network maintenance</b><small>Payment may be delayed for 20 minutes.</small></td><td>en</td><td><span class="badge paid">YES</span></td><td>2026-09-15 15:00</td><td>—</td><td><div class="row-actions"><button class="view-button" data-admin-form="notice">Edit</button><button class="mini-action" data-preview-action="활성 사용자 전체에게 Telegram 공지를 발송합니다.">Send</button><button class="danger-link" data-preview-action="삭제 확인 후 공지를 삭제합니다.">Delete</button></div></td></tr>
+        <tr><td><b>New SKT Korea plans</b><small>Unlimited plans are now available.</small></td><td>en</td><td><span class="badge paid">YES</span></td><td>2026-09-10 09:00</td><td>2026-09-10 09:05</td><td><div class="row-actions"><button class="view-button" data-admin-form="notice">Edit</button><button class="mini-action" data-preview-action="활성 사용자 전체에게 Telegram 공지를 발송합니다.">Send</button><button class="danger-link" data-preview-action="삭제 확인 후 공지를 삭제합니다.">Delete</button></div></td></tr>
+      </tbody></table></div></section>
+    </section>
+
+    <section id="settlementView" class="view">
+      <div class="page-heading">
+        <div><h1>Settlement</h1><p>기간별 고객 결제·환불과 eSIM 공급원가·SkySIM 취소 크레딧을 대조합니다.</p></div>
+        <button class="primary-button">Export Excel</button>
+      </div>
+      <section class="filter-card settlement-filter">
+        <label><span>기간 기준</span><select id="settlementDateBasis"><option value="CANCEL">SkySIM 취소 처리일</option><option value="EVENT">Event Date</option><option value="ISSUED">eSIM 발급일</option><option value="REFUND">고객 환불 완료일</option><option value="CREDIT">공급 크레딧 반영일</option></select></label>
+        <label><span>기간</span><div class="date-group"><input id="settlementStartDate" type="date" value="2026-09-01"><i>–</i><input id="settlementEndDate" type="date" value="2026-09-30"></div></label>
+        <label><span>결제수단</span><select id="settlementPaymentMethod"><option value="ALL">All Methods</option><option value="TON">TON</option><option value="Stars">Stars</option><option value="ForumPay">ForumPay</option></select></label>
+        <label><span>Event</span><select id="settlementEventFilter"><option value="ALL">All Events</option><option value="PAYMENT">PAYMENT</option><option value="REFUND">REFUND</option><option value="ESIM_ISSUED_COST">ESIM_ISSUED_COST</option><option value="SUPPLIER_CREDIT">SUPPLIER_CREDIT</option></select></label>
+        <label><span>eSIM 상태</span><select id="settlementEsimStatus"><option value="ALL">All eSIM</option><option value="NOT_ISSUED">NOT_ISSUED</option><option value="UNINSTALLED">UNINSTALLED</option><option value="INSTALLED">INSTALLED</option><option value="ACTIVE">ACTIVE</option><option value="EXPIRED">EXPIRED</option></select></label>
+        <label><span>SkySIM 취소 상태</span><select id="settlementCancelStatus"><option value="ALL">All Status</option><option value="REQUESTED">취소 요청중</option><option value="PROCESSING">취소 처리중</option><option value="COMPLETED" selected>취소 완료</option></select></label>
+        <label><span>공급 크레딧</span><select id="settlementCreditStatus"><option value="ALL">전체</option><option value="UNAPPLIED">미반영</option><option value="APPLIED">반영완료</option></select></label>
+        <label><span>정렬</span><select id="cancelDateSort"><option value="DESC">취소 처리일 최신순</option><option value="ASC">취소 처리일 과거순</option></select></label>
+        <label class="search-label"><span>통합 검색</span><input id="settlementSearchInput" type="search" placeholder="Order / Payment ID / ICCID / Sale ID / Product / Customer"></label>
+        <button class="search-button" id="settlementSearchButton">Search</button>
+      </section>
+      <div class="settlement-scope"><span class="pulse green-pulse"></span><strong>현재 조회:</strong> 2026-09-01~2026-09-30 · SkySIM 취소완료 건 · 취소 처리일 최신순</div>
+      <div class="notice-box event-date-guide"><strong>날짜 기준 안내</strong><span>PAYMENT=결제완료일 · REFUND=고객 환불 완료일 · ESIM_ISSUED_COST=eSIM 발급일 · SUPPLIER_CREDIT=SkySIM 취소완료일 또는 공급 크레딧 반영일입니다. 선택한 기간 기준에 따라 조회·정렬·Excel 출력 범위가 동일하게 적용됩니다.</span></div>
+      <div class="metric-grid">
+        <article><span>Payment Total</span><strong>$15,482.60</strong><small>고객 결제 발생액</small></article>
+        <article><span>Refund Total</span><strong class="red">−$428.30</strong><small>완료된 고객 환불</small></article>
+        <article><span>Net Customer Payment</span><strong>$15,054.30</strong><small>결제 − 고객 환불</small></article>
+        <article><span>Supply Cost</span><strong>₩12,840,000</strong><small>$9,441.18 · eSIM 발급 기준</small></article>
+        <article><span>Applied Supply Credit</span><strong class="green">−₩384,000</strong><small>−$282.35 · 정산 반영 완료액</small></article>
+        <article><span>SkySIM Payable</span><strong>₩12,456,000</strong><small>$9,158.83 · 영업이익 아님</small></article>
+      </div>
+      <div class="notice-box event-date-guide"><strong>합계 계산식</strong><span>Net Customer Payment = 성공 결제액 − 완료 환불액 · Supply Cost = eSIM 발급 성공 시점의 공급가 스냅샷 합계 · SkySIM Payable = Supply Cost − Applied Supply Credit. 공급 크레딧 발생액과 실제 정산 반영액은 구분합니다.</span></div>
+      <section class="table-card method-summary-card">
+        <header><div><h2>Payment Method Summary</h2><p>선택 기간의 결제수단별 실제 수령액과 환불 차감액입니다.</p></div></header>
+        <div class="table-scroll"><table class="compact-table">
+          <thead><tr><th>Payment Method</th><th>Paid Orders</th><th>Actual Paid USD</th><th>Refund USD</th><th>Net Payment USD</th></tr></thead>
+          <tbody id="paymentMethodSummaryBody"></tbody>
+        </table></div>
+      </section>
+      <section class="table-card">
+        <div class="table-scroll"><table>
+          <thead><tr><th>Event</th><th>Event Date</th><th>Order</th><th>Product / Customer</th><th>Payment</th><th>eSIM Status</th><th>ICCID / Sale ID</th><th>Supply KRW</th><th>Supply USD</th><th>Refund</th><th>SkySIM Cancellation</th><th>Credit Applied</th><th></th></tr></thead>
+          <tbody id="settlementBody"></tbody>
+        </table></div>
+      </section>
+    </section>
+
+    <section id="adminsView" class="view">
+      <div class="page-heading"><div><h1>Admin Users</h1><p>기존 username·password·role 기반 관리자 계정 구조를 유지합니다.</p></div><button class="primary-button" data-admin-form="admin-create">+ Add Admin</button></div>
+      <section class="table-card"><div class="table-scroll"><table><thead><tr><th>Username</th><th>Role</th><th>Active</th><th>Last Login</th><th>Created</th><th>Actions</th></tr></thead><tbody>
+        <tr><td><b>administrator</b></td><td><select><option selected>admin</option><option>operations</option><option>finance</option></select></td><td><span class="badge paid">YES</span></td><td>2026-09-15 09:02</td><td>2026-05-01</td><td><div class="row-actions"><button class="mini-action" data-preview-action="관리자 계정을 비활성화합니다.">Deactivate</button><button class="mini-action" data-admin-form="admin-password">Reset PW</button><button class="danger-link" data-preview-action="삭제 확인 후 관리자 계정을 삭제합니다.">Delete</button></div></td></tr>
+        <tr><td><b>finance01</b></td><td><select><option>admin</option><option>operations</option><option selected>finance</option></select></td><td><span class="badge paid">YES</span></td><td>2026-09-15 13:10</td><td>2026-06-12</td><td><div class="row-actions"><button class="mini-action" data-preview-action="관리자 계정을 비활성화합니다.">Deactivate</button><button class="mini-action" data-admin-form="admin-password">Reset PW</button><button class="danger-link" data-preview-action="삭제 확인 후 관리자 계정을 삭제합니다.">Delete</button></div></td></tr>
+        <tr><td><b>content01</b></td><td><select><option>admin</option><option>operations</option><option selected>content</option></select></td><td><span class="badge pending">NO</span></td><td>—</td><td>2026-09-14</td><td><div class="row-actions"><button class="mini-action" data-preview-action="관리자 계정을 활성화합니다.">Activate</button><button class="mini-action" data-admin-form="admin-password">Reset PW</button><button class="danger-link" data-preview-action="삭제 확인 후 관리자 계정을 삭제합니다.">Delete</button></div></td></tr>
+      </tbody></table></div></section>
+    </section>
+
+    <section id="rolesView" class="view">
+      <div class="page-heading"><div><h1>Roles &amp; Permissions</h1><p>기존 RBAC scope와 view·manage·admin 권한 계층을 그대로 관리합니다.</p></div><div class="page-actions"><button class="secondary-button" data-admin-form="permission">+ Add Permission</button><button class="primary-button" data-admin-form="role">+ Add Role</button></div></div>
+      <section class="table-card"><div class="table-scroll"><table><thead><tr><th>Role</th><th>Description</th><th>Permissions</th><th>Actions</th></tr></thead><tbody>
+        <tr><td><b>admin</b><small><span class="badge paid">SYSTEM</span></small></td><td>Full system access</td><td>products:admin · orders:admin · settlement:admin · …</td><td><button class="view-button" data-admin-form="role">Manage Permissions</button></td></tr>
+        <tr><td><b>operations</b></td><td>Order and eSIM operations</td><td>orders:manage · esims:manage · refunds:manage · supplier-cancel:manage</td><td><button class="view-button" data-admin-form="role">Manage Permissions</button></td></tr>
+        <tr><td><b>finance</b></td><td>Payments and settlement</td><td>payments:admin · settlement:manage · reconciliation:view</td><td><div class="row-actions"><button class="view-button" data-admin-form="role">Manage Permissions</button><button class="danger-link" data-preview-action="보호 역할이 아닌 경우 삭제할 수 있습니다.">Delete</button></div></td></tr>
+      </tbody></table></div></section>
+    </section>
+
+    <section id="settingsView" class="view">
+      <div class="page-heading"><div><h1>Settings</h1><p>서비스 운영과 외부 연동의 현재 설정 상태를 관리합니다.</p></div><button class="primary-button" data-preview-action="설정 저장 화면 예시입니다.">Save Changes</button></div>
+      <div class="settings-grid">
+        <section class="panel-card setting-card"><header class="card-heading"><div><h2>General</h2><p>서비스 기본 운영 설정</p></div><span class="badge paid">ACTIVE</span></header><div class="toggle-list"><label><span><b>Maintenance Mode</b><small>사용자 기능 전체 중지</small></span><input type="checkbox"></label></div><div class="setting-fields"><label><span>Default Language</span><select><option>English</option><option>한국어</option><option>中文</option><option>日本語</option></select></label><label><span>Default Currency</span><select><option>USD</option><option>KRW</option><option>EUR</option><option>JPY</option></select></label><label><span>Environment</span><select><option>Production</option><option>Development</option></select></label></div></section>
+        <section class="panel-card setting-card"><header class="card-heading"><div><h2>Payment Methods</h2><p>결제수단 노출과 서버 강제 정책</p></div></header><div class="toggle-list"><label><span><b>TON</b><small>TON blockchain payment</small></span><input type="checkbox" checked></label><label><span><b>Telegram Stars</b><small>XTR payment and automatic refund</small></span><input type="checkbox" checked></label><label><span><b>ForumPay</b><small>Hosted crypto checkout</small></span><input type="checkbox" checked></label></div><div class="setting-fields"><label><span>Enforced Method</span><select><option>None · All methods</option><option>TON</option><option>STARS</option><option>FORUMPAY</option></select></label></div></section>
+        <section class="panel-card setting-card"><header class="card-heading"><div><h2>TON</h2><p>지갑·네트워크·검증 설정</p></div><span class="badge paid">CONNECTED</span></header><div class="setting-fields"><label><span>Network</span><select><option>Mainnet</option><option>Testnet</option></select></label><label><span>Mainnet Wallet</span><input value="EQB••••••••••••••••••••••••••P9"></label><label><span>Testnet Wallet</span><input value="kQB••••••••••••••••••••••••••T3"></label><label><span>TonCenter API URL</span><input value="https://toncenter.com/api/v2"></label><label><span>API Key</span><input type="password" placeholder="변경 시에만 입력"></label><label><span>USD Rate</span><input type="number" value="0"><small>0이면 자동 시세</small></label><label><span>Verification Provider</span><select><option>toncenter</option><option>tonapi</option><option>liteserver</option></select></label><label><span>TonConnect Manifest URL</span><input value="https://dev.esimglocal.com/.well-known/tonconnect-manifest.json"></label></div><div class="toggle-list"><label><span><b>Enable TonConnect</b></span><input type="checkbox" checked></label></div></section>
+        <section class="panel-card setting-card"><header class="card-heading"><div><h2>ForumPay</h2><p>Hosted crypto checkout 설정</p></div><span class="badge paid">CONNECTED</span></header><div class="setting-fields"><label><span>Merchant ID</span><input type="password" placeholder="변경 시에만 입력"></label><label><span>POS ID</span><input value="POS-ESIMGLOBAL"></label><label><span>API Secret</span><input type="password" placeholder="변경 시에만 입력"></label><label><span>Currency</span><input value="USDT"></label><label><span>Enabled Networks</span><input value="USDT_TRC20, USDT"></label><label><span>Base URL</span><input value="https://api.forumpay.com"></label></div><div class="toggle-list"><label><span><b>Sandbox</b><small>테스트 환경 사용</small></span><input type="checkbox"></label></div></section>
+        <section class="panel-card setting-card"><header class="card-heading"><div><h2>Telegram Stars</h2><p>Bot과 XTR 판매 환율</p></div><span class="badge paid">CONNECTED</span></header><div class="setting-fields"><label><span>Bot Token</span><input type="password" placeholder="변경 시에만 입력"></label><label><span>Provider Token</span><input type="password" placeholder="변경 시에만 입력"></label><label><span>XTR Sell Rate</span><input type="number" value="70"><small>1 USD = 70 XTR</small></label></div><div class="key-value-list"><div><span>Webhook</span><b class="green">Healthy</b></div><div><span>Last Message</span><b>2026-09-15 15:18</b></div></div></section>
+        <section class="panel-card setting-card"><header class="card-heading"><div><h2>Points & Cashback</h2><p>포인트 적립과 결제 사용 정책</p></div></header><div class="toggle-list"><label><span><b>Points Enabled</b><small>기존 잔액은 비활성화해도 보존</small></span><input type="checkbox" checked></label></div><div class="setting-fields"><label><span>Cashback Rate</span><input type="number" value="0.10" step="0.01"><small>실결제액 기준 · 0.10 = 10%</small></label></div></section>
+        <section class="panel-card setting-card"><header class="card-heading"><div><h2>SkySIM eSIM API</h2><p>상품·발급 공급사 연결</p></div><span class="badge paid">CONNECTED</span></header><div class="setting-fields"><label><span>Environment</span><select><option>Production</option><option>Development</option></select></label><label><span>Base URL</span><input value="https://api.skysim.example"></label><label><span>API Key</span><input type="password" placeholder="변경 시에만 입력"></label><label><span>User ID</span><input value="esimglobal"></label><label><span>Password</span><input type="password" placeholder="변경 시에만 입력"></label><label><span>Callback Token</span><input type="password" placeholder="변경 시에만 입력"></label></div><div class="key-value-list"><div><span>Last Product Sync</span><b>2026-09-15 14:30</b></div><div><span>API Health</span><b class="green">Normal</b></div></div></section>
+        <section class="panel-card setting-card"><header class="card-heading"><div><h2>Exchange Rate API</h2><p>KRW·USD 자동 환율 수집</p></div></header><div class="toggle-list"><label><span><b>Auto Update</b></span><input type="checkbox" checked></label></div><div class="setting-fields"><label><span>Base URL</span><input value="https://api.exchangerate.example"></label><label><span>API Key</span><input type="password" placeholder="변경 시에만 입력"></label><label><span>Base Currency</span><input value="KRW"></label></div></section>
+        <section class="panel-card setting-card"><header class="card-heading"><div><h2>Shopify</h2><p>상품 피드 연동</p></div></header><div class="toggle-list"><label><span><b>Enabled</b></span><input type="checkbox"></label></div><div class="setting-fields"><label><span>Store Domain</span><input placeholder="store.myshopify.com"></label><label><span>Feed Token</span><input type="password" placeholder="변경 시에만 입력"></label><label><span>API Version</span><input value="2026-07"></label></div></section>
+        <section class="panel-card setting-card"><header class="card-heading"><div><h2>Bot Notifications</h2><p>운영 알림 발송 조건</p></div></header><div class="toggle-list compact-toggles"><label><span>Order Created</span><input type="checkbox" checked></label><label><span>Payment Complete</span><input type="checkbox" checked></label><label><span>Payment Failed</span><input type="checkbox" checked></label><label><span>eSIM Issued</span><input type="checkbox" checked></label><label><span>eSIM Expiring</span><input type="checkbox" checked></label><label><span>eSIM Expired</span><input type="checkbox" checked></label><label><span>Issuance Delay</span><input type="checkbox" checked></label><label><span>Admin Refund Started</span><input type="checkbox" checked></label><label><span>Admin Refund Failed / Completed</span><input type="checkbox" checked></label><label><span>Notice</span><input type="checkbox" checked></label></div></section>
+        <section class="panel-card setting-card"><header class="card-heading"><div><h2>Security & Logs</h2><p>요청 제한과 로그 보관</p></div></header><div class="setting-fields"><label><span>Rate Limit Requests</span><input type="number" value="120"></label><label><span>Rate Limit Window (sec)</span><input type="number" value="60"></label><label><span>Log Retention (days)</span><input type="number" value="180"></label></div></section>
+      </div>
+    </section>
+  </main>
+
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <aside class="drawer" id="orderDrawer" aria-hidden="true">
+    <header><div><span class="eyebrow">ORDER DETAIL</span><h2 id="drawerOrder">ORD-260903-1142</h2></div><button id="closeDrawer" aria-label="상세 닫기">×</button></header>
+    <div class="drawer-content">
+      <section class="detail-status"><div><span>Order Status</span><strong id="detailOrderStatus">PAYMENT_PAID</strong></div><div><span>System Check</span><strong id="detailCheck" class="green">NORMAL</strong></div></section>
+      <section class="detail-section"><h3>Order</h3><dl><div><dt>Customer</dt><dd id="detailCustomer">@traveler01</dd></div><div><dt>Product</dt><dd id="detailProduct">Japan 5GB · 30 Days</dd></div><div><dt>Created At</dt><dd id="detailCreatedAt">2026-09-03 10:20</dd></div></dl></section>
+      <section class="detail-section"><h3>Payment</h3><dl><div><dt>Payment ID</dt><dd id="detailPaymentId">ton-7fa9…ae20</dd></div><div><dt>Method / Status</dt><dd id="detailPayment">TON · COMPLETED</dd></div><div><dt>Selling Price</dt><dd id="detailSellingPrice">$10.00 USD</dd></div><div><dt>Points Used</dt><dd id="detailPointsUsed">$3.00 USD</dd></div><div><dt>Actual Payment</dt><dd id="detailAmount">7.23 TON / $7.00</dd></div><div><dt>Completed At</dt><dd id="detailCompletedAt">2026-09-03 10:22</dd></div></dl></section>
+      <section class="detail-section"><h3>eSIM / SkySIM</h3><dl><div><dt>eSIM Status</dt><dd id="detailEsim">ACTIVE</dd></div><div><dt>ICCID</dt><dd id="detailIccid">898821…7641</dd></div><div><dt>SkySIM Sale ID</dt><dd id="detailSaleId">SALE-938294</dd></div><div><dt>Issued At</dt><dd id="detailIssuedAt">2026-09-03 10:24</dd></div></dl></section>
+      <section class="detail-section refund-section">
+        <div class="section-heading"><h3>Admin Refund</h3><button class="danger-button" id="processRefund">Start Admin Refund</button></div>
+        <p class="section-note" id="refundActionGuide">관리자가 결제완료 주문을 확인하고 이 화면에서만 환불을 시작합니다.</p>
+        <dl><div><dt>Refund Status</dt><dd id="detailRefundStatus">NOT_STARTED</dd></div><div><dt>Initiated By</dt><dd id="detailRefundSource">—</dd></div><div><dt>Started At</dt><dd id="detailRefundRequestedAt">—</dd></div><div><dt>Refund Amount</dt><dd id="detailRefundAmount">—</dd></div><div><dt>Processing Type</dt><dd id="detailRefundType">—</dd></div><div><dt>Completed At</dt><dd id="detailRefundCompletedAt">—</dd></div><div><dt>Reason</dt><dd id="detailRefundReason">—</dd></div></dl>
+      </section>
+      <section class="detail-section supplier-section">
+        <div class="section-heading"><h3>SkySIM Cancellation Record</h3><button class="outline-button" id="recordSupplierCancel">취소 처리 기록</button></div>
+        <p class="section-note">SkySIM 관리자에서 실제 취소를 확인한 뒤 결과를 기록합니다. 이 기록은 고객 환불을 자동 실행하지 않습니다.</p>
+        <dl><div><dt>Cancellation Status</dt><dd id="supplierStatus"><span class="badge pending">NOT_RECORDED</span></dd></div><div><dt>Requested At</dt><dd id="supplierRequestedAt">—</dd></div><div><dt>Cancelled At</dt><dd id="supplierCancelledAt">—</dd></div><div><dt>Supply Credit</dt><dd id="supplierCredit">—</dd></div><div><dt>Credit Applied</dt><dd id="supplierCreditStatus"><span class="badge pending">미반영</span></dd></div><div><dt>Settlement Reference</dt><dd id="supplierCreditMeta">—</dd></div><div><dt>Processed By</dt><dd id="supplierAdmin">—</dd></div></dl>
+      </section>
+      <section class="detail-section"><h3>Timeline</h3><ol class="timeline" id="detailTimeline"><li><i></i><div><b>eSIM 발급 완료</b><span>2026-09-03 10:24</span></div></li><li><i></i><div><b>결제 완료</b><span>2026-09-03 10:22</span></div></li><li><i></i><div><b>주문 생성</b><span>2026-09-03 10:20</span></div></li></ol></section>
+    </div>
+  </aside>
+  <div class="dialog-backdrop" id="cancelDialogBackdrop"></div>
+  <section class="dialog" id="cancelDialog" role="dialog" aria-modal="true" aria-labelledby="cancelDialogTitle" aria-hidden="true">
+    <header><div><span class="eyebrow">SUPPLIER ADJUSTMENT</span><h2 id="cancelDialogTitle">SkySIM 취소 처리 기록</h2></div><button id="closeCancelDialog" aria-label="창 닫기">×</button></header>
+    <div class="dialog-body">
+      <div class="notice-box"><strong>관리자 확인용 기록</strong><span>SkySIM에 취소 요청을 전송하지 않으며 고객 결제 환불 상태도 변경하지 않습니다.</span></div>
+      <label><span>SkySIM 처리 상태</span><select id="cancelStatus"><option value="REQUESTED">취소 요청중</option><option value="PROCESSING">취소 처리중</option><option value="COMPLETED" selected>취소 완료</option></select></label>
+      <div class="form-row"><label><span>취소 요청 기록일</span><input id="cancelRequestedDate" type="date" value="2026-09-05"></label><label><span>SkySIM 취소 처리일</span><input id="cancelCompletedDate" type="date" value="2026-09-06"></label></div>
+      <div class="form-row"><label><span>Supply Credit (KRW)</span><input id="cancelCredit" type="number" value="8400" min="0"></label><label><span>처리 관리자</span><input id="cancelAdmin" type="text" value="admin01"></label></div>
+      <label><span>처리 메모</span><textarea id="cancelMemo" rows="3" placeholder="SkySIM 관리자에서 취소 완료 확인"></textarea></label>
+    </div>
+    <footer><button class="secondary-button" id="cancelDialogCancel">취소</button><button class="primary-button" id="saveSupplierCancel">취소 완료 기록 저장</button></footer>
+  </section>
+  <div class="dialog-backdrop" id="creditDialogBackdrop"></div>
+  <section class="dialog" id="creditDialog" role="dialog" aria-modal="true" aria-labelledby="creditDialogTitle" aria-hidden="true">
+    <header><div><span class="eyebrow">SETTLEMENT ADJUSTMENT</span><h2 id="creditDialogTitle">공급 크레딧 정산 반영</h2></div><button id="closeCreditDialog" aria-label="창 닫기">×</button></header>
+    <div class="dialog-body">
+      <div class="credit-context"><span>Order</span><strong id="creditDialogOrder">—</strong><span>Supply Credit</span><strong id="creditDialogAmount">—</strong></div>
+      <div class="notice-box"><strong>SkySIM 정산 확인용 기록</strong><span>SkySIM 정산서에서 해당 취소 공급가가 실제로 차감됐는지 기록합니다. 고객 환불이나 주문 상태에는 영향을 주지 않습니다.</span></div>
+      <label><span>공급 크레딧 상태</span><select id="creditApplyStatus"><option value="UNAPPLIED">미반영</option><option value="APPLIED">반영완료</option></select></label>
+      <div class="form-row"><label><span>정산 반영일</span><input id="creditAppliedDate" type="date" value="2026-09-30"></label><label><span>정산 월</span><input id="creditSettlementMonth" type="month" value="2026-09"></label></div>
+      <div class="form-row"><label><span>정산 참조번호</span><input id="creditReference" type="text" placeholder="예: SKY-SET-2026-09"></label><label><span>처리 관리자</span><input id="creditProcessedBy" type="text" value="finance01"></label></div>
+      <label><span>처리 메모</span><textarea id="creditMemo" rows="3" placeholder="SkySIM 9월 정산서에서 공급 크레딧 차감 확인"></textarea></label>
+    </div>
+    <footer><button class="secondary-button" id="creditDialogCancel">취소</button><button class="primary-button" id="saveCreditApplication">정산 반영 기록 저장</button></footer>
+  </section>
+  <div class="dialog-backdrop" id="refundDialogBackdrop"></div>
+  <section class="dialog" id="refundDialog" role="dialog" aria-modal="true" aria-labelledby="refundDialogTitle" aria-hidden="true">
+    <header><div><span class="eyebrow">ADMIN REFUND</span><h2 id="refundDialogTitle">관리자 환불 처리</h2></div><button id="closeRefundDialog" aria-label="창 닫기">×</button></header>
+    <div class="dialog-body">
+      <div class="credit-context"><span>Order</span><strong id="refundDialogOrder">—</strong><span>Method</span><strong id="refundDialogMethod">—</strong><span>Refund Amount</span><strong id="refundDialogAmount">—</strong><span>Initiated By</span><strong id="refundDialogSource">ADMIN</strong></div>
+      <div class="notice-box" id="refundMethodNotice"><strong>결제수단별 환불 처리</strong><span>Stars는 자동환불되며 TON과 ForumPay는 외부 수동 환불 증빙이 필요합니다.</span></div>
+      <label><span>환불 사유</span><textarea id="refundReason" rows="3" placeholder="환불 처리 사유를 입력하세요."></textarea></label>
+      <div id="tonProofFields" class="proof-fields"><label><span>TON 환불 수신 지갑</span><input id="refundWalletAddress" type="text" placeholder="환불을 보낸 대상 지갑주소"></label><label><span>TON 환불 txHash</span><input id="refundTxHash" type="text" placeholder="온체인 환불 트랜잭션 해시"></label></div>
+      <div id="forumPayProofFields" class="proof-fields"><label><span>ForumPay 환불 증빙 참조번호</span><input id="refundProofReference" type="text" placeholder="포털 참조번호 또는 txid (8자 이상)"></label></div>
+      <label class="confirm-check"><input id="refundConfirmed" type="checkbox"><span id="refundConfirmText">환불 실행 내용을 확인했습니다.</span></label>
+    </div>
+    <footer><button class="secondary-button" id="refundDialogCancel">닫기</button><button class="danger-button" id="executeRefund">환불 처리 실행</button></footer>
+  </section>
+  <div class="dialog-backdrop" id="adminActionDialogBackdrop"></div>
+  <section class="dialog dialog-wide" id="adminActionDialog" role="dialog" aria-modal="true" aria-labelledby="adminActionTitle" aria-hidden="true">
+    <header><div><span class="eyebrow" id="adminActionEyebrow">ADMIN ACTION</span><h2 id="adminActionTitle">관리 화면</h2></div><button id="closeAdminActionDialog" aria-label="창 닫기">×</button></header>
+    <div class="dialog-body" id="adminActionBody"></div>
+    <footer><button class="danger-link" id="adminActionDelete">Delete</button><span class="footer-spacer"></span><button class="secondary-button" id="adminActionCancel">취소</button><button class="primary-button" id="adminActionSave">Save</button></footer>
+  </section>
+  <div class="toast" id="toast">현재 필터 기준으로 Excel을 생성합니다.</div>
+  <script src="./app.js"></script>
+</body>
+</html>
