@@ -9,11 +9,16 @@ const orders = [
 ];
 
 const settlementRows = [
-  {event:"SUPPLIER_CREDIT",eventDate:"2026-09-21 11:00",order:"ORD-260812-0874",orderStatus:"REFUNDED",created:"2026-08-12 08:55",paymentCompletedAt:"2026-08-12 08:57",issuedAt:"2026-08-12 09:01",cancelRequestedAt:"2026-09-18 14:20",product:"USA 10GB · 30 Days",customer:"@businessfly",payment:"TON",paymentId:"ton-a812…4301",paymentAmount:"4.10 TON",sellingPrice:"$6.00 USD",pointsUsed:"$2.00 USD",actualPaidUsd:"$4.00 USD",esim:"UNINSTALLED",iccid:"898821…3068",saleId:"SALE-918430",supplyKrw:"−₩12,400",supplyUsd:"−$9.12",refund:"COMPLETED",refundAmount:"4.10 TON / $4.00",refundCompletedAt:"2026-09-19",cancelStatus:"COMPLETED",cancelDate:"2026-09-21",creditDate:"2026-09-30",creditMonth:"2026-09",creditReference:"SKY-SET-2026-09",creditAdmin:"finance01",creditMemo:"9월 SkySIM 정산서 차감 확인"},
-  {event:"SUPPLIER_CREDIT",eventDate:"2026-09-14 14:00",order:"ORD-260805-0731",orderStatus:"REFUNDED",created:"2026-08-05 11:12",paymentCompletedAt:"2026-08-05 11:14",issuedAt:"2026-08-05 11:18",cancelRequestedAt:"2026-09-11 09:30",product:"Japan 5GB · 30 Days",customer:"@tokyowalk",payment:"Stars",paymentId:"stars-8050…0731",paymentAmount:"700 XTR",sellingPrice:"$10.00 USD",pointsUsed:"$0.00 USD",actualPaidUsd:"$10.00 USD",esim:"UNINSTALLED",iccid:"898821…7310",saleId:"SALE-905731",supplyKrw:"−₩9,600",supplyUsd:"−$7.06",refund:"COMPLETED",refundAmount:"700 XTR / $10.00",refundCompletedAt:"2026-09-12",cancelStatus:"COMPLETED",cancelDate:"2026-09-14",creditDate:""},
-  {event:"SUPPLIER_CREDIT",eventDate:"2026-09-06 11:00",order:"ORD-260731-0640",orderStatus:"REFUNDED",created:"2026-07-31 15:05",paymentCompletedAt:"2026-07-31 15:08",issuedAt:"2026-07-31 15:12",cancelRequestedAt:"2026-09-03 10:10",product:"Thailand Unlimited",customer:"@summertrip",payment:"ForumPay",paymentId:"fp-7310…1735",paymentAmount:"$9.90 USD",sellingPrice:"$9.90 USD",pointsUsed:"$0.00 USD",actualPaidUsd:"$9.90 USD",esim:"UNINSTALLED",iccid:"898821…5082",saleId:"SALE-901735",supplyKrw:"−₩7,900",supplyUsd:"−$5.82",refund:"COMPLETED",refundAmount:"$9.90 USD",refundCompletedAt:"2026-09-04",cancelStatus:"COMPLETED",cancelDate:"2026-09-06",creditDate:"2026-09-30",creditMonth:"2026-09",creditReference:"SKY-SET-2026-09",creditAdmin:"finance01",creditMemo:"9월 정산 차감 완료"},
-  {event:"REFUND",eventDate:"2026-09-05 15:30",order:"ORD-260824-1027",orderStatus:"REFUNDED",created:"2026-08-24 09:18",paymentCompletedAt:"2026-08-24 09:20",issuedAt:"2026-08-24 09:24",cancelRequestedAt:"2026-09-05 15:30",product:"Europe 10GB · 30 Days",customer:"@globalnomad",payment:"Stars",paymentId:"stars-8d1e…38ab",paymentAmount:"840 XTR",sellingPrice:"$12.00 USD",pointsUsed:"$0.00 USD",actualPaidUsd:"$12.00 USD",esim:"UNINSTALLED",iccid:"898821…1129",saleId:"SALE-925011",supplyKrw:"—",supplyUsd:"—",refund:"COMPLETED",refundAmount:"840 XTR / $12.00",refundCompletedAt:"2026-09-05",cancelStatus:"PROCESSING",cancelDate:"",creditDate:""}
+  {event:"ESIM_ISSUED_COST",eventDate:"2026-09-03 10:24",order:"ORD-260903-1142",orderStatus:"PAYMENT_PAID",created:"2026-09-03 10:20",paymentCompletedAt:"2026-09-03 10:22",issuedAt:"2026-09-03 10:24",product:"Japan 5GB · 30 Days",productGroup:"GLOBAL",customer:"@traveler01",payment:"TON",paymentId:"ton-7fa9…ae20",paymentAmount:"7.23 TON",sellingPrice:"$10.00 USD",pointsUsed:"$3.00 USD",actualPaidUsd:"$7.00 USD",esim:"ACTIVE",iccid:"898821…7641",saleId:"SALE-938294",supplyKrw:"₩8,400",supplyUsd:"$6.18",cancelStatus:"NOT_REQUESTED",cancelDate:"",creditStatus:"NA",creditKrw:"—",creditUsd:"—",creditDate:"",creditReference:""},
+  {event:"ESIM_ISSUED_COST",eventDate:"2026-09-05 13:47",order:"ORD-260905-1204",orderStatus:"PAYMENT_PAID",created:"2026-09-05 13:42",paymentCompletedAt:"2026-09-05 13:44",issuedAt:"2026-09-05 13:47",product:"SKT Korea Unlimited",productGroup:"SKT",customer:"@seoultrip",payment:"Stars",paymentId:"stars-91bd…a82c",paymentAmount:"560 XTR",sellingPrice:"$8.00 USD",pointsUsed:"$0.00 USD",actualPaidUsd:"$8.00 USD",esim:"UNKNOWN",iccid:"SKTeSIM",saleId:"SALE-940120",supplyKrw:"₩7,100",supplyUsd:"$5.22",cancelStatus:"NOT_REQUESTED",cancelDate:"",creditStatus:"NA",creditKrw:"—",creditUsd:"—",creditDate:"",creditReference:""},
+  {event:"ESIM_ISSUED_COST",eventDate:"2026-08-05 11:18",order:"ORD-260805-0731",orderStatus:"REFUNDED",created:"2026-08-05 11:12",paymentCompletedAt:"2026-08-05 11:14",issuedAt:"2026-08-05 11:18",cancelRequestedAt:"2026-09-11 09:30",product:"Japan 5GB · 30 Days",productGroup:"GLOBAL",customer:"@tokyowalk",payment:"Stars",paymentId:"stars-8050…0731",paymentAmount:"700 XTR",sellingPrice:"$10.00 USD",pointsUsed:"$0.00 USD",actualPaidUsd:"$10.00 USD",esim:"UNINSTALLED",iccid:"898821…7310",saleId:"SALE-905731",supplyKrw:"₩9,600",supplyUsd:"$7.06",cancelStatus:"COMPLETED",cancelDate:"2026-09-14",creditStatus:"PENDING",creditKrw:"₩9,600",creditUsd:"$7.06",creditDate:"",creditReference:""},
+  {event:"SUPPLIER_CREDIT_APPLIED",eventDate:"2026-09-30 10:00",order:"ORD-260812-0874",orderStatus:"REFUNDED",created:"2026-08-12 08:55",paymentCompletedAt:"2026-08-12 08:57",issuedAt:"2026-08-12 09:01",cancelRequestedAt:"2026-09-18 14:20",product:"USA 10GB · 30 Days",productGroup:"GLOBAL",customer:"@businessfly",payment:"TON",paymentId:"ton-a812…4301",paymentAmount:"4.10 TON",sellingPrice:"$6.00 USD",pointsUsed:"$2.00 USD",actualPaidUsd:"$4.00 USD",esim:"UNINSTALLED",iccid:"898821…3068",saleId:"SALE-918430",supplyKrw:"₩12,400",supplyUsd:"$9.12",cancelStatus:"COMPLETED",cancelDate:"2026-09-21",creditStatus:"APPLIED",creditKrw:"−₩12,400",creditUsd:"−$9.12",creditDate:"2026-09-30",creditMonth:"2026-09",creditReference:"SKY-SET-2026-09",creditAdmin:"finance01",creditMemo:"9월 SkySIM 정산서 차감 확인"}
 ];
+
+settlementRows.forEach(row=>{
+  row.paymentStatus=row.paymentStatus||(row.orderStatus==="REFUNDED"?"REFUNDED":"COMPLETED");
+  row.refund=row.refund||(row.orderStatus==="REFUNDED"?"COMPLETED":"—");
+});
 
 const paymentRows = [
   {paymentId:"stars-35a…308c",order:"ORD-260910-1422",created:"2026-09-10 09:03",paymentCompletedAt:"—",customer:"@newtraveler",product:"Japan 20GB · 30 Days",method:"Stars",amount:"3,820 XTR",usd:"$54.57",paymentStatus:"FAILED",refund:"—",verify:"CALLBACK_FAILED",issue:true,status:"PAYMENT_FAILED",pointsUsed:"$0.00 USD",esim:"NOT_ISSUED",iccid:"—",saleId:"—"},
@@ -25,12 +30,12 @@ const paymentRows = [
 ];
 
 const esimRows = [
-  {esimId:"ESIM-260903-4401",order:"ORD-260903-1142",created:"2026-09-03 10:20",issuedAt:"2026-09-03 10:24",customer:"@traveler01",product:"Japan 5GB · 30 Days",destination:"Japan",productGroup:"GLOBAL",status:"PAYMENT_PAID",paymentStatus:"COMPLETED",method:"TON",paymentId:"ton-7fa9…ae20",amount:"7.23 TON",usd:"$7.00",pointsUsed:"$3.00 USD",fulfillment:"ISSUED",usageStatus:"ACTIVE",iccid:"898821…7641",saleId:"SALE-938294",usage:"1,240 / 5,120MB",installedAt:"2026-09-05 08:05",activatedAt:"2026-09-05 08:10",expiresAt:"2026-10-05 08:10",activationCode:"LPA:1$sm-v4-010-a…",qrCode:"LPA payload available",check:"NORMAL",issue:false,refund:"—"},
-  {esimId:"ESIM-260905-4520",order:"ORD-260905-1204",created:"2026-09-05 13:42",issuedAt:"2026-09-05 13:46",customer:"@seoultrip",product:"SKT Korea Unlimited",destination:"Korea",productGroup:"SKT",status:"PAYMENT_PAID",paymentStatus:"COMPLETED",method:"Stars",paymentId:"stars-91bd…a82c",amount:"560 XTR",usd:"$8.00",pointsUsed:"$0.00 USD",fulfillment:"ISSUED",usageStatus:"UNKNOWN",iccid:"SKTeSIM",saleId:"SALE-SKT-5204",usage:"—",installedAt:"—",activatedAt:"—",expiresAt:"2026-11-04",activationCode:"LPA:1$skt…",qrCode:"LPA payload available",check:"NORMAL · SKT 사용상태 UNKNOWN",issue:false,refund:"—"},
-  {esimId:"ESIM-260902-4350",order:"ORD-260902-1110",created:"2026-09-02 08:14",issuedAt:"2026-09-02 08:18",customer:"@tokyowalk",product:"Japan 3GB · 15 Days",destination:"Japan",productGroup:"GLOBAL",status:"PAYMENT_PAID",paymentStatus:"COMPLETED",method:"ForumPay",paymentId:"fp-9021…4310",amount:"$4.20 USD",usd:"$4.20",pointsUsed:"$0.00 USD",fulfillment:"ISSUED",usageStatus:"INSTALLED",iccid:"898821…7762",saleId:"SALE-933114",usage:"0 / 3,072MB",installedAt:"2026-09-03 10:10",activatedAt:"—",expiresAt:"2026-11-01",activationCode:"LPA:1$sm-v4-010-b…",qrCode:"LPA payload available",check:"NORMAL",issue:false,refund:"—"},
-  {esimId:"ESIM-260824-4102",order:"ORD-260824-1027",created:"2026-08-24 09:18",issuedAt:"2026-08-24 09:24",customer:"@summertrip",product:"Thailand Unlimited · 10 Days",destination:"Thailand",productGroup:"GLOBAL",status:"REFUNDED",paymentStatus:"REFUNDED",method:"Stars",paymentId:"stars-8d1e…38ab",amount:"840 XTR",usd:"$12.00",pointsUsed:"$0.00 USD",fulfillment:"ISSUED",usageStatus:"UNINSTALLED",iccid:"898821…1129",saleId:"SALE-925011",usage:"0 / Unlimited",installedAt:"—",activatedAt:"—",expiresAt:"2026-10-23",activationCode:"LPA:1$sm-v4-010-c…",qrCode:"LPA payload available",check:"NORMAL",issue:false,refund:"COMPLETED"},
-  {esimId:"ESIM-260906-4588",order:"ORD-260906-1240",created:"2026-09-06 16:05",issuedAt:"2026-09-06 16:09",customer:"@europass",product:"France 3GB · 15 Days",destination:"France",productGroup:"GLOBAL",status:"PAYMENT_FAILED",paymentStatus:"FAILED",method:"TON",paymentId:"ton-a041…bb19",amount:"2.15 TON",usd:"$3.10",pointsUsed:"$0.00 USD",fulfillment:"ISSUED",usageStatus:"ACTIVE",iccid:"898821…9934",saleId:"SALE-940588",usage:"420 / 3,072MB",installedAt:"2026-09-07 09:35",activatedAt:"2026-09-07 09:40",expiresAt:"2026-09-22 09:40",activationCode:"LPA:1$sm-v4-010-d…",qrCode:"LPA payload available",check:"미결제 · eSIM 발급",issue:true,refund:"—"},
-  {esimId:"ESIM-260911-4620",order:"ORD-260911-1440",created:"2026-09-11 11:05",issuedAt:"—",customer:"@newtraveler",product:"USA 5GB · 15 Days",destination:"USA",productGroup:"GLOBAL",status:"PAYMENT_PAID",paymentStatus:"COMPLETED",method:"ForumPay",paymentId:"fp-9114…4620",amount:"7.20 USDT",usd:"$7.20",pointsUsed:"$0.00 USD",fulfillment:"FAILED",usageStatus:"UNKNOWN",iccid:"—",saleId:"—",usage:"—",installedAt:"—",activatedAt:"—",expiresAt:"—",activationCode:"—",qrCode:"—",check:"발급 실패 · 재시도 필요",issue:true,refund:"—"}
+  {esimId:"ESIM-260903-4401",order:"ORD-260903-1142",created:"2026-09-03 10:20",issuedAt:"2026-09-03 10:24",customer:"@traveler01",product:"Japan 5GB · 30 Days",destination:"Japan",productGroup:"GLOBAL",status:"PAYMENT_PAID",paymentStatus:"COMPLETED",method:"TON",paymentId:"ton-7fa9…ae20",amount:"7.23 TON",usd:"$7.00",pointsUsed:"$3.00 USD",fulfillment:"ISSUED",usageStatus:"ACTIVE",iccid:"898821…7641",saleId:"SALE-938294",usage:"1,240 / 5,120MB",installedAt:"2026-09-05 08:05",activatedAt:"2026-09-05 08:10",expiresAt:"2026-10-05 08:10",statusCheckedAt:"2026-09-15 09:10",activationCode:"LPA:1$sm-v4-010-a…",qrCode:"LPA payload available",check:"NORMAL",issue:false,refund:"—"},
+  {esimId:"ESIM-260905-4520",order:"ORD-260905-1204",created:"2026-09-05 13:42",issuedAt:"2026-09-05 13:46",customer:"@seoultrip",product:"SKT Korea Unlimited",destination:"Korea",productGroup:"SKT",status:"PAYMENT_PAID",paymentStatus:"COMPLETED",method:"Stars",paymentId:"stars-91bd…a82c",amount:"560 XTR",usd:"$8.00",pointsUsed:"$0.00 USD",fulfillment:"ISSUED",usageStatus:"UNKNOWN",iccid:"SKTeSIM",saleId:"SALE-SKT-5204",usage:"—",installedAt:"—",activatedAt:"—",expiresAt:"2026-11-04",statusCheckedAt:"2026-09-15 09:08",activationCode:"LPA:1$skt…",qrCode:"LPA payload available",check:"NORMAL · SKT 사용상태 UNKNOWN",issue:false,refund:"—"},
+  {esimId:"ESIM-260902-4350",order:"ORD-260902-1110",created:"2026-09-02 08:14",issuedAt:"2026-09-02 08:18",customer:"@tokyowalk",product:"Japan 3GB · 15 Days",destination:"Japan",productGroup:"GLOBAL",status:"PAYMENT_PAID",paymentStatus:"COMPLETED",method:"ForumPay",paymentId:"fp-9021…4310",amount:"$4.20 USD",usd:"$4.20",pointsUsed:"$0.00 USD",fulfillment:"ISSUED",usageStatus:"INSTALLED",iccid:"898821…7762",saleId:"SALE-933114",usage:"0 / 3,072MB",installedAt:"2026-09-03 10:10",activatedAt:"—",expiresAt:"2026-11-01",statusCheckedAt:"2026-09-15 09:06",activationCode:"LPA:1$sm-v4-010-b…",qrCode:"LPA payload available",check:"NORMAL",issue:false,refund:"—"},
+  {esimId:"ESIM-260824-4102",order:"ORD-260824-1027",created:"2026-08-24 09:18",issuedAt:"2026-08-24 09:24",customer:"@summertrip",product:"Thailand Unlimited · 10 Days",destination:"Thailand",productGroup:"GLOBAL",status:"REFUNDED",paymentStatus:"REFUNDED",method:"Stars",paymentId:"stars-8d1e…38ab",amount:"840 XTR",usd:"$12.00",pointsUsed:"$0.00 USD",fulfillment:"ISSUED",usageStatus:"UNINSTALLED",iccid:"898821…1129",saleId:"SALE-925011",usage:"0 / Unlimited",installedAt:"—",activatedAt:"—",expiresAt:"2026-10-23",statusCheckedAt:"2026-09-15 09:04",activationCode:"LPA:1$sm-v4-010-c…",qrCode:"LPA payload available",check:"NORMAL",issue:false,refund:"COMPLETED"},
+  {esimId:"ESIM-260906-4588",order:"ORD-260906-1240",created:"2026-09-06 16:05",issuedAt:"2026-09-06 16:09",customer:"@europass",product:"France 3GB · 15 Days",destination:"France",productGroup:"GLOBAL",status:"PAYMENT_FAILED",paymentStatus:"FAILED",method:"TON",paymentId:"ton-a041…bb19",amount:"2.15 TON",usd:"$3.10",pointsUsed:"$0.00 USD",fulfillment:"ISSUED",usageStatus:"ACTIVE",iccid:"898821…9934",saleId:"SALE-940588",usage:"420 / 3,072MB",installedAt:"2026-09-07 09:35",activatedAt:"2026-09-07 09:40",expiresAt:"2026-09-22 09:40",statusCheckedAt:"2026-09-15 09:02",activationCode:"LPA:1$sm-v4-010-d…",qrCode:"LPA payload available",check:"미결제 · eSIM 발급",issue:true,refund:"—"},
+  {esimId:"ESIM-260911-4620",order:"ORD-260911-1440",created:"2026-09-11 11:05",issuedAt:"—",customer:"@newtraveler",product:"USA 5GB · 15 Days",destination:"USA",productGroup:"GLOBAL",status:"PAYMENT_PAID",paymentStatus:"COMPLETED",method:"ForumPay",paymentId:"fp-9114…4620",amount:"7.20 USDT",usd:"$7.20",pointsUsed:"$0.00 USD",fulfillment:"FAILED",usageStatus:"UNKNOWN",iccid:"—",saleId:"—",usage:"—",installedAt:"—",activatedAt:"—",expiresAt:"—",statusCheckedAt:"2026-09-15 09:00",activationCode:"—",qrCode:"—",check:"발급 실패 · 재시도 필요",issue:true,refund:"—"}
 ];
 
 const body = document.querySelector("#ordersBody");
@@ -88,6 +93,7 @@ function renderOrders(){
 }
 
 function renderPayments(){
+  const dateBasis=document.querySelector("#paymentDateBasis").value;
   const method=document.querySelector("#paymentMethodFilter").value;
   const status=document.querySelector("#paymentStatusFilter").value;
   const verification=document.querySelector("#paymentVerifyFilter").value;
@@ -98,13 +104,14 @@ function renderPayments(){
     const methodMatch=method==="ALL"||row.method===method;
     const statusMatch=status==="ALL"||row.paymentStatus===status;
     const verifyMatch=verification==="ALL"||(verification==="NORMAL"?!row.issue:row.issue);
-    const dateMatch=inDateRange(row.paymentCompletedAt,start,end);
+    const dateMatch=inDateRange(dateBasis==="COMPLETED"?row.paymentCompletedAt:row.created,start,end);
     const searchMatch=!query||`${row.paymentId} ${row.order}`.toLowerCase().includes(query);
     return methodMatch&&statusMatch&&verifyMatch&&dateMatch&&searchMatch;
   });
   document.querySelector("#paymentsBody").innerHTML=rows.map(row=>`<tr>
     <td><b>${row.paymentId}</b></td>
     <td><b>${row.order}</b></td>
+    <td>${row.created}</td>
     <td>${row.method}</td>
     <td><b>${row.amount}</b></td>
     <td>${row.usd}</td>
@@ -113,7 +120,7 @@ function renderPayments(){
     <td>${row.paymentCompletedAt==="—"?"—":`${row.paymentCompletedAt}<small>Completed At</small>`}</td>
     <td><span class="badge ${row.issue?"check-issue":"check-normal"}">${row.verify}</span></td>
     <td><button class="view-button payment-view-button" data-index="${paymentRows.indexOf(row)}">View</button></td>
-  </tr>`).join("")||`<tr><td colspan="10" style="text-align:center;padding:50px;color:#8a93a4">조건에 맞는 결제가 없습니다.</td></tr>`;
+  </tr>`).join("")||`<tr><td colspan="11" style="text-align:center;padding:50px;color:#8a93a4">조건에 맞는 결제가 없습니다.</td></tr>`;
   document.querySelector("#paymentVisibleCount").textContent=rows.length;
   document.querySelector("#paymentNormalCount").textContent=rows.filter(row=>!row.issue).length;
   document.querySelector("#paymentIssueCount").textContent=rows.filter(row=>row.issue).length;
@@ -124,6 +131,7 @@ function renderEsims(){
   const fulfillment=document.querySelector("#esimFulfillmentFilter").value;
   const usageStatus=document.querySelector("#esimUsageStatusFilter").value;
   const product=document.querySelector("#esimProductFilter").value;
+  const systemCheck=document.querySelector("#esimSystemCheckFilter").value;
   const query=document.querySelector("#esimManagerSearchInput").value.trim().toLowerCase();
   const start=document.querySelector("#esimStartDate").value;
   const end=document.querySelector("#esimEndDate").value;
@@ -131,9 +139,10 @@ function renderEsims(){
     const fulfillmentMatch=fulfillment==="ALL"||row.fulfillment===fulfillment;
     const usageMatch=usageStatus==="ALL"||row.usageStatus===usageStatus;
     const productMatch=product==="ALL"||row.productGroup===product;
+    const systemCheckMatch=systemCheck==="ALL"||(systemCheck==="CHECK_REQUIRED"?row.issue:!row.issue);
     const dateMatch=inDateRange(row.issuedAt==="—"?row.created:row.issuedAt,start,end);
     const searchMatch=!query||`${row.order} ${row.iccid} ${row.saleId} ${row.customer} ${row.product}`.toLowerCase().includes(query);
-    return fulfillmentMatch&&usageMatch&&productMatch&&dateMatch&&searchMatch;
+    return fulfillmentMatch&&usageMatch&&productMatch&&systemCheckMatch&&dateMatch&&searchMatch;
   });
   document.querySelector("#esimManagerBody").innerHTML=rows.map(row=>`<tr>
     <td><b>${row.esimId}</b><small>${row.order}</small></td>
@@ -146,9 +155,10 @@ function renderEsims(){
     <td>${row.activatedAt}</td>
     <td>${row.expiresAt}</td>
     <td>${row.issuedAt}</td>
-    <td><span class="badge ${row.issue?"check-issue":"check-normal"}">${row.check}</span></td>
+    <td>${row.statusCheckedAt||"—"}</td>
+    <td><span class="badge ${row.issue?"check-issue":"check-normal"}">${row.issue?"CHECK REQUIRED":"NORMAL"}</span></td>
     <td><div class="row-actions"><button class="view-button esim-detail-button" data-index="${esimRows.indexOf(row)}">eSIM Detail</button><button class="mini-action esim-manager-view-button" data-index="${esimRows.indexOf(row)}">Order View</button>${row.fulfillment==="FAILED"?`<button class="mini-action esim-retry-button" data-retry-index="${esimRows.indexOf(row)}">Retry</button>`:""}</div></td>
-  </tr>`).join("")||`<tr><td colspan="12" style="text-align:center;padding:50px;color:#8a93a4">조건에 맞는 eSIM이 없습니다.</td></tr>`;
+  </tr>`).join("")||`<tr><td colspan="13" style="text-align:center;padding:50px;color:#8a93a4">조건에 맞는 eSIM이 없습니다.</td></tr>`;
   document.querySelector("#esimManagerVisibleCount").textContent=rows.length;
   document.querySelector("#esimManagerNormalCount").textContent=rows.filter(row=>!row.issue).length;
   document.querySelector("#esimManagerIssueCount").textContent=rows.filter(row=>row.issue).length;
@@ -209,8 +219,8 @@ function openDrawer(row){
   document.querySelector("#supplierStatus").innerHTML=row.cancelStatus?`<span class="badge ${row.cancelStatus==="COMPLETED"?"paid":"pending"}">${cancelLabel(row.cancelStatus)}</span>`:`<span class="badge pending">NOT_RECORDED</span>`;
   document.querySelector("#supplierRequestedAt").textContent=row.cancelRequestedAt||"—";
   document.querySelector("#supplierCancelledAt").textContent=row.cancelDate||"—";
-  document.querySelector("#supplierCredit").textContent=row.event==="SUPPLIER_CREDIT"?row.supplyKrw:"—";
-  document.querySelector("#supplierCreditStatus").innerHTML=row.event==="SUPPLIER_CREDIT"?(row.creditDate?`<span class="badge paid">반영완료</span><small>${row.creditDate}</small>`:`<span class="badge pending">미반영</span>`):"—";
+  document.querySelector("#supplierCredit").textContent=row.creditKrw&&row.creditKrw!=="—"?`${row.creditKrw}${row.creditUsd&&row.creditUsd!=="—"?` / ${row.creditUsd}`:""}`:"—";
+  document.querySelector("#supplierCreditStatus").innerHTML=row.creditStatus==="APPLIED"?`<span class="badge paid">반영완료</span><small>${row.creditDate||"—"}</small>`:row.creditStatus==="PENDING"?`<span class="badge pending">반영대기</span>`:"—";
   document.querySelector("#supplierCreditMeta").textContent=row.creditReference||"—";
   document.querySelector("#supplierAdmin").textContent=row.creditAdmin||(settlementRow?"admin01":"—");
   const timeline=document.querySelector("#detailTimeline");
@@ -280,8 +290,8 @@ function openCreditDialog(index){
   selectedCreditRowIndex=index;
   const row=settlementRows[index];
   document.querySelector("#creditDialogOrder").textContent=row.order;
-  document.querySelector("#creditDialogAmount").textContent=`${row.supplyKrw} / ${row.supplyUsd}`;
-  document.querySelector("#creditApplyStatus").value=row.creditDate?"APPLIED":"UNAPPLIED";
+  document.querySelector("#creditDialogAmount").textContent=`${row.creditKrw&&row.creditKrw!=="—"?row.creditKrw:row.supplyKrw} / ${row.creditUsd&&row.creditUsd!=="—"?row.creditUsd:row.supplyUsd}`;
+  document.querySelector("#creditApplyStatus").value=row.creditStatus==="APPLIED"?"APPLIED":"PENDING";
   document.querySelector("#creditAppliedDate").value=row.creditDate||"2026-09-30";
   document.querySelector("#creditSettlementMonth").value=row.creditMonth||"2026-09";
   document.querySelector("#creditReference").value=row.creditReference||"";
@@ -297,11 +307,21 @@ function saveCreditApplication(){
   const applied=document.querySelector("#creditApplyStatus").value==="APPLIED";
   const date=document.querySelector("#creditAppliedDate").value;
   if(applied&&!date){const toast=document.querySelector("#toast");toast.textContent="반영완료 상태에는 정산 반영일이 필요합니다.";toast.classList.add("open");setTimeout(()=>toast.classList.remove("open"),2400);return}
+  row.creditStatus=applied?"APPLIED":"PENDING";
   row.creditDate=applied?date:"";
   row.creditMonth=applied?document.querySelector("#creditSettlementMonth").value:"";
   row.creditReference=applied?document.querySelector("#creditReference").value.trim():"";
   row.creditAdmin=applied?document.querySelector("#creditProcessedBy").value.trim():"";
   row.creditMemo=applied?document.querySelector("#creditMemo").value.trim():"";
+  row.event=applied?"SUPPLIER_CREDIT_APPLIED":"ESIM_ISSUED_COST";
+  row.eventDate=applied?date:row.issuedAt;
+  if(applied){
+    if(row.creditKrw&&row.creditKrw!=="—"&&!row.creditKrw.startsWith("−"))row.creditKrw=`−${row.creditKrw}`;
+    if(row.creditUsd&&row.creditUsd!=="—"&&!row.creditUsd.startsWith("−"))row.creditUsd=`−${row.creditUsd}`;
+  }else{
+    row.creditKrw=(row.creditKrw||row.supplyKrw).replace(/^−/,"");
+    row.creditUsd=(row.creditUsd||row.supplyUsd).replace(/^−/,"");
+  }
   closeCreditDialog();renderSettlement();
   const toast=document.querySelector("#toast");toast.textContent=applied?"공급 크레딧을 정산 반영완료로 기록했습니다.":"공급 크레딧을 미반영 상태로 변경했습니다.";toast.classList.add("open");setTimeout(()=>toast.classList.remove("open"),2600);
 }
@@ -309,42 +329,31 @@ function renderSettlement(){
   const basis=document.querySelector("#settlementDateBasis").value;
   const start=document.querySelector("#settlementStartDate").value;
   const end=document.querySelector("#settlementEndDate").value;
-  const method=document.querySelector("#settlementPaymentMethod").value;
   const event=document.querySelector("#settlementEventFilter").value;
-  const esim=document.querySelector("#settlementEsimStatus").value;
   const status=document.querySelector("#settlementCancelStatus").value;
   const credit=document.querySelector("#settlementCreditStatus").value;
-  const sort=document.querySelector("#cancelDateSort").value;
+  const product=document.querySelector("#settlementProductFilter").value;
   const query=document.querySelector("#settlementSearchInput").value.trim().toLowerCase();
-  const dateOf=row=>basis==="CANCEL"?row.cancelDate:basis==="ISSUED"?row.issuedAt:basis==="REFUND"?row.refundCompletedAt:basis==="CREDIT"?row.creditDate:row.eventDate;
+  const dateOf=row=>basis==="CANCEL"?row.cancelDate:basis==="CREDIT"?row.creditDate:row.issuedAt;
   const rows=settlementRows.filter(row=>{
     const date=(dateOf(row)||"").slice(0,10);
     const dateMatch=Boolean(date)&&(!start||date>=start)&&(!end||date<=end);
-    const methodMatch=method==="ALL"||row.payment===method;
     const eventMatch=event==="ALL"||row.event===event;
-    const esimMatch=esim==="ALL"||row.esim===esim;
     const statusMatch=status==="ALL"||row.cancelStatus===status;
-    const applied=Boolean(row.creditDate);
-    const creditMatch=credit==="ALL"||(credit==="APPLIED"?applied:!applied);
-    const searchMatch=!query||`${row.order} ${row.paymentId} ${row.iccid} ${row.saleId} ${row.product} ${row.customer}`.toLowerCase().includes(query);
-    return dateMatch&&methodMatch&&eventMatch&&esimMatch&&statusMatch&&creditMatch&&searchMatch;
-  }).sort((a,b)=>{const av=dateOf(a)||"";const bv=dateOf(b)||"";return sort==="DESC"?bv.localeCompare(av):av.localeCompare(bv)});
-  document.querySelector("#settlementBody").innerHTML=rows.map(row=>`<tr><td><span class="event ${row.event==="SUPPLIER_CREDIT"?"credit":"refund"}">${row.event}</span></td><td>${row.eventDate}</td><td><b>${row.order}</b></td><td>${row.product}<small>${row.customer}</small></td><td><b>${row.payment}</b><small>${row.paymentAmount}</small><small>${row.paymentId}</small></td><td><span class="badge ${esimClass(row.esim)}">${row.esim}</span></td><td>${row.iccid}<small>${row.saleId}</small></td><td><b class="${row.event==="SUPPLIER_CREDIT"?"green":""}">${row.supplyKrw}</b></td><td>${row.supplyUsd}</td><td>${row.refund==="—"?"—":`<span class="badge refunded">${row.refund}</span><small>${row.refundAmount}</small><small>${row.refundCompletedAt||"완료 전"}</small>`}</td><td><span class="badge ${row.cancelStatus==="COMPLETED"?"paid":"pending"}">${cancelLabel(row.cancelStatus)}</span><small>요청 ${row.cancelRequestedAt}</small><small>완료 ${row.cancelDate||"—"}</small></td><td>${row.creditDate?`<span class="badge paid">반영완료</span><small>${row.creditDate}</small><small>${row.creditReference||"참조번호 없음"}</small>`:`<span class="badge pending">미반영</span>`}</td><td><div class="row-actions"><button class="view-button settlement-view-button" data-index="${settlementRows.indexOf(row)}">View</button>${row.event==="SUPPLIER_CREDIT"?`<button class="view-button credit-button" data-credit-index="${settlementRows.indexOf(row)}">${row.creditDate?"Edit Credit":"Apply Credit"}</button>`:""}</div></td></tr>`).join("")||`<tr><td colspan="13" style="text-align:center;padding:50px;color:#8a93a4">조건에 맞는 정산 이벤트가 없습니다.</td></tr>`;
+    const creditMatch=credit==="ALL"||row.creditStatus===credit;
+    const productMatch=product==="ALL"||row.productGroup===product;
+    const searchMatch=!query||`${row.order} ${row.iccid} ${row.saleId} ${row.product}`.toLowerCase().includes(query);
+    return dateMatch&&eventMatch&&statusMatch&&creditMatch&&productMatch&&searchMatch;
+  }).sort((a,b)=>(dateOf(b)||"").localeCompare(dateOf(a)||""));
+  document.querySelector("#settlementBody").innerHTML=rows.map(row=>{
+    const cancelText=row.cancelStatus==="COMPLETED"?"취소완료":row.cancelStatus==="PROCESSING"?"처리중":row.cancelStatus==="REQUESTED"?"접수중":"—";
+    const creditText=row.creditStatus==="APPLIED"?"반영 완료":row.creditStatus==="PENDING"?"반영 대기":"해당 없음";
+    return `<tr><td>${dateOf(row)||"—"}</td><td><span class="event ${row.event==="SUPPLIER_CREDIT_APPLIED"?"credit":"issue"}">${row.event}</span></td><td><b>${row.order}</b></td><td>${row.product}</td><td>${row.iccid}<small>${row.saleId}</small></td><td>${row.issuedAt}</td><td><b>${row.supplyKrw}</b></td><td>${row.supplyUsd}</td><td>${row.cancelStatus==="NOT_REQUESTED"?"—":`<span class="badge ${row.cancelStatus==="COMPLETED"?"paid":"pending"}">${cancelText}</span>`}</td><td>${row.cancelDate||"—"}</td><td><span class="badge ${row.creditStatus==="APPLIED"?"paid":row.creditStatus==="PENDING"?"pending":"esim-neutral"}">${creditText}</span><small>${row.creditKrw||"—"}</small></td><td>${row.creditDate||"—"}</td><td>${row.creditReference||"—"}</td><td><div class="row-actions"><button class="view-button settlement-view-button" data-index="${settlementRows.indexOf(row)}">View</button>${row.cancelStatus==="COMPLETED"?`<button class="view-button credit-button" data-credit-index="${settlementRows.indexOf(row)}">${row.creditStatus==="APPLIED"?"Edit Credit":"Apply Credit"}</button>`:""}</div></td></tr>`;
+  }).join("")||`<tr><td colspan="14" style="text-align:center;padding:50px;color:#8a93a4">조건에 맞는 공급사 정산 항목이 없습니다.</td></tr>`;
   document.querySelectorAll("#settlementBody .settlement-view-button").forEach(button=>button.addEventListener("click",()=>openDrawer(settlementRows[Number(button.dataset.index)])));
   document.querySelectorAll("#settlementBody .credit-button").forEach(button=>button.addEventListener("click",()=>openCreditDialog(Number(button.dataset.creditIndex))));
-  document.querySelector(".settlement-scope").innerHTML=`<span class="pulse green-pulse"></span><strong>현재 조회:</strong> ${start}~${end} · ${method==="ALL"?"전체 결제수단":method} · ${status==="ALL"?"전체 취소 상태":cancelLabel(status)} · ${credit==="ALL"?"전체 크레딧":credit==="APPLIED"?"크레딧 반영완료":"크레딧 미반영"} · ${sort==="DESC"?"최신순":"과거순"}`;
-  renderPaymentMethodSummary(method);
-}
-
-function renderPaymentMethodSummary(selectedMethod){
-  const methods=["TON","Stars","ForumPay"];
-  const summary=methods.filter(method=>selectedMethod==="ALL"||method===selectedMethod).map(method=>{
-    const rows=paymentRows.filter(row=>row.method===method&&["COMPLETED","REFUNDED"].includes(row.paymentStatus));
-    const paid=rows.reduce((sum,row)=>sum+Number(row.usd.replace(/[^0-9.]/g,"")),0);
-    const refunded=rows.filter(row=>row.refund==="COMPLETED").reduce((sum,row)=>sum+Number(row.usd.replace(/[^0-9.]/g,"")),0);
-    return {method,count:rows.length,paid,refunded,net:paid-refunded};
-  });
-  document.querySelector("#paymentMethodSummaryBody").innerHTML=summary.map(row=>`<tr><td><b>${row.method}</b></td><td>${row.count}</td><td>$${row.paid.toFixed(2)}</td><td class="red">−$${row.refunded.toFixed(2)}</td><td><b>$${row.net.toFixed(2)}</b></td></tr>`).join("");
+  const basisLabel=basis==="CANCEL"?"SkySIM 취소 완료일":basis==="CREDIT"?"공급 크레딧 반영일":"eSIM 발급일";
+  document.querySelector(".settlement-scope").innerHTML=`<span class="pulse green-pulse"></span><strong>현재 조회:</strong> ${start}~${end} · ${basisLabel} 기준 · ${event==="ALL"?"전체 정산 이벤트":event} · ${credit==="ALL"?"전체 크레딧":credit}`;
 }
 function saveSupplierCancellation(){
   const status=document.querySelector("#cancelStatus").value;
@@ -370,7 +379,7 @@ function openEsimDetail(row){
     <div class="detail-grid">
       <section class="detail-section"><h3>Identifiers</h3><dl><div><dt>eSIM ID</dt><dd>${row.esimId}</dd></div><div><dt>Order</dt><dd>${row.order}</dd></div><div><dt>ICCID</dt><dd>${row.iccid}</dd></div><div><dt>SkySIM Sale ID</dt><dd>${row.saleId}</dd></div><div><dt>Activation Code</dt><dd>${row.activationCode}</dd></div><div><dt>Fulfillment</dt><dd>${row.fulfillment}</dd></div><div><dt>Usage Status</dt><dd>${row.usageStatus}</dd></div></dl></section>
       <section class="detail-section"><h3>QR / Install</h3><p class="section-note">${row.qrCode}</p></section>
-      <section class="detail-section"><h3>Lifecycle & Usage</h3><dl><div><dt>Issued</dt><dd>${row.issuedAt}</dd></div><div><dt>Installed</dt><dd>${row.installedAt||"—"}</dd></div><div><dt>Activated</dt><dd>${row.activatedAt}</dd></div><div><dt>Expires</dt><dd>${row.expiresAt}</dd></div><div><dt>Usage</dt><dd>${row.usage}</dd></div></dl></section>
+      <section class="detail-section"><h3>Lifecycle & Usage</h3><dl><div><dt>Issued</dt><dd>${row.issuedAt}</dd></div><div><dt>Installed</dt><dd>${row.installedAt||"—"}</dd></div><div><dt>Activated</dt><dd>${row.activatedAt}</dd></div><div><dt>Expires</dt><dd>${row.expiresAt}</dd></div><div><dt>Usage</dt><dd>${row.usage}</dd></div><div><dt>Last Checked</dt><dd>${row.statusCheckedAt||"—"}</dd></div><div><dt>System Check</dt><dd>${row.issue?`CHECK REQUIRED · ${row.check}`:"NORMAL"}</dd></div></dl></section>
       <section class="detail-section"><h3>Technical Logs</h3><div class="key-value-list"><div><span>Usage Logs</span><strong>3 records</strong></div><div><span>Callback Logs</span><strong>2 valid / 0 invalid</strong></div><div><span>API Logs</span><strong>View latest supplier calls</strong></div></div></section>
     </div>
     <div class="action-strip"><button class="mini-action" data-preview-action="eSIM 사용량 로그를 조회합니다.">Usage Logs</button><button class="mini-action" data-preview-action="공급사 callback 로그를 조회합니다.">Callback Logs</button><button class="mini-action" data-preview-action="SkySIM API 호출 로그를 조회합니다.">API Logs</button>${row.fulfillment==="FAILED"?'<button class="mini-action" data-preview-action="eSIM 발급 재시도를 요청합니다.">Retry Issuance</button>':""}</div>`;
@@ -447,9 +456,9 @@ document.querySelector("#creditDialogCancel").addEventListener("click",closeCred
 document.querySelector("#creditDialogBackdrop").addEventListener("click",closeCreditDialog);
 document.querySelector("#creditApplyStatus").addEventListener("change",syncCreditFields);
 document.querySelector("#saveCreditApplication").addEventListener("click",saveCreditApplication);
-document.querySelector("#settlementCancelStatus").addEventListener("change",renderSettlement);
-document.querySelector("#cancelDateSort").addEventListener("change",renderSettlement);
-document.querySelectorAll("#settlementDateBasis,#settlementStartDate,#settlementEndDate,#settlementPaymentMethod,#settlementEventFilter,#settlementEsimStatus,#settlementCreditStatus").forEach(element=>element.addEventListener("change",renderSettlement));
+document.querySelector("#paymentDateBasis").addEventListener("change",renderPayments);
+document.querySelector("#esimSystemCheckFilter").addEventListener("change",renderEsims);
+document.querySelectorAll("#settlementDateBasis,#settlementStartDate,#settlementEndDate,#settlementEventFilter,#settlementCancelStatus,#settlementCreditStatus,#settlementProductFilter").forEach(element=>element.addEventListener("change",renderSettlement));
 document.querySelector("#settlementSearchButton").addEventListener("click",renderSettlement);
 document.querySelector("#settlementSearchInput").addEventListener("keydown",event=>{if(event.key==="Enter")renderSettlement()});
 document.querySelectorAll("[data-admin-form]").forEach(item=>item.addEventListener("click",()=>openAdminActionDialog(item.dataset.adminForm)));
