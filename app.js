@@ -9,16 +9,20 @@ const orders = [
 ];
 
 const settlementRows = [
-  {event:"ESIM_ISSUED_COST",eventDate:"2026-09-03 10:24",order:"ORD-260903-1142",orderStatus:"PAYMENT_PAID",created:"2026-09-03 10:20",paymentCompletedAt:"2026-09-03 10:22",issuedAt:"2026-09-03 10:24",product:"Japan 5GB · 30 Days",productGroup:"GLOBAL",customer:"@traveler01",payment:"TON",paymentId:"ton-7fa9…ae20",paymentAmount:"7.23 TON",sellingPrice:"$10.00 USD",pointsUsed:"$3.00 USD",actualPaidUsd:"$7.00 USD",esim:"ACTIVE",iccid:"898821…7641",saleId:"SALE-938294",supplyKrw:"₩8,400",supplyUsd:"$6.18",cancelStatus:"NOT_REQUESTED",cancelDate:"",creditStatus:"NA",creditKrw:"—",creditUsd:"—",creditDate:"",creditReference:""},
-  {event:"ESIM_ISSUED_COST",eventDate:"2026-09-05 13:47",order:"ORD-260905-1204",orderStatus:"PAYMENT_PAID",created:"2026-09-05 13:42",paymentCompletedAt:"2026-09-05 13:44",issuedAt:"2026-09-05 13:47",product:"SKT Korea Unlimited",productGroup:"SKT",customer:"@seoultrip",payment:"Stars",paymentId:"stars-91bd…a82c",paymentAmount:"560 XTR",sellingPrice:"$8.00 USD",pointsUsed:"$0.00 USD",actualPaidUsd:"$8.00 USD",esim:"UNKNOWN",iccid:"SKTeSIM",saleId:"SALE-940120",supplyKrw:"₩7,100",supplyUsd:"$5.22",cancelStatus:"NOT_REQUESTED",cancelDate:"",creditStatus:"NA",creditKrw:"—",creditUsd:"—",creditDate:"",creditReference:""},
-  {event:"ESIM_ISSUED_COST",eventDate:"2026-08-05 11:18",order:"ORD-260805-0731",orderStatus:"REFUNDED",created:"2026-08-05 11:12",paymentCompletedAt:"2026-08-05 11:14",issuedAt:"2026-08-05 11:18",cancelRequestedAt:"2026-09-11 09:30",product:"Japan 5GB · 30 Days",productGroup:"GLOBAL",customer:"@tokyowalk",payment:"Stars",paymentId:"stars-8050…0731",paymentAmount:"700 XTR",sellingPrice:"$10.00 USD",pointsUsed:"$0.00 USD",actualPaidUsd:"$10.00 USD",esim:"UNINSTALLED",iccid:"898821…7310",saleId:"SALE-905731",supplyKrw:"₩9,600",supplyUsd:"$7.06",cancelStatus:"COMPLETED",cancelDate:"2026-09-14",creditStatus:"PENDING",creditKrw:"₩9,600",creditUsd:"$7.06",creditDate:"",creditReference:""},
-  {event:"SUPPLIER_CREDIT_APPLIED",eventDate:"2026-09-30 10:00",order:"ORD-260812-0874",orderStatus:"REFUNDED",created:"2026-08-12 08:55",paymentCompletedAt:"2026-08-12 08:57",issuedAt:"2026-08-12 09:01",cancelRequestedAt:"2026-09-18 14:20",product:"USA 10GB · 30 Days",productGroup:"GLOBAL",customer:"@businessfly",payment:"TON",paymentId:"ton-a812…4301",paymentAmount:"4.10 TON",sellingPrice:"$6.00 USD",pointsUsed:"$2.00 USD",actualPaidUsd:"$4.00 USD",esim:"UNINSTALLED",iccid:"898821…3068",saleId:"SALE-918430",supplyKrw:"₩12,400",supplyUsd:"$9.12",cancelStatus:"COMPLETED",cancelDate:"2026-09-21",creditStatus:"APPLIED",creditKrw:"−₩12,400",creditUsd:"−$9.12",creditDate:"2026-09-30",creditMonth:"2026-09",creditReference:"SKY-SET-2026-09",creditAdmin:"finance01",creditMemo:"9월 SkySIM 정산서 차감 확인"}
+  {event:"PAYMENT",eventDate:"2026-09-05 13:44",order:"ORD-260905-1204",product:"SKT Korea Unlimited",customer:"@seoultrip",payment:"STARS",paymentId:"stars-91bd…a82c",amountUsd:"$8.00",nativeAmount:"560 XTR",esim:"UNINSTALLED",refundStatus:"—",iccid:"SKTeSIM"},
+  {event:"PAYMENT",eventDate:"2026-09-04 09:20",order:"ORD-260904-1188",product:"Europe 10GB · 30 Days",customer:"@globalnomad",payment:"FORUMPAY",paymentId:"fp-4ca2…9011",amountUsd:"$20.00",nativeAmount:"20.00 USDT",esim:"—",refundStatus:"—",iccid:"—"},
+  {event:"PAYMENT",eventDate:"2026-09-03 10:22",order:"ORD-260903-1142",product:"Japan 5GB · 30 Days",customer:"@traveler01",payment:"TON",paymentId:"ton-7fa9…ae20",amountUsd:"$7.00",nativeAmount:"7.23 TON",esim:"ACTIVE",refundStatus:"—",iccid:"898821…7641"},
+  {event:"REFUND",eventDate:"2026-09-05 15:30",order:"ORD-260824-1027",product:"Thailand Unlimited · 10 Days",customer:"@summertrip",payment:"STARS",paymentId:"stars-8d1e…38ab",amountUsd:"$12.00",nativeAmount:"840 XTR",esim:"—",refundStatus:"COMPLETED",iccid:"898821…1129"},
+  {event:"REFUND",eventDate:"2026-08-24 15:51",order:"ORD-260824-1032",product:"Thailand 1GB · 7 Days",customer:"@summertrip",payment:"STARS",paymentId:"stars-361d…1cfe",amountUsd:"$0.85",nativeAmount:"60 XTR",esim:"—",refundStatus:"COMPLETED",iccid:"898821…1129"}
 ];
 
-settlementRows.forEach(row=>{
-  row.paymentStatus=row.paymentStatus||(row.orderStatus==="REFUNDED"?"REFUNDED":"COMPLETED");
-  row.refund=row.refund||(row.orderStatus==="REFUNDED"?"COMPLETED":"—");
-});
+const defaultRateSnapshot = row => {
+  const method=(row.method||row.payment||"").toUpperCase();
+  if(method==="STARS")return {rateSnapshot:"1 USD = 70 XTR",rateMeta:`SYSTEM SETTING · ${(row.created||row.eventDate||"—").slice(0,16)} UTC`};
+  if(method==="TON")return {rateSnapshot:"1 TON = $0.9682 USD",rateMeta:`AUTO · ${(row.created||row.eventDate||"—").slice(0,16)} UTC`};
+  if(method==="FORUMPAY")return {rateSnapshot:"1 USD = 1.0000 USDT",rateMeta:`FORUMPAY QUOTE · ${(row.created||row.eventDate||"—").slice(0,16)} UTC`};
+  return {rateSnapshot:"—",rateMeta:"—"};
+};
 
 const paymentRows = [
   {paymentId:"stars-35a…308c",order:"ORD-260910-1422",created:"2026-09-10 09:03",paymentCompletedAt:"—",customer:"@newtraveler",product:"Japan 20GB · 30 Days",method:"Stars",amount:"3,820 XTR",usd:"$54.57",paymentStatus:"FAILED",refund:"—",verify:"CALLBACK_FAILED",issue:true,status:"PAYMENT_FAILED",pointsUsed:"$0.00 USD",esim:"NOT_ISSUED",iccid:"—",saleId:"—"},
@@ -28,6 +32,10 @@ const paymentRows = [
   {paymentId:"fp-a956…0844",order:"ORD-260819-0931",created:"2026-08-19 16:42",paymentCompletedAt:"2026-08-19 16:44",customer:"@forumtraveler",product:"USA 5GB · 15 Days",method:"ForumPay",amount:"10.04 USDT",usd:"$10.04",paymentStatus:"REFUNDED",refund:"COMPLETED",verify:"AMOUNT_MISMATCH",issue:true,status:"REFUNDED",pointsUsed:"$0.00 USD",esim:"UNINSTALLED",iccid:"898821…8841",saleId:"SALE-904844"},
   {paymentId:"fp-b583…5cc0",order:"ORD-260820-0955",created:"2026-08-20 16:27",paymentCompletedAt:"—",customer:"@globalnomad",product:"France 3GB · 15 Days",method:"ForumPay",amount:"4.57 USDT",usd:"$4.57",paymentStatus:"FAILED",refund:"—",verify:"ORDER_NOT_FOUND",issue:true,status:"PAYMENT_FAILED",pointsUsed:"$0.00 USD",esim:"NOT_ISSUED",iccid:"—",saleId:"—"}
 ];
+
+[...orders,...paymentRows].forEach(row=>Object.assign(row,{notes:row.notes||[],roamingNumber:row.roamingNumber||null,...defaultRateSnapshot(row)}));
+orders[2].roamingNumber="010-1234-5678";
+orders[0].notes=[{category:"PAYMENT",text:"TON 결제와 발급 결과를 확인했습니다.",admin:"admin01",createdAt:"2026-09-03 10:30 UTC"}];
 
 const esimRows = [
   {esimId:"ESIM-260903-4401",order:"ORD-260903-1142",created:"2026-09-03 10:20",issuedAt:"2026-09-03 10:24",customer:"@traveler01",product:"Japan 5GB · 30 Days",destination:"Japan",productGroup:"GLOBAL",status:"PAYMENT_PAID",paymentStatus:"COMPLETED",method:"TON",paymentId:"ton-7fa9…ae20",amount:"7.23 TON",usd:"$7.00",pointsUsed:"$3.00 USD",fulfillment:"ISSUED",usageStatus:"ACTIVE",iccid:"898821…7641",saleId:"SALE-938294",usage:"1,240 / 5,120MB",installedAt:"2026-09-05 08:05",activatedAt:"2026-09-05 08:10",expiresAt:"2026-10-05 08:10",statusCheckedAt:"2026-09-15 09:10",activationCode:"LPA:1$sm-v4-010-a…",qrCode:"LPA payload available",check:"NORMAL",issue:false,refund:"—"},
@@ -171,7 +179,6 @@ function renderEsims(){
 let activeDrawerRow=null;
 function openDrawer(row){
   activeDrawerRow=row;
-  const settlementRow = Boolean(row.event);
   document.querySelector("#drawerOrder").textContent=row.order;
   document.querySelector("#detailOrderStatus").textContent=row.status||row.orderStatus||(row.refund==="COMPLETED"?"REFUNDED":"PAYMENT_PAID");
   const check=document.querySelector("#detailCheck");check.textContent=row.issue?`CHECK REQUIRED · ${row.check}`:"NORMAL";check.className=row.issue?"red":"green";
@@ -181,8 +188,11 @@ function openDrawer(row){
   document.querySelector("#detailPaymentId").textContent=row.paymentId||"—";
   document.querySelector("#detailPayment").textContent=`${row.method||row.payment} · ${row.paymentStatus||"COMPLETED"}`;
   document.querySelector("#detailSellingPrice").textContent=row.sellingPrice||row.usd||row.paymentAmount||"—";
-  document.querySelector("#detailPointsUsed").textContent=row.pointsUsed||(settlementRow?"—":"$3.00 USD");
+  document.querySelector("#detailPointsUsed").textContent=row.pointsUsed||"$0.00 USD";
   document.querySelector("#detailAmount").textContent=row.amount?`${row.amount} / ${row.usd}`:`${row.paymentAmount} / ${row.actualPaidUsd||"—"}`;
+  const rate=defaultRateSnapshot(row);
+  document.querySelector("#detailRateSnapshot").textContent=row.rateSnapshot||rate.rateSnapshot;
+  document.querySelector("#detailRateMeta").textContent=row.rateMeta||rate.rateMeta;
   document.querySelector("#detailCompletedAt").textContent=row.paymentCompletedAt||row.created||"—";
   const paymentAttempts=row.paymentAttempts||[{id:row.paymentId||"—",method:row.method||row.payment||"—",status:row.paymentStatus||"COMPLETED",amount:row.amount||row.paymentAmount||"—",completedAt:row.paymentCompletedAt||"—"}];
   const completedAttempts=paymentAttempts.filter(payment=>["COMPLETED","REFUNDED"].includes(payment.status));
@@ -199,6 +209,7 @@ function openDrawer(row){
   document.querySelector("#detailFulfillment").textContent=row.fulfillment||(row.issuedAt&&row.issuedAt!=="—"?"ISSUED":"NOT_ISSUED");
   document.querySelector("#detailUsageStatus").textContent=row.usageStatus||row.esim||"UNKNOWN";
   document.querySelector("#detailIccid").textContent=row.iccid;
+  document.querySelector("#detailRoamingNumber").textContent=row.roamingNumber||"—";
   document.querySelector("#detailSaleId").textContent=row.saleId||"SALE-938294";
   document.querySelector("#detailIssuedAt").textContent=row.issuedAt||"—";
   const method=(row.method||row.payment||"").toUpperCase();
@@ -221,14 +232,34 @@ function openDrawer(row){
   document.querySelector("#supplierCredit").textContent=row.creditKrw&&row.creditKrw!=="—"?`${row.creditKrw}${row.creditUsd&&row.creditUsd!=="—"?` / ${row.creditUsd}`:""}`:"—";
   document.querySelector("#supplierCreditStatus").innerHTML=row.creditStatus==="APPLIED"?`<span class="badge paid">APPLIED</span><small>${row.creditDate||"—"}</small>`:row.creditStatus==="PENDING"?`<span class="badge pending">PENDING</span>`:"—";
   document.querySelector("#supplierCreditMeta").textContent=row.creditReference||"—";
-  document.querySelector("#supplierAdmin").textContent=row.creditAdmin||(settlementRow?"admin01":"—");
-  const timeline=document.querySelector("#detailTimeline");
-  timeline.innerHTML=settlementRow?`${row.cancelDate?`<li><i></i><div><b>SkySIM 취소 완료</b><span>${row.cancelDate}</span></div></li>`:""}${row.refund==="COMPLETED"?`<li><i></i><div><b>관리자 환불 완료</b><span>${row.eventDate}</span></div></li>`:""}<li><i></i><div><b>eSIM 발급 완료</b><span>${row.issuedAt}</span></div></li><li><i></i><div><b>결제 완료</b><span>${row.paymentCompletedAt}</span></div></li><li><i></i><div><b>주문 생성</b><span>${row.created}</span></div></li>`:`${row.refund==="COMPLETED"?`<li><i></i><div><b>관리자 환불 완료</b><span>${row.refundCompletedAt||"—"}</span></div></li>`:row.refund==="REQUESTED"?`<li><i></i><div><b>환불 처리 시작</b><span>${row.refundStartedAt||"—"}</span></div></li>`:""}<li><i></i><div><b>eSIM 발급 ${row.fulfillment||"NOT_ISSUED"} · 사용 ${row.usageStatus||row.esim||"UNKNOWN"}</b><span>${row.issuedAt||"—"}</span></div></li>${row.paymentCompletedAt!=="—"?`<li><i></i><div><b>결제 완료</b><span>${row.paymentCompletedAt}</span></div></li>`:""}<li><i></i><div><b>주문 생성</b><span>${row.created}</span></div></li>`;
+  document.querySelector("#supplierAdmin").textContent=row.creditAdmin||"—";
+  renderOrderNotes();
   document.querySelector("#orderDrawer").classList.add("open");
   document.querySelector("#drawerBackdrop").classList.add("open");
   document.querySelector("#orderDrawer").setAttribute("aria-hidden","false");
 }
 function closeDrawer(){document.querySelector("#orderDrawer").classList.remove("open");document.querySelector("#drawerBackdrop").classList.remove("open");document.querySelector("#orderDrawer").setAttribute("aria-hidden","true")}
+
+function escapeHtml(value){return String(value??"").replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"})[char])}
+function renderOrderNotes(){
+  const notes=activeDrawerRow?.notes||[];
+  document.querySelector("#detailOrderNotes").innerHTML=notes.length?notes.map(note=>`<article class="order-note"><header><span class="status-token">${escapeHtml(note.category)}</span><small>${escapeHtml(note.admin)} · ${escapeHtml(note.createdAt)}</small></header><p>${escapeHtml(note.text)}</p></article>`).join(""):`<div class="empty-note">등록된 관리자 메모가 없습니다.</div>`;
+}
+function openOrderNoteDialog(){
+  if(!activeDrawerRow)return;
+  document.querySelector("#orderNoteText").value="";
+  document.querySelector("#orderNoteCategory").value="GENERAL";
+  document.querySelector("#orderNoteDialog").classList.add("open");document.querySelector("#orderNoteDialogBackdrop").classList.add("open");document.querySelector("#orderNoteDialog").setAttribute("aria-hidden","false");
+}
+function closeOrderNoteDialog(){document.querySelector("#orderNoteDialog").classList.remove("open");document.querySelector("#orderNoteDialogBackdrop").classList.remove("open");document.querySelector("#orderNoteDialog").setAttribute("aria-hidden","true")}
+function saveOrderNote(){
+  if(!activeDrawerRow)return;
+  const text=document.querySelector("#orderNoteText").value.trim();
+  if(!text){showToast("메모 내용을 입력해 주세요.");return}
+  activeDrawerRow.notes=activeDrawerRow.notes||[];
+  activeDrawerRow.notes.unshift({category:document.querySelector("#orderNoteCategory").value,text,admin:"admin01",createdAt:"2026-09-17 10:30 UTC"});
+  closeOrderNoteDialog();renderOrderNotes();showToast("주문 메모를 저장했습니다. 주문 상태는 변경되지 않았습니다.");
+}
 
 function openRefundDialog(){
   if(!activeDrawerRow)return;
@@ -280,79 +311,37 @@ function cancelRefundProcess(){
 function openCancelDialog(){document.querySelector("#cancelDialog").classList.add("open");document.querySelector("#cancelDialogBackdrop").classList.add("open");document.querySelector("#cancelDialog").setAttribute("aria-hidden","false")}
 function closeCancelDialog(){document.querySelector("#cancelDialog").classList.remove("open");document.querySelector("#cancelDialogBackdrop").classList.remove("open");document.querySelector("#cancelDialog").setAttribute("aria-hidden","true")}
 const cancelLabel=status=>status||"NOT_RECORDED";
-let selectedCreditRowIndex=null;
-function syncCreditFields(){
-  const applied=document.querySelector("#creditApplyStatus").value==="APPLIED";
-  ["#creditAppliedDate","#creditSettlementMonth","#creditReference","#creditProcessedBy","#creditMemo"].forEach(selector=>document.querySelector(selector).disabled=!applied);
-}
-function openCreditDialog(index){
-  selectedCreditRowIndex=index;
-  const row=settlementRows[index];
-  document.querySelector("#creditDialogOrder").textContent=row.order;
-  document.querySelector("#creditDialogAmount").textContent=`${row.creditKrw&&row.creditKrw!=="—"?row.creditKrw:row.supplyKrw} / ${row.creditUsd&&row.creditUsd!=="—"?row.creditUsd:row.supplyUsd}`;
-  document.querySelector("#creditApplyStatus").value=row.creditStatus==="APPLIED"?"APPLIED":"PENDING";
-  document.querySelector("#creditAppliedDate").value=row.creditDate||"2026-09-30";
-  document.querySelector("#creditSettlementMonth").value=row.creditMonth||"2026-09";
-  document.querySelector("#creditReference").value=row.creditReference||"";
-  document.querySelector("#creditProcessedBy").value=row.creditAdmin||"finance01";
-  document.querySelector("#creditMemo").value=row.creditMemo||"";
-  syncCreditFields();
-  document.querySelector("#creditDialog").classList.add("open");document.querySelector("#creditDialogBackdrop").classList.add("open");document.querySelector("#creditDialog").setAttribute("aria-hidden","false");
-}
-function closeCreditDialog(){document.querySelector("#creditDialog").classList.remove("open");document.querySelector("#creditDialogBackdrop").classList.remove("open");document.querySelector("#creditDialog").setAttribute("aria-hidden","true")}
-function saveCreditApplication(){
-  if(selectedCreditRowIndex===null)return;
-  const row=settlementRows[selectedCreditRowIndex];
-  const applied=document.querySelector("#creditApplyStatus").value==="APPLIED";
-  const date=document.querySelector("#creditAppliedDate").value;
-  if(applied&&!date){const toast=document.querySelector("#toast");toast.textContent="반영완료 상태에는 정산 반영일이 필요합니다.";toast.classList.add("open");setTimeout(()=>toast.classList.remove("open"),2400);return}
-  row.creditStatus=applied?"APPLIED":"PENDING";
-  row.creditDate=applied?date:"";
-  row.creditMonth=applied?document.querySelector("#creditSettlementMonth").value:"";
-  row.creditReference=applied?document.querySelector("#creditReference").value.trim():"";
-  row.creditAdmin=applied?document.querySelector("#creditProcessedBy").value.trim():"";
-  row.creditMemo=applied?document.querySelector("#creditMemo").value.trim():"";
-  row.event=applied?"SUPPLIER_CREDIT_APPLIED":"ESIM_ISSUED_COST";
-  row.eventDate=applied?date:row.issuedAt;
-  if(applied){
-    if(row.creditKrw&&row.creditKrw!=="—"&&!row.creditKrw.startsWith("−"))row.creditKrw=`−${row.creditKrw}`;
-    if(row.creditUsd&&row.creditUsd!=="—"&&!row.creditUsd.startsWith("−"))row.creditUsd=`−${row.creditUsd}`;
-  }else{
-    row.creditKrw=(row.creditKrw||row.supplyKrw).replace(/^−/,"");
-    row.creditUsd=(row.creditUsd||row.supplyUsd).replace(/^−/,"");
-  }
-  closeCreditDialog();renderSettlement();
-  const toast=document.querySelector("#toast");toast.textContent=applied?"공급 크레딧을 정산 반영완료로 기록했습니다.":"공급 크레딧을 미반영 상태로 변경했습니다.";toast.classList.add("open");setTimeout(()=>toast.classList.remove("open"),2600);
-}
 function renderSettlement(){
-  const basis=document.querySelector("#settlementDateBasis").value;
   const start=document.querySelector("#settlementStartDate").value;
   const end=document.querySelector("#settlementEndDate").value;
   const event=document.querySelector("#settlementEventFilter").value;
-  const status=document.querySelector("#settlementCancelStatus").value;
-  const credit=document.querySelector("#settlementCreditStatus").value;
-  const product=document.querySelector("#settlementProductFilter").value;
+  const method=document.querySelector("#settlementMethodFilter").value;
+  const esim=document.querySelector("#settlementEsimFilter").value;
+  const product=document.querySelector("#settlementProductInput").value.trim().toLowerCase();
+  const sort=document.querySelector("#settlementSort").value;
   const query=document.querySelector("#settlementSearchInput").value.trim().toLowerCase();
-  const dateOf=row=>basis==="CANCEL"?row.cancelDate:basis==="CREDIT"?row.creditDate:row.issuedAt;
   const rows=settlementRows.filter(row=>{
-    const date=(dateOf(row)||"").slice(0,10);
+    const date=(row.eventDate||"").slice(0,10);
     const dateMatch=Boolean(date)&&(!start||date>=start)&&(!end||date<=end);
     const eventMatch=event==="ALL"||row.event===event;
-    const statusMatch=status==="ALL"||row.cancelStatus===status;
-    const creditMatch=credit==="ALL"||row.creditStatus===credit;
-    const productMatch=product==="ALL"||row.productGroup===product;
-    const searchMatch=!query||`${row.order} ${row.iccid} ${row.saleId} ${row.product}`.toLowerCase().includes(query);
-    return dateMatch&&eventMatch&&statusMatch&&creditMatch&&productMatch&&searchMatch;
-  }).sort((a,b)=>(dateOf(b)||"").localeCompare(dateOf(a)||""));
+    const methodMatch=method==="ALL"||row.payment===method;
+    const esimMatch=esim==="ALL"||row.esim===esim;
+    const productMatch=!product||row.product.toLowerCase().includes(product);
+    const searchMatch=!query||`${row.order} ${row.customer} ${row.paymentId} ${row.iccid} ${row.product}`.toLowerCase().includes(query);
+    return dateMatch&&eventMatch&&methodMatch&&esimMatch&&productMatch&&searchMatch;
+  }).sort((a,b)=>{
+    if(sort==="DATE_ASC")return (a.eventDate||"").localeCompare(b.eventDate||"");
+    if(sort==="AMOUNT_DESC"||sort==="AMOUNT_ASC"){
+      const av=Number(String(a.amountUsd).replace(/[^0-9.-]/g,""));const bv=Number(String(b.amountUsd).replace(/[^0-9.-]/g,""));
+      return sort==="AMOUNT_DESC"?bv-av:av-bv;
+    }
+    if(sort==="ORDER_ASC")return a.order.localeCompare(b.order);
+    return (b.eventDate||"").localeCompare(a.eventDate||"");
+  });
   document.querySelector("#settlementBody").innerHTML=rows.map(row=>{
-    const cancelText=row.cancelStatus||"NOT_REQUESTED";
-    const creditText=row.creditStatus||"NA";
-    return `<tr><td>${dateOf(row)||"—"}</td><td><span class="event ${row.event==="SUPPLIER_CREDIT_APPLIED"?"credit":"issue"}">${row.event}</span></td><td><b>${row.order}</b></td><td>${row.product}</td><td>${row.iccid}<small>${row.saleId}</small></td><td>${row.issuedAt}</td><td><b>${row.supplyKrw}</b></td><td>${row.supplyUsd}</td><td><span class="badge ${row.cancelStatus==="COMPLETED"?"paid":row.cancelStatus==="NOT_REQUESTED"?"esim-neutral":"pending"}">${cancelText}</span></td><td>${row.cancelDate||"—"}</td><td><span class="badge ${row.creditStatus==="APPLIED"?"paid":row.creditStatus==="PENDING"?"pending":"esim-neutral"}">${creditText}</span><small>${row.creditKrw||"—"}</small></td><td>${row.creditDate||"—"}</td><td>${row.creditReference||"—"}</td><td><div class="row-actions"><button class="view-button settlement-view-button" data-index="${settlementRows.indexOf(row)}">View</button>${row.cancelStatus==="COMPLETED"?`<button class="view-button credit-button" data-credit-index="${settlementRows.indexOf(row)}">${row.creditStatus==="APPLIED"?"Edit Credit":"Apply Credit"}</button>`:""}</div></td></tr>`;
-  }).join("")||`<tr><td colspan="14" style="text-align:center;padding:50px;color:#8a93a4">조건에 맞는 공급사 정산 항목이 없습니다.</td></tr>`;
-  document.querySelectorAll("#settlementBody .settlement-view-button").forEach(button=>button.addEventListener("click",()=>openDrawer(settlementRows[Number(button.dataset.index)])));
-  document.querySelectorAll("#settlementBody .credit-button").forEach(button=>button.addEventListener("click",()=>openCreditDialog(Number(button.dataset.creditIndex))));
-  const basisLabel=basis==="CANCEL"?"SkySIM 취소 완료일":basis==="CREDIT"?"공급 크레딧 반영일":"eSIM 발급일";
-  document.querySelector(".settlement-scope").innerHTML=`<span class="pulse green-pulse"></span><strong>현재 조회:</strong> ${start}~${end} · ${basisLabel} 기준 · ${event==="ALL"?"전체 정산 이벤트":event} · ${credit==="ALL"?"전체 크레딧":credit}`;
+    return `<tr><td><span class="event ${row.event==="REFUND"?"credit":"issue"}">${row.event}</span></td><td><b>${row.order}</b><small>${row.paymentId}</small></td><td>${row.product}</td><td>${row.customer}</td><td>${row.payment}</td><td><b>${row.amountUsd}</b><small>${row.nativeAmount}</small></td><td>${row.esim}</td><td>${row.eventDate}</td><td>${row.refundStatus}</td></tr>`;
+  }).join("")||`<tr><td colspan="9" style="text-align:center;padding:50px;color:#8a93a4">조건에 맞는 정산 이벤트가 없습니다.</td></tr>`;
+  document.querySelector(".settlement-scope").innerHTML=`<span class="pulse green-pulse"></span><strong>현재 조회:</strong> ${start}~${end} · ${method==="ALL"?"전체 결제수단":method} · ${event==="ALL"?"전체 이벤트":event}`;
 }
 function saveSupplierCancellation(){
   const status=document.querySelector("#cancelStatus").value;
@@ -365,8 +354,6 @@ function saveSupplierCancellation(){
   document.querySelector("#supplierCancelledAt").textContent=status==="COMPLETED"?(completed||"—"):"—";
   document.querySelector("#supplierCredit").textContent=status==="COMPLETED"?`₩${credit}`:"—";
   document.querySelector("#supplierAdmin").textContent=admin;
-  const timeline=document.querySelector(".timeline");
-  timeline.insertAdjacentHTML("afterbegin",`<li><i></i><div><b>SkySIM 취소 ${cancelLabel(status)} 기록</b><span>${completed||requested} · ${admin}</span></div></li>`);
   closeCancelDialog();
   const toast=document.querySelector("#toast");toast.textContent="SkySIM 취소 처리 기록을 저장했습니다. 고객 환불 상태는 변경되지 않았습니다.";toast.classList.add("open");setTimeout(()=>toast.classList.remove("open"),2600);
 }
@@ -422,9 +409,8 @@ const operationalStatusGuides={
     {title:"System Check",rows:[["NORMAL","결제·발급·식별정보 대조에서 운영상 불일치가 발견되지 않았습니다."],["CHECK REQUIRED","결제와 발급 불일치, 발급 실패, 누락 식별정보 등 관리자가 상세 원인을 확인해야 합니다."]]}
   ]},
   settlement:{title:"Settlement 상태 가이드",eyebrow:"SETTLEMENT REFERENCE",sections:[
-    {title:"Event",rows:[["ESIM_ISSUED_COST","eSIM 발급 성공으로 SkySIM 공급원가가 발생한 이벤트입니다."],["SUPPLIER_CREDIT_APPLIED","SkySIM 정산서에서 취소 공급 크레딧 차감이 실제 확인된 이벤트입니다."]]},
-    {title:"SkySIM Cancel Status",rows:[["NOT_REQUESTED","SkySIM 취소 처리 기록이 없습니다."],["REQUESTED","관리자가 SkySIM 측에 취소를 요청한 것으로 기록했습니다."],["PROCESSING","SkySIM 취소 처리가 진행 중인 것으로 확인했습니다."],["COMPLETED","SkySIM에서 취소 완료를 확인하고 완료일을 기록했습니다."]]},
-    {title:"Supply Credit Status",rows:[["NA","취소 공급 크레딧 대상이 아닙니다."],["PENDING","예상 공급 크레딧은 있으나 정산서 차감은 아직 확인되지 않았습니다."],["APPLIED","SkySIM 정산서에서 공급 크레딧 차감을 실제 확인했습니다."]]}
+    {title:"Event",rows:[["PAYMENT","성공 또는 환불된 결제 원장의 결제 완료 이벤트이며 Event Date는 결제 완료일입니다."],["REFUND","완료된 환불 결제 항목이며 Event Date는 환불 완료일입니다."]]},
+    {title:"Totals",rows:[["PAYMENT TOTAL","선택한 조건의 결제 이벤트 USD 합계입니다."],["REFUND TOTAL","완료된 환불 USD 합계를 음수로 표시합니다."],["NET CASH","Payment Total + Refund Total입니다."],["NET MARGIN","Net Cash - Supply Cost + Supply Credit입니다."]]}
   ]}
 };
 function openOperationalStatusGuide(type){const guide=operationalStatusGuides[type];if(!guide)return;document.querySelector("#operationalStatusGuideTitle").textContent=guide.title;document.querySelector("#operationalStatusGuideEyebrow").textContent=guide.eyebrow;document.querySelector("#operationalStatusGuideBody").innerHTML=guide.sections.map(section=>`<section class="status-guide-section"><h3>${section.title}</h3>${section.rows.map(([status,description])=>`<div class="status-guide-row"><span class="status-token">${status}</span><p>${description}</p></div>`).join("")}</section>`).join("");document.querySelector("#operationalStatusGuide").classList.add("open");document.querySelector("#operationalStatusGuideBackdrop").classList.add("open");document.querySelector("#operationalStatusGuide").setAttribute("aria-hidden","false");document.querySelector("#closeOperationalStatusGuide").focus()}
@@ -479,16 +465,17 @@ document.querySelector("#closeCancelDialog").addEventListener("click",closeCance
 document.querySelector("#cancelDialogCancel").addEventListener("click",closeCancelDialog);
 document.querySelector("#cancelDialogBackdrop").addEventListener("click",closeCancelDialog);
 document.querySelector("#saveSupplierCancel").addEventListener("click",saveSupplierCancellation);
-document.querySelector("#closeCreditDialog").addEventListener("click",closeCreditDialog);
-document.querySelector("#creditDialogCancel").addEventListener("click",closeCreditDialog);
-document.querySelector("#creditDialogBackdrop").addEventListener("click",closeCreditDialog);
-document.querySelector("#creditApplyStatus").addEventListener("change",syncCreditFields);
-document.querySelector("#saveCreditApplication").addEventListener("click",saveCreditApplication);
+document.querySelector("#addOrderNote").addEventListener("click",openOrderNoteDialog);
+document.querySelector("#closeOrderNoteDialog").addEventListener("click",closeOrderNoteDialog);
+document.querySelector("#orderNoteDialogCancel").addEventListener("click",closeOrderNoteDialog);
+document.querySelector("#orderNoteDialogBackdrop").addEventListener("click",closeOrderNoteDialog);
+document.querySelector("#saveOrderNote").addEventListener("click",saveOrderNote);
 document.querySelector("#paymentDateBasis").addEventListener("change",renderPayments);
 document.querySelector("#esimSystemCheckFilter").addEventListener("change",renderEsims);
-document.querySelectorAll("#settlementDateBasis,#settlementStartDate,#settlementEndDate,#settlementEventFilter,#settlementCancelStatus,#settlementCreditStatus,#settlementProductFilter").forEach(element=>element.addEventListener("change",renderSettlement));
+document.querySelectorAll("#settlementStartDate,#settlementEndDate,#settlementMethodFilter,#settlementEsimFilter,#settlementEventFilter,#settlementSort").forEach(element=>element.addEventListener("change",renderSettlement));
 document.querySelector("#settlementSearchButton").addEventListener("click",renderSettlement);
 document.querySelector("#settlementSearchInput").addEventListener("keydown",event=>{if(event.key==="Enter")renderSettlement()});
+document.querySelector("#settlementProductInput").addEventListener("keydown",event=>{if(event.key==="Enter")renderSettlement()});
 document.querySelectorAll("[data-admin-form]").forEach(item=>item.addEventListener("click",()=>openAdminActionDialog(item.dataset.adminForm)));
 document.querySelector("#closeAdminActionDialog").addEventListener("click",closeAdminActionDialog);
 document.querySelector("#adminActionCancel").addEventListener("click",closeAdminActionDialog);
@@ -496,7 +483,7 @@ document.querySelector("#adminActionDialogBackdrop").addEventListener("click",cl
 document.querySelector("#adminActionSave").addEventListener("click",()=>{const type=document.querySelector("#adminActionDialog").dataset.formType;closeAdminActionDialog();showToast(`${adminForms[type]?.title||"관리 항목"}을 저장했습니다.`)});
 document.querySelector("#adminActionDelete").addEventListener("click",()=>{closeAdminActionDialog();showToast("삭제 확인 후 항목을 삭제하고 감사 로그를 남깁니다.")});
 document.querySelectorAll(".status-tabs").forEach(group=>{if(group.closest("#ordersView"))return;group.querySelectorAll(".status-tab").forEach(tab=>tab.addEventListener("click",()=>{group.querySelectorAll(".status-tab").forEach(x=>x.classList.remove("active"));tab.classList.add("active");showToast(`${tab.textContent.trim()} 화면으로 전환했습니다.`)}))});
-document.addEventListener("keydown",event=>{if(event.key==="Escape"){closeOperationalStatusGuide();closeOrderStatusGuide();closeAdminActionDialog();closeRefundDialog();closeCreditDialog();closeCancelDialog();closeDrawer()}});
+document.addEventListener("keydown",event=>{if(event.key==="Escape"){closeOperationalStatusGuide();closeOrderStatusGuide();closeAdminActionDialog();closeRefundDialog();closeOrderNoteDialog();closeCancelDialog();closeDrawer()}});
 
 document.querySelectorAll("[data-view]").forEach(item=>item.addEventListener("click",()=>{
   document.querySelectorAll(".nav-item").forEach(x=>x.classList.remove("active")); item.classList.add("active");
