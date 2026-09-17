@@ -45,8 +45,8 @@ function showToast(message){const toast=document.querySelector("#toast");toast.t
 
 const statusClass = status => status === "PAYMENT_PAID" ? "paid" : status === "REFUNDED" ? "refunded" : status === "PAYMENT_FAILED" ? "failed" : "pending";
 const esimClass = status => status === "ACTIVE" || status === "ISSUED" ? "esim-active" : status === "NOT_ISSUED" || status === "UNKNOWN" ? "esim-none" : status === "FAILED" ? "failed" : "esim-neutral";
-const orderStatusLabel = status => status === "REFUND_REQUESTED" ? "환불 처리 중" : status === "REFUNDED" ? "환불 완료" : status;
-const refundStatusLabel = status => status === "REQUESTED" ? "환불 처리 중" : status === "COMPLETED" ? "환불 완료" : status === "FAILED" ? "환불 실패" : status === "CANCELLED" ? "처리 취소" : "—";
+const orderStatusLabel = status => status;
+const refundStatusLabel = status => status || "—";
 const dateOnly = value => value && value !== "—" ? value.slice(0,10) : "";
 const inDateRange = (value,start,end) => {
   if(!start&&!end)return true;
@@ -61,7 +61,6 @@ function renderOrders(){
   const usageStatus = document.querySelector("#usageStatusFilter").value;
   const systemCheck = document.querySelector("#systemCheckFilter").value;
   const method = document.querySelector("#orderPaymentMethod").value;
-  const dateBasis = document.querySelector("#orderDateBasis").value;
   const start = document.querySelector("#orderStartDate").value;
   const end = document.querySelector("#orderEndDate").value;
   const filtered = orders.filter(row => {
@@ -70,7 +69,7 @@ function renderOrders(){
     const usageMatch = usageStatus === "ALL" || row.usageStatus === usageStatus;
     const systemCheckMatch = systemCheck === "ALL" || (systemCheck === "CHECK_REQUIRED" ? row.issue : !row.issue);
     const methodMatch = method === "ALL" || row.method === method;
-    const dateMatch = inDateRange(dateBasis==="COMPLETED"?row.paymentCompletedAt:row.created,start,end);
+    const dateMatch = inDateRange(row.created,start,end);
     const searchMatch = !query || Object.values(row).join(" ").toLowerCase().includes(query);
     return statusMatch && fulfillmentMatch && usageMatch && systemCheckMatch && methodMatch && dateMatch && searchMatch;
   });
@@ -409,6 +408,8 @@ const adminForms={
 function openAdminActionDialog(type){const config=adminForms[type];if(!config)return;document.querySelector("#adminActionTitle").textContent=config.title;document.querySelector("#adminActionEyebrow").textContent=config.eyebrow;document.querySelector("#adminActionBody").innerHTML=config.body;document.querySelector("#adminActionDelete").hidden=["product-import","product-history","exchange","permission","member","admin-create","admin-password"].includes(type);document.querySelector("#adminActionSave").hidden=type==="product-history";document.querySelector("#adminActionDialog").dataset.formType=type;document.querySelector("#adminActionDialog").classList.add("open");document.querySelector("#adminActionDialogBackdrop").classList.add("open");document.querySelector("#adminActionDialog").setAttribute("aria-hidden","false");bindPreviewActions(document.querySelector("#adminActionBody"))}
 function closeAdminActionDialog(){document.querySelector("#adminActionDialog").classList.remove("open");document.querySelector("#adminActionDialogBackdrop").classList.remove("open");document.querySelector("#adminActionDialog").setAttribute("aria-hidden","true")}
 function bindPreviewActions(root=document){root.querySelectorAll("[data-preview-action]").forEach(item=>{if(item.dataset.bound)return;item.dataset.bound="1";item.addEventListener("click",()=>showToast(item.dataset.previewAction))})}
+function openOrderStatusGuide(){document.querySelector("#orderStatusGuide").classList.add("open");document.querySelector("#orderStatusGuideBackdrop").classList.add("open");document.querySelector("#orderStatusGuide").setAttribute("aria-hidden","false");document.querySelector("#closeOrderStatusGuide").focus()}
+function closeOrderStatusGuide(){document.querySelector("#orderStatusGuide").classList.remove("open");document.querySelector("#orderStatusGuideBackdrop").classList.remove("open");document.querySelector("#orderStatusGuide").setAttribute("aria-hidden","true")}
 
 statusTabs.forEach(tab=>tab.addEventListener("click",()=>{statusTabs.forEach(x=>x.classList.remove("active"));tab.classList.add("active");activeStatus=tab.dataset.status;renderOrders()}));
 document.querySelector("#searchButton").addEventListener("click",renderOrders);
@@ -416,7 +417,11 @@ document.querySelector("#searchInput").addEventListener("keydown",event=>{if(eve
 document.querySelector("#fulfillmentFilter").addEventListener("change",renderOrders);
 document.querySelector("#usageStatusFilter").addEventListener("change",renderOrders);
 document.querySelector("#systemCheckFilter").addEventListener("change",renderOrders);
-document.querySelectorAll("#orderDateBasis,#orderStartDate,#orderEndDate,#orderPaymentMethod").forEach(element=>element.addEventListener("change",renderOrders));
+document.querySelectorAll("#orderStartDate,#orderEndDate,#orderPaymentMethod").forEach(element=>element.addEventListener("change",renderOrders));
+document.querySelector("#openOrderStatusGuide").addEventListener("click",openOrderStatusGuide);
+document.querySelector("#closeOrderStatusGuide").addEventListener("click",closeOrderStatusGuide);
+document.querySelector("#orderStatusGuideDone").addEventListener("click",closeOrderStatusGuide);
+document.querySelector("#orderStatusGuideBackdrop").addEventListener("click",closeOrderStatusGuide);
 document.querySelector("#paymentMethodFilter").addEventListener("change",renderPayments);
 document.querySelector("#paymentStatusFilter").addEventListener("change",renderPayments);
 document.querySelector("#paymentVerifyFilter").addEventListener("change",renderPayments);
@@ -468,7 +473,7 @@ document.querySelector("#adminActionDialogBackdrop").addEventListener("click",cl
 document.querySelector("#adminActionSave").addEventListener("click",()=>{const type=document.querySelector("#adminActionDialog").dataset.formType;closeAdminActionDialog();showToast(`${adminForms[type]?.title||"관리 항목"}을 저장했습니다.`)});
 document.querySelector("#adminActionDelete").addEventListener("click",()=>{closeAdminActionDialog();showToast("삭제 확인 후 항목을 삭제하고 감사 로그를 남깁니다.")});
 document.querySelectorAll(".status-tabs").forEach(group=>{if(group.closest("#ordersView"))return;group.querySelectorAll(".status-tab").forEach(tab=>tab.addEventListener("click",()=>{group.querySelectorAll(".status-tab").forEach(x=>x.classList.remove("active"));tab.classList.add("active");showToast(`${tab.textContent.trim()} 화면으로 전환했습니다.`)}))});
-document.addEventListener("keydown",event=>{if(event.key==="Escape"){closeAdminActionDialog();closeRefundDialog();closeCreditDialog();closeCancelDialog();closeDrawer()}});
+document.addEventListener("keydown",event=>{if(event.key==="Escape"){closeOrderStatusGuide();closeAdminActionDialog();closeRefundDialog();closeCreditDialog();closeCancelDialog();closeDrawer()}});
 
 document.querySelectorAll("[data-view]").forEach(item=>item.addEventListener("click",()=>{
   document.querySelectorAll(".nav-item").forEach(x=>x.classList.remove("active")); item.classList.add("active");
