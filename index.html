@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>eSIMglobal Admin Preview</title>
   <meta name="description" content="eSIMglobal 주문, 결제, eSIM 발급, 환불 및 SkySIM 정산 통합 관리자 화면 예시">
-  <meta name="admin-preview-revision" content="ADMIN-OPS-R20.1">
-  <link rel="stylesheet" href="./styles.css?v=20.1">
+  <meta name="admin-preview-revision" content="ADMIN-OPS-R20.2">
+  <link rel="stylesheet" href="./styles.css?v=20.2">
 </head>
 <body>
   <aside class="sidebar">
@@ -35,7 +35,7 @@
     <header class="topbar">
       <button class="mobile-menu" aria-label="메뉴 열기">☰</button>
       <div class="breadcrumb">ADMIN <span>/</span> <strong id="crumb">Orders</strong></div>
-      <div class="top-actions"><button class="icon-button" aria-label="알림">♢</button><span class="environment">PREVIEW R20.1</span></div>
+      <div class="top-actions"><button class="icon-button" aria-label="알림">♢</button><span class="environment">PREVIEW R20.2</span></div>
     </header>
 
     <section id="dashboardView" class="view">
@@ -55,9 +55,9 @@
         <section class="table-card">
           <header class="card-heading"><div><h2>Operational Alerts</h2><p>우선 확인이 필요한 주문입니다.</p></div><button class="text-button" data-view-jump="orders">View Orders</button></header>
           <table class="compact-table"><thead><tr><th>Order</th><th>Issue</th><th>Age</th><th>Status</th></tr></thead><tbody>
-            <tr><td><b>ORD-260904-1188</b></td><td>결제 완료 · eSIM 미발급</td><td>18m</td><td><span class="badge failed">확인 필요</span></td></tr>
-            <tr><td><b>ORD-260906-1240</b></td><td>미결제 · eSIM 발급</td><td>42m</td><td><span class="badge failed">확인 필요</span></td></tr>
-            <tr><td><b>ORD-260824-1027</b></td><td>환불 완료 · SkySIM 처리중</td><td>2d</td><td><span class="badge pending">처리중</span></td></tr>
+            <tr><td><b>ORD-260904-1188</b></td><td>결제 완료 · eSIM 미발급</td><td>18m</td><td><span class="badge failed">CHECK REQUIRED</span></td></tr>
+            <tr><td><b>ORD-260906-1240</b></td><td>미결제 · eSIM 발급</td><td>42m</td><td><span class="badge failed">CHECK REQUIRED</span></td></tr>
+            <tr><td><b>ORD-260824-1027</b></td><td>환불 완료 · SkySIM 처리중</td><td>2d</td><td><span class="badge pending">PROCESSING</span></td></tr>
           </tbody></table>
         </section>
         <section class="panel-card">
@@ -95,7 +95,7 @@
         <div class="page-actions"><button class="secondary-button" id="openOrderStatusGuide">Status Guide</button><button class="primary-button" id="exportOrders">Export Excel</button></div>
       </div>
 
-      <div class="preview-scope" role="note"><strong>UI/UX 화면설계 프리뷰</strong><span>표시 데이터와 버튼 동작은 화면 흐름 확인용 예시입니다. 실제 API·DB·권한·환불·정산 로직은 R20.1 최종 개발명세를 기준으로 구현합니다.</span></div>
+      <div class="preview-scope" role="note"><strong>UI/UX 화면설계 프리뷰</strong><span>표시 데이터와 버튼 동작은 화면 흐름 확인용 예시입니다. 실제 API·DB·권한·환불·정산 로직은 R20.2 최종 개발명세를 기준으로 구현합니다.</span></div>
 
       <div class="status-tabs" role="tablist" aria-label="주문 상태">
         <button class="status-tab active" data-status="ALL">ALL <b>1,284</b></button>
@@ -149,21 +149,21 @@
     <section id="paymentsView" class="view">
       <div class="page-heading">
         <div><h1>Payments</h1><p>결제 원본 상태와 실제 수령금액, 환불 및 검증 결과를 확인합니다.</p></div>
-        <button class="primary-button">Export Excel</button>
+        <div class="page-actions"><button class="secondary-button" data-status-guide="payments">Status Guide</button><button class="primary-button">Export Excel</button></div>
       </div>
       <section class="filter-card payments-filter-v2" aria-label="결제 검색 조건">
         <label class="payment-date-basis"><span>날짜 기준</span><select id="paymentDateBasis"><option value="CREATED">결제 생성일</option><option value="COMPLETED">결제 완료일</option></select></label>
         <label class="payment-date-range"><span>기간</span><div class="date-group"><input id="paymentStartDate" type="date"><i>–</i><input id="paymentEndDate" type="date"></div></label>
         <label><span>결제수단</span><select id="paymentMethodFilter"><option value="ALL">All Methods</option><option value="TON">TON</option><option value="Stars">Stars</option><option value="ForumPay">ForumPay</option></select></label>
         <label><span>결제 상태</span><select id="paymentStatusFilter"><option value="ALL">All Status</option><option value="PENDING">PENDING</option><option value="PROOF_RECEIVED">PROOF_RECEIVED</option><option value="ONCHAIN_PENDING">ONCHAIN_PENDING</option><option value="TX_FOUND">TX_FOUND</option><option value="CONFIRMED">CONFIRMED</option><option value="COMPLETED">COMPLETED</option><option value="FAILED">FAILED</option><option value="REFUNDED">REFUNDED</option></select></label>
-        <label><span>검증 결과</span><select id="paymentVerifyFilter"><option value="ALL">All Checks</option><option value="NORMAL">NORMAL</option><option value="ISSUE">확인 필요</option></select></label>
+        <label><span>검증 결과</span><select id="paymentVerifyFilter"><option value="ALL">All Checks</option><option value="NORMAL">NORMAL</option><option value="ISSUE">CHECK REQUIRED</option></select></label>
         <label class="search-label"><span>통합 검색</span><input id="paymentSearchInput" type="search" placeholder="Payment ID / Order Number"></label>
         <button class="search-button" id="paymentSearchButton">Search</button>
       </section>
       <div class="summary-strip">
         <div><span>조회 결제</span><strong id="paymentVisibleCount">6</strong></div>
-        <div><span>정상</span><strong class="green" id="paymentNormalCount">2</strong></div>
-        <div><span>확인 필요</span><strong class="red" id="paymentIssueCount">4</strong></div>
+        <div><span>NORMAL</span><strong class="green" id="paymentNormalCount">2</strong></div>
+        <div><span>CHECK REQUIRED</span><strong class="red" id="paymentIssueCount">4</strong></div>
         <p><span class="pulse"></span> 현재 결제 상태가 REFUNDED로 바뀌어도 성공 결제 이력과 완료일은 별도 이벤트로 보존합니다.</p>
       </div>
       <section class="table-card">
@@ -177,22 +177,21 @@
     <section id="esimsView" class="view">
       <div class="page-heading">
         <div><h1>eSIM Management</h1><p>eSIM 발급 결과와 SkySIM 기반 사용 상태를 서로 분리해 확인합니다.</p></div>
-        <button class="primary-button">Export Excel</button>
+        <div class="page-actions"><button class="secondary-button" data-status-guide="esims">Status Guide</button><button class="primary-button">Export Excel</button></div>
       </div>
       <section class="filter-card esims-filter-v2" aria-label="eSIM 검색 조건">
         <label><span>발급 기간</span><div class="date-group"><input id="esimStartDate" type="date" value="2026-08-01"><i>–</i><input id="esimEndDate" type="date" value="2026-09-30"></div></label>
         <label><span>발급 상태</span><select id="esimFulfillmentFilter"><option value="ALL">All Fulfillment</option><option value="NOT_ISSUED">NOT_ISSUED</option><option value="ISSUING">ISSUING</option><option value="ISSUED">ISSUED</option><option value="FAILED">FAILED</option></select></label>
         <label><span>사용 상태</span><select id="esimUsageStatusFilter"><option value="ALL">All Usage</option><option value="UNKNOWN">UNKNOWN</option><option value="UNINSTALLED">UNINSTALLED</option><option value="INSTALLED">INSTALLED</option><option value="ACTIVE">ACTIVE</option><option value="EXPIRED">EXPIRED</option></select></label>
         <label><span>상품</span><select id="esimProductFilter"><option value="ALL">All Products</option><option value="SKT">SKT Products</option><option value="GLOBAL">Global Products</option></select></label>
-        <label><span>System Check</span><select id="esimSystemCheckFilter"><option value="ALL">All</option><option value="NORMAL">Normal</option><option value="CHECK_REQUIRED">Check Required</option></select></label>
+        <label><span>System Check</span><select id="esimSystemCheckFilter"><option value="ALL">All</option><option value="NORMAL">NORMAL</option><option value="CHECK_REQUIRED">CHECK REQUIRED</option></select></label>
         <label class="search-label"><span>통합 검색</span><input id="esimManagerSearchInput" type="search" placeholder="Order / ICCID / SkySIM Sale ID / Customer"></label>
         <button class="search-button" id="esimManagerSearchButton">Search</button>
       </section>
-      <div class="notice-box event-date-guide"><strong>상태·기간 기준 안내</strong><span>Fulfillment는 NOT_ISSUED·ISSUING·ISSUED·FAILED, Usage는 UNKNOWN·UNINSTALLED·INSTALLED·ACTIVE·EXPIRED로 분리합니다. SkySIM 원본 install_status와 시각을 함께 저장하며, SKT는 ICCID 없이 SKTeSIM으로 표시하고 사용상태는 확인 가능할 때만 판정합니다. 발급 성공은 Issued At, 미발급은 주문 생성일 기준입니다.</span></div>
       <div class="summary-strip">
         <div><span>조회 eSIM</span><strong id="esimManagerVisibleCount">5</strong></div>
-        <div><span>정상</span><strong class="green" id="esimManagerNormalCount">4</strong></div>
-        <div><span>확인 필요</span><strong class="red" id="esimManagerIssueCount">1</strong></div>
+        <div><span>NORMAL</span><strong class="green" id="esimManagerNormalCount">4</strong></div>
+        <div><span>CHECK REQUIRED</span><strong class="red" id="esimManagerIssueCount">1</strong></div>
         <p><span class="pulse"></span> SKT 상품은 ICCID 없이 정상 발급될 수 있으며 `SKTeSIM`으로 구분합니다.</p>
       </div>
       <section class="table-card">
@@ -255,15 +254,15 @@
     <section id="settlementView" class="view">
       <div class="page-heading">
         <div><h1>Settlement</h1><p>SkySIM eSIM 발급 공급원가와 실제 정산서에 반영된 공급 크레딧을 대조합니다.</p></div>
-        <button class="primary-button">Export Excel</button>
+        <div class="page-actions"><button class="secondary-button" data-status-guide="settlement">Status Guide</button><button class="primary-button">Export Excel</button></div>
       </div>
       <div class="notice-box event-date-guide"><strong>공급사 정산 전용</strong><span>고객 결제·환불은 Orders와 Payments에서 확인합니다. 이 화면의 정산금액은 eSIM 발급 공급원가에서 SkySIM 정산서에 실제 반영된 공급 크레딧만 차감합니다.</span></div>
       <section class="filter-card settlement-filter-v2">
         <label><span>기간 기준</span><select id="settlementDateBasis"><option value="ISSUED">eSIM 발급일</option><option value="CANCEL">SkySIM 취소 완료일</option><option value="CREDIT">공급 크레딧 반영일</option></select></label>
         <label><span>기간</span><div class="date-group"><input id="settlementStartDate" type="date" value="2026-09-01"><i>–</i><input id="settlementEndDate" type="date" value="2026-09-30"></div></label>
-        <label><span>Event</span><select id="settlementEventFilter"><option value="ALL">All Events</option><option value="ESIM_ISSUED_COST">eSIM 발급 원가</option><option value="SUPPLIER_CREDIT_APPLIED">공급 크레딧 반영</option></select></label>
-        <label><span>SkySIM 취소 상태</span><select id="settlementCancelStatus"><option value="ALL">All Status</option><option value="REQUESTED">접수중</option><option value="PROCESSING">처리중</option><option value="COMPLETED">취소완료</option></select></label>
-        <label><span>공급 크레딧</span><select id="settlementCreditStatus"><option value="ALL">전체</option><option value="NA">해당 없음</option><option value="PENDING">반영 대기</option><option value="APPLIED">반영 완료</option></select></label>
+        <label><span>Event</span><select id="settlementEventFilter"><option value="ALL">All Events</option><option value="ESIM_ISSUED_COST">ESIM_ISSUED_COST</option><option value="SUPPLIER_CREDIT_APPLIED">SUPPLIER_CREDIT_APPLIED</option></select></label>
+        <label><span>SkySIM 취소 상태</span><select id="settlementCancelStatus"><option value="ALL">All Status</option><option value="REQUESTED">REQUESTED</option><option value="PROCESSING">PROCESSING</option><option value="COMPLETED">COMPLETED</option></select></label>
+        <label><span>공급 크레딧</span><select id="settlementCreditStatus"><option value="ALL">All Credit</option><option value="NA">NA</option><option value="PENDING">PENDING</option><option value="APPLIED">APPLIED</option></select></label>
         <label><span>상품</span><select id="settlementProductFilter"><option value="ALL">All Products</option><option value="GLOBAL">Global Products</option><option value="SKT">SKT Products</option></select></label>
         <label class="search-label"><span>통합 검색</span><input id="settlementSearchInput" type="search" placeholder="Order / ICCID / SKTeSIM / SkySIM Sale ID / Product"></label>
         <button class="search-button" id="settlementSearchButton">Search</button>
@@ -339,7 +338,7 @@
       <section class="detail-section supplier-section">
         <div class="section-heading"><h3>SkySIM Cancellation Record</h3><button class="outline-button" id="recordSupplierCancel">취소 처리 기록</button></div>
         <p class="section-note">SkySIM 관리자에서 실제 취소를 확인한 뒤 결과를 기록합니다. 이 기록은 고객 환불을 자동 실행하지 않습니다.</p>
-        <dl><div><dt>Cancellation Status</dt><dd id="supplierStatus"><span class="badge pending">NOT_RECORDED</span></dd></div><div><dt>Requested At</dt><dd id="supplierRequestedAt">—</dd></div><div><dt>Cancelled At</dt><dd id="supplierCancelledAt">—</dd></div><div><dt>Supply Credit</dt><dd id="supplierCredit">—</dd></div><div><dt>Credit Applied</dt><dd id="supplierCreditStatus"><span class="badge pending">미반영</span></dd></div><div><dt>Settlement Reference</dt><dd id="supplierCreditMeta">—</dd></div><div><dt>Processed By</dt><dd id="supplierAdmin">—</dd></div></dl>
+        <dl><div><dt>Cancellation Status</dt><dd id="supplierStatus"><span class="badge pending">NOT_RECORDED</span></dd></div><div><dt>Requested At</dt><dd id="supplierRequestedAt">—</dd></div><div><dt>Cancelled At</dt><dd id="supplierCancelledAt">—</dd></div><div><dt>Supply Credit</dt><dd id="supplierCredit">—</dd></div><div><dt>Credit Applied</dt><dd id="supplierCreditStatus"><span class="badge pending">PENDING</span></dd></div><div><dt>Settlement Reference</dt><dd id="supplierCreditMeta">—</dd></div><div><dt>Processed By</dt><dd id="supplierAdmin">—</dd></div></dl>
       </section>
       <section class="detail-section"><h3>Timeline</h3><ol class="timeline" id="detailTimeline"><li><i></i><div><b>eSIM 발급 완료</b><span>2026-09-03 10:24</span></div></li><li><i></i><div><b>결제 완료</b><span>2026-09-03 10:22</span></div></li><li><i></i><div><b>주문 생성</b><span>2026-09-03 10:20</span></div></li></ol></section>
     </div>
@@ -376,12 +375,18 @@
     </div>
     <footer><button class="primary-button" id="orderStatusGuideDone">확인</button></footer>
   </section>
+  <div class="dialog-backdrop" id="operationalStatusGuideBackdrop"></div>
+  <section class="dialog dialog-wide status-guide-dialog" id="operationalStatusGuide" role="dialog" aria-modal="true" aria-labelledby="operationalStatusGuideTitle" aria-hidden="true">
+    <header><div><span class="eyebrow" id="operationalStatusGuideEyebrow">STATUS REFERENCE</span><h2 id="operationalStatusGuideTitle">상태 가이드</h2></div><button id="closeOperationalStatusGuide" aria-label="상태 가이드 닫기">×</button></header>
+    <div class="dialog-body status-guide-body" id="operationalStatusGuideBody"></div>
+    <footer><button class="primary-button" id="operationalStatusGuideDone">확인</button></footer>
+  </section>
   <div class="dialog-backdrop" id="cancelDialogBackdrop"></div>
   <section class="dialog" id="cancelDialog" role="dialog" aria-modal="true" aria-labelledby="cancelDialogTitle" aria-hidden="true">
     <header><div><span class="eyebrow">SUPPLIER ADJUSTMENT</span><h2 id="cancelDialogTitle">SkySIM 취소 처리 기록</h2></div><button id="closeCancelDialog" aria-label="창 닫기">×</button></header>
     <div class="dialog-body">
       <div class="notice-box"><strong>관리자 확인용 기록</strong><span>SkySIM에 취소 요청을 전송하지 않으며 고객 결제 환불 상태도 변경하지 않습니다.</span></div>
-      <label><span>SkySIM 처리 상태</span><select id="cancelStatus"><option value="REQUESTED">취소 요청중</option><option value="PROCESSING">취소 처리중</option><option value="COMPLETED" selected>취소 완료</option></select></label>
+      <label><span>SkySIM 처리 상태</span><select id="cancelStatus"><option value="REQUESTED">REQUESTED</option><option value="PROCESSING">PROCESSING</option><option value="COMPLETED" selected>COMPLETED</option></select></label>
       <div class="form-row"><label><span>취소 요청 기록일</span><input id="cancelRequestedDate" type="date" value="2026-09-05"></label><label><span>SkySIM 취소 처리일</span><input id="cancelCompletedDate" type="date" value="2026-09-06"></label></div>
       <div class="form-row"><label><span>Supply Credit (KRW)</span><input id="cancelCredit" type="number" value="8400" min="0"></label><label><span>처리 관리자</span><input id="cancelAdmin" type="text" value="admin01"></label></div>
       <label><span>처리 메모</span><textarea id="cancelMemo" rows="3" placeholder="SkySIM 관리자에서 취소 완료 확인"></textarea></label>
@@ -394,7 +399,7 @@
     <div class="dialog-body">
       <div class="credit-context"><span>Order</span><strong id="creditDialogOrder">—</strong><span>Supply Credit</span><strong id="creditDialogAmount">—</strong></div>
       <div class="notice-box"><strong>SkySIM 정산 확인용 기록</strong><span>SkySIM 정산서에서 해당 취소 공급가가 실제로 차감됐는지 기록합니다. 고객 환불이나 주문 상태에는 영향을 주지 않습니다.</span></div>
-      <label><span>공급 크레딧 상태</span><select id="creditApplyStatus"><option value="PENDING">반영 대기</option><option value="APPLIED">반영 완료</option></select></label>
+      <label><span>공급 크레딧 상태</span><select id="creditApplyStatus"><option value="PENDING">PENDING</option><option value="APPLIED">APPLIED</option></select></label>
       <div class="form-row"><label><span>정산 반영일</span><input id="creditAppliedDate" type="date" value="2026-09-30"></label><label><span>정산 월</span><input id="creditSettlementMonth" type="month" value="2026-09"></label></div>
       <div class="form-row"><label><span>정산 참조번호</span><input id="creditReference" type="text" placeholder="예: SKY-SET-2026-09"></label><label><span>처리 관리자</span><input id="creditProcessedBy" type="text" value="finance01"></label></div>
       <label><span>처리 메모</span><textarea id="creditMemo" rows="3" placeholder="SkySIM 9월 정산서에서 공급 크레딧 차감 확인"></textarea></label>
@@ -422,6 +427,6 @@
     <footer><button class="danger-link" id="adminActionDelete">Delete</button><span class="footer-spacer"></span><button class="secondary-button" id="adminActionCancel">취소</button><button class="primary-button" id="adminActionSave">Save</button></footer>
   </section>
   <div class="toast" id="toast">현재 필터 기준으로 Excel을 생성합니다.</div>
-  <script src="./app.js?v=20.1"></script>
+  <script src="./app.js?v=20.2"></script>
 </body>
 </html>

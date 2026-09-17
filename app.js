@@ -219,7 +219,7 @@ function openDrawer(row){
   document.querySelector("#supplierRequestedAt").textContent=row.cancelRequestedAt||"—";
   document.querySelector("#supplierCancelledAt").textContent=row.cancelDate||"—";
   document.querySelector("#supplierCredit").textContent=row.creditKrw&&row.creditKrw!=="—"?`${row.creditKrw}${row.creditUsd&&row.creditUsd!=="—"?` / ${row.creditUsd}`:""}`:"—";
-  document.querySelector("#supplierCreditStatus").innerHTML=row.creditStatus==="APPLIED"?`<span class="badge paid">반영완료</span><small>${row.creditDate||"—"}</small>`:row.creditStatus==="PENDING"?`<span class="badge pending">반영대기</span>`:"—";
+  document.querySelector("#supplierCreditStatus").innerHTML=row.creditStatus==="APPLIED"?`<span class="badge paid">APPLIED</span><small>${row.creditDate||"—"}</small>`:row.creditStatus==="PENDING"?`<span class="badge pending">PENDING</span>`:"—";
   document.querySelector("#supplierCreditMeta").textContent=row.creditReference||"—";
   document.querySelector("#supplierAdmin").textContent=row.creditAdmin||(settlementRow?"admin01":"—");
   const timeline=document.querySelector("#detailTimeline");
@@ -279,7 +279,7 @@ function cancelRefundProcess(){
 
 function openCancelDialog(){document.querySelector("#cancelDialog").classList.add("open");document.querySelector("#cancelDialogBackdrop").classList.add("open");document.querySelector("#cancelDialog").setAttribute("aria-hidden","false")}
 function closeCancelDialog(){document.querySelector("#cancelDialog").classList.remove("open");document.querySelector("#cancelDialogBackdrop").classList.remove("open");document.querySelector("#cancelDialog").setAttribute("aria-hidden","true")}
-const cancelLabel=status=>status==="COMPLETED"?"취소완료":status==="PROCESSING"?"처리중":"접수중";
+const cancelLabel=status=>status||"NOT_RECORDED";
 let selectedCreditRowIndex=null;
 function syncCreditFields(){
   const applied=document.querySelector("#creditApplyStatus").value==="APPLIED";
@@ -345,9 +345,9 @@ function renderSettlement(){
     return dateMatch&&eventMatch&&statusMatch&&creditMatch&&productMatch&&searchMatch;
   }).sort((a,b)=>(dateOf(b)||"").localeCompare(dateOf(a)||""));
   document.querySelector("#settlementBody").innerHTML=rows.map(row=>{
-    const cancelText=row.cancelStatus==="COMPLETED"?"취소완료":row.cancelStatus==="PROCESSING"?"처리중":row.cancelStatus==="REQUESTED"?"접수중":"—";
-    const creditText=row.creditStatus==="APPLIED"?"반영 완료":row.creditStatus==="PENDING"?"반영 대기":"해당 없음";
-    return `<tr><td>${dateOf(row)||"—"}</td><td><span class="event ${row.event==="SUPPLIER_CREDIT_APPLIED"?"credit":"issue"}">${row.event}</span></td><td><b>${row.order}</b></td><td>${row.product}</td><td>${row.iccid}<small>${row.saleId}</small></td><td>${row.issuedAt}</td><td><b>${row.supplyKrw}</b></td><td>${row.supplyUsd}</td><td>${row.cancelStatus==="NOT_REQUESTED"?"—":`<span class="badge ${row.cancelStatus==="COMPLETED"?"paid":"pending"}">${cancelText}</span>`}</td><td>${row.cancelDate||"—"}</td><td><span class="badge ${row.creditStatus==="APPLIED"?"paid":row.creditStatus==="PENDING"?"pending":"esim-neutral"}">${creditText}</span><small>${row.creditKrw||"—"}</small></td><td>${row.creditDate||"—"}</td><td>${row.creditReference||"—"}</td><td><div class="row-actions"><button class="view-button settlement-view-button" data-index="${settlementRows.indexOf(row)}">View</button>${row.cancelStatus==="COMPLETED"?`<button class="view-button credit-button" data-credit-index="${settlementRows.indexOf(row)}">${row.creditStatus==="APPLIED"?"Edit Credit":"Apply Credit"}</button>`:""}</div></td></tr>`;
+    const cancelText=row.cancelStatus||"NOT_REQUESTED";
+    const creditText=row.creditStatus||"NA";
+    return `<tr><td>${dateOf(row)||"—"}</td><td><span class="event ${row.event==="SUPPLIER_CREDIT_APPLIED"?"credit":"issue"}">${row.event}</span></td><td><b>${row.order}</b></td><td>${row.product}</td><td>${row.iccid}<small>${row.saleId}</small></td><td>${row.issuedAt}</td><td><b>${row.supplyKrw}</b></td><td>${row.supplyUsd}</td><td><span class="badge ${row.cancelStatus==="COMPLETED"?"paid":row.cancelStatus==="NOT_REQUESTED"?"esim-neutral":"pending"}">${cancelText}</span></td><td>${row.cancelDate||"—"}</td><td><span class="badge ${row.creditStatus==="APPLIED"?"paid":row.creditStatus==="PENDING"?"pending":"esim-neutral"}">${creditText}</span><small>${row.creditKrw||"—"}</small></td><td>${row.creditDate||"—"}</td><td>${row.creditReference||"—"}</td><td><div class="row-actions"><button class="view-button settlement-view-button" data-index="${settlementRows.indexOf(row)}">View</button>${row.cancelStatus==="COMPLETED"?`<button class="view-button credit-button" data-credit-index="${settlementRows.indexOf(row)}">${row.creditStatus==="APPLIED"?"Edit Credit":"Apply Credit"}</button>`:""}</div></td></tr>`;
   }).join("")||`<tr><td colspan="14" style="text-align:center;padding:50px;color:#8a93a4">조건에 맞는 공급사 정산 항목이 없습니다.</td></tr>`;
   document.querySelectorAll("#settlementBody .settlement-view-button").forEach(button=>button.addEventListener("click",()=>openDrawer(settlementRows[Number(button.dataset.index)])));
   document.querySelectorAll("#settlementBody .credit-button").forEach(button=>button.addEventListener("click",()=>openCreditDialog(Number(button.dataset.creditIndex))));
@@ -410,6 +410,25 @@ function closeAdminActionDialog(){document.querySelector("#adminActionDialog").c
 function bindPreviewActions(root=document){root.querySelectorAll("[data-preview-action]").forEach(item=>{if(item.dataset.bound)return;item.dataset.bound="1";item.addEventListener("click",()=>showToast(item.dataset.previewAction))})}
 function openOrderStatusGuide(){document.querySelector("#orderStatusGuide").classList.add("open");document.querySelector("#orderStatusGuideBackdrop").classList.add("open");document.querySelector("#orderStatusGuide").setAttribute("aria-hidden","false");document.querySelector("#closeOrderStatusGuide").focus()}
 function closeOrderStatusGuide(){document.querySelector("#orderStatusGuide").classList.remove("open");document.querySelector("#orderStatusGuideBackdrop").classList.remove("open");document.querySelector("#orderStatusGuide").setAttribute("aria-hidden","true")}
+const operationalStatusGuides={
+  payments:{title:"Payments 상태 가이드",eyebrow:"PAYMENTS REFERENCE",sections:[
+    {title:"Payment Status",rows:[["PENDING","결제가 생성됐지만 아직 완료되지 않았습니다."],["PROOF_RECEIVED","클라이언트 결제 증빙을 수신했지만 서버 검증은 완료되지 않았습니다."],["ONCHAIN_PENDING","온체인 결제의 최종 확정을 기다리고 있습니다."],["TX_FOUND","결제 트랜잭션을 찾았지만 주문 귀속과 금액 검증이 완료되지 않았습니다."],["CONFIRMED","결제수단 검증은 통과했으며 완료 반영 단계입니다."],["COMPLETED","결제가 정상 완료되어 주문의 구매 성립 결제로 사용할 수 있습니다."],["FAILED","결제 검증 또는 처리에 실패했습니다."],["REFUNDED","해당 결제의 환불이 최종 완료되었습니다."]]},
+    {title:"Refund Status",rows:[["—","해당 결제에 환불 기록이 없습니다."],["PROCESSING","관리자가 환불을 시작했으며 최종 완료 전입니다."],["COMPLETED","자동 또는 수동 환불 확인이 완료되었습니다."],["FAILED","환불 실행이나 외부 처리 확인에 실패했습니다."],["CANCELLED","진행 중이던 환불 처리를 취소하고 이력을 보존한 상태입니다."]]},
+    {title:"Verification",rows:[["NORMAL","결제수단별 필수 검증을 모두 통과했습니다."],["CALLBACK_FAILED","결제 콜백의 서명·형식·처리에 문제가 있어 확인이 필요합니다."],["RETURNED/BOUNCED","TON 전송이 반송되었거나 수신 지갑에 최종 입금되지 않았습니다."],["AMOUNT_MISMATCH","주문 예상 금액과 실제 수령 금액이 일치하지 않습니다."],["ORDER_NOT_FOUND","결제 트랜잭션을 연결할 주문을 찾지 못했습니다."],["CHECK REQUIRED","NORMAL이 아닌 검증 결과를 묶어 조회하는 화면 필터입니다."]]}
+  ]},
+  esims:{title:"eSIM Management 상태 가이드",eyebrow:"ESIM REFERENCE",sections:[
+    {title:"Fulfillment",rows:[["NOT_ISSUED","eSIM이 아직 생성되거나 발급되지 않았습니다."],["ISSUING","SkySIM 발급 요청이 처리 중입니다."],["ISSUED","eSIM 발급이 정상 완료되었습니다."],["FAILED","eSIM 발급에 실패해 관리자 확인 또는 재처리가 필요합니다."]]},
+    {title:"Usage Status",rows:[["UNKNOWN","SkySIM 응답으로 사용 상태를 아직 판정할 수 없습니다."],["UNINSTALLED","사용자 기기에 eSIM 프로파일이 아직 설치되지 않았습니다."],["INSTALLED","프로파일은 설치됐지만 활성 사용은 확인되지 않았습니다."],["ACTIVE","eSIM이 활성화되어 사용 중인 상태입니다."],["EXPIRED","eSIM의 사용 가능 기간이 만료되었습니다."]]},
+    {title:"System Check",rows:[["NORMAL","결제·발급·식별정보 대조에서 운영상 불일치가 발견되지 않았습니다."],["CHECK REQUIRED","결제와 발급 불일치, 발급 실패, 누락 식별정보 등 관리자가 상세 원인을 확인해야 합니다."]]}
+  ]},
+  settlement:{title:"Settlement 상태 가이드",eyebrow:"SETTLEMENT REFERENCE",sections:[
+    {title:"Event",rows:[["ESIM_ISSUED_COST","eSIM 발급 성공으로 SkySIM 공급원가가 발생한 이벤트입니다."],["SUPPLIER_CREDIT_APPLIED","SkySIM 정산서에서 취소 공급 크레딧 차감이 실제 확인된 이벤트입니다."]]},
+    {title:"SkySIM Cancel Status",rows:[["NOT_REQUESTED","SkySIM 취소 처리 기록이 없습니다."],["REQUESTED","관리자가 SkySIM 측에 취소를 요청한 것으로 기록했습니다."],["PROCESSING","SkySIM 취소 처리가 진행 중인 것으로 확인했습니다."],["COMPLETED","SkySIM에서 취소 완료를 확인하고 완료일을 기록했습니다."]]},
+    {title:"Supply Credit Status",rows:[["NA","취소 공급 크레딧 대상이 아닙니다."],["PENDING","예상 공급 크레딧은 있으나 정산서 차감은 아직 확인되지 않았습니다."],["APPLIED","SkySIM 정산서에서 공급 크레딧 차감을 실제 확인했습니다."]]}
+  ]}
+};
+function openOperationalStatusGuide(type){const guide=operationalStatusGuides[type];if(!guide)return;document.querySelector("#operationalStatusGuideTitle").textContent=guide.title;document.querySelector("#operationalStatusGuideEyebrow").textContent=guide.eyebrow;document.querySelector("#operationalStatusGuideBody").innerHTML=guide.sections.map(section=>`<section class="status-guide-section"><h3>${section.title}</h3>${section.rows.map(([status,description])=>`<div class="status-guide-row"><span class="status-token">${status}</span><p>${description}</p></div>`).join("")}</section>`).join("");document.querySelector("#operationalStatusGuide").classList.add("open");document.querySelector("#operationalStatusGuideBackdrop").classList.add("open");document.querySelector("#operationalStatusGuide").setAttribute("aria-hidden","false");document.querySelector("#closeOperationalStatusGuide").focus()}
+function closeOperationalStatusGuide(){document.querySelector("#operationalStatusGuide").classList.remove("open");document.querySelector("#operationalStatusGuideBackdrop").classList.remove("open");document.querySelector("#operationalStatusGuide").setAttribute("aria-hidden","true")}
 
 statusTabs.forEach(tab=>tab.addEventListener("click",()=>{statusTabs.forEach(x=>x.classList.remove("active"));tab.classList.add("active");activeStatus=tab.dataset.status;renderOrders()}));
 document.querySelector("#searchButton").addEventListener("click",renderOrders);
@@ -422,6 +441,10 @@ document.querySelector("#openOrderStatusGuide").addEventListener("click",openOrd
 document.querySelector("#closeOrderStatusGuide").addEventListener("click",closeOrderStatusGuide);
 document.querySelector("#orderStatusGuideDone").addEventListener("click",closeOrderStatusGuide);
 document.querySelector("#orderStatusGuideBackdrop").addEventListener("click",closeOrderStatusGuide);
+document.querySelectorAll("[data-status-guide]").forEach(button=>button.addEventListener("click",()=>openOperationalStatusGuide(button.dataset.statusGuide)));
+document.querySelector("#closeOperationalStatusGuide").addEventListener("click",closeOperationalStatusGuide);
+document.querySelector("#operationalStatusGuideDone").addEventListener("click",closeOperationalStatusGuide);
+document.querySelector("#operationalStatusGuideBackdrop").addEventListener("click",closeOperationalStatusGuide);
 document.querySelector("#paymentMethodFilter").addEventListener("change",renderPayments);
 document.querySelector("#paymentStatusFilter").addEventListener("change",renderPayments);
 document.querySelector("#paymentVerifyFilter").addEventListener("change",renderPayments);
@@ -473,7 +496,7 @@ document.querySelector("#adminActionDialogBackdrop").addEventListener("click",cl
 document.querySelector("#adminActionSave").addEventListener("click",()=>{const type=document.querySelector("#adminActionDialog").dataset.formType;closeAdminActionDialog();showToast(`${adminForms[type]?.title||"관리 항목"}을 저장했습니다.`)});
 document.querySelector("#adminActionDelete").addEventListener("click",()=>{closeAdminActionDialog();showToast("삭제 확인 후 항목을 삭제하고 감사 로그를 남깁니다.")});
 document.querySelectorAll(".status-tabs").forEach(group=>{if(group.closest("#ordersView"))return;group.querySelectorAll(".status-tab").forEach(tab=>tab.addEventListener("click",()=>{group.querySelectorAll(".status-tab").forEach(x=>x.classList.remove("active"));tab.classList.add("active");showToast(`${tab.textContent.trim()} 화면으로 전환했습니다.`)}))});
-document.addEventListener("keydown",event=>{if(event.key==="Escape"){closeOrderStatusGuide();closeAdminActionDialog();closeRefundDialog();closeCreditDialog();closeCancelDialog();closeDrawer()}});
+document.addEventListener("keydown",event=>{if(event.key==="Escape"){closeOperationalStatusGuide();closeOrderStatusGuide();closeAdminActionDialog();closeRefundDialog();closeCreditDialog();closeCancelDialog();closeDrawer()}});
 
 document.querySelectorAll("[data-view]").forEach(item=>item.addEventListener("click",()=>{
   document.querySelectorAll(".nav-item").forEach(x=>x.classList.remove("active")); item.classList.add("active");
