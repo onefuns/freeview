@@ -3,9 +3,9 @@ const orders = [
   {order:"ORD-260904-1188",created:"2026-09-04 09:18",customer:"@globalnomad",product:"Europe 10GB · 30 Days",status:"PAYMENT_PAID",paymentStatus:"COMPLETED",method:"ForumPay",paymentId:"fp-4ca2…9011",sellingPrice:"$20.00",pointsUsed:"$0.00",amount:"20.00 USDT",usd:"$20.00",paymentCompletedAt:"2026-09-04 09:20",fulfillment:"NOT_ISSUED",usageStatus:"UNKNOWN",iccid:"—",saleId:"—",issuedAt:"—",refund:"—",refundSource:"—",refundStartedAt:"",refundAmount:"",refundCompletedAt:"",refundReason:"",refundEligible:true,check:"결제 완료 · 미발급",issue:true},
   {order:"ORD-260905-1204",created:"2026-09-05 13:42",customer:"@seoultrip",product:"SKT Korea Unlimited",status:"PAYMENT_PAID",paymentStatus:"COMPLETED",method:"Stars",paymentId:"stars-91bd…a82c",sellingPrice:"$8.00",pointsUsed:"$0.00",amount:"560 XTR",usd:"$8.00",paymentCompletedAt:"2026-09-05 13:44",fulfillment:"ISSUED",usageStatus:"UNKNOWN",iccid:"SKTeSIM",saleId:"SALE-940120",issuedAt:"2026-09-05 13:47",refund:"—",refundSource:"—",refundStartedAt:"",refundAmount:"",refundCompletedAt:"",refundReason:"",refundEligible:true,check:"NORMAL · SKT 사용상태 확인불가",issue:false},
   {order:"ORD-260824-1027",created:"2026-08-24 09:18",customer:"@summertrip",product:"Thailand Unlimited · 10 Days",status:"REFUNDED",paymentStatus:"REFUNDED",method:"Stars",paymentId:"stars-8d1e…38ab",sellingPrice:"$12.00",pointsUsed:"$0.00",amount:"840 XTR",usd:"$12.00",paymentCompletedAt:"2026-08-24 09:20",fulfillment:"ISSUED",usageStatus:"UNINSTALLED",iccid:"898821…1129",saleId:"SALE-925011",issuedAt:"2026-08-24 09:24",refund:"COMPLETED",refundSource:"ADMIN",refundStartedAt:"2026-09-04 12:10",refundAmount:"840 XTR / $12.00",refundCompletedAt:"2026-09-05 15:30",refundReason:"관리자 환불 처리",refundEligible:false,check:"환불 완료 · SkySIM 미취소",issue:true},
-  {order:"ORD-260901-1091",created:"2026-09-01 08:45",customer:"@tokyowalk",product:"Japan 3GB · 15 Days",status:"REFUND_REQUESTED",paymentStatus:"COMPLETED",method:"TON",paymentId:"ton-9011…3114",sellingPrice:"$4.20",pointsUsed:"$0.00",amount:"2.75 TON",usd:"$4.20",paymentCompletedAt:"2026-09-01 08:47",fulfillment:"ISSUED",usageStatus:"UNINSTALLED",iccid:"898821…7762",saleId:"SALE-933114",issuedAt:"2026-09-01 08:51",refund:"REQUESTED",refundSource:"ADMIN",refundStartedAt:"2026-09-04 12:10",refundAmount:"2.75 TON / $4.20",refundCompletedAt:"",refundReason:"관리자 환불 처리 중",refundEligible:true,check:"수동 환불 완료 확인 대기",issue:true},
+  {order:"ORD-260901-1091",created:"2026-09-01 08:45",customer:"@tokyowalk",product:"Japan 3GB · 15 Days",status:"REFUND_REQUESTED",paymentStatus:"COMPLETED",method:"TON",paymentId:"ton-9011…3114",sellingPrice:"$4.20",pointsUsed:"$0.00",amount:"2.75 TON",usd:"$4.20",paymentCompletedAt:"2026-09-01 08:47",fulfillment:"ISSUED",usageStatus:"UNINSTALLED",iccid:"898821…7762",saleId:"SALE-933114",issuedAt:"2026-09-01 08:51",refund:"MANUAL_PENDING",refundSource:"ADMIN",refundStartedAt:"2026-09-04 12:10",refundAmount:"2.75 TON / $4.20",refundCompletedAt:"",refundReason:"관리자 수동환불 처리 중",refundEligible:true,check:"수동 환불 완료 증빙 대기",issue:true},
   {order:"ORD-260906-1240",created:"2026-09-06 16:05",customer:"@europass",product:"France 3GB · 15 Days",status:"PAYMENT_FAILED",paymentStatus:"FAILED",method:"TON",paymentId:"ton-a041…bb19",sellingPrice:"$3.10",pointsUsed:"$0.00",amount:"2.15 TON",usd:"$3.10",paymentCompletedAt:"—",fulfillment:"ISSUED",usageStatus:"ACTIVE",iccid:"898821…9934",saleId:"SALE-941240",issuedAt:"2026-09-06 16:12",refund:"—",refundSource:"—",refundStartedAt:"",refundAmount:"",refundCompletedAt:"",refundReason:"",refundEligible:false,check:"미결제 · eSIM 발급",issue:true},
-  {order:"ORD-260907-1278",created:"2026-09-07 11:12",customer:"@twicepaid",product:"USA 5GB · 15 Days",status:"PAYMENT_PAID",paymentStatus:"2 COMPLETED",method:"Stars",paymentId:"대표 결제 미확정",sellingPrice:"$6.00",pointsUsed:"$1.00",amount:"—",usd:"—",paymentCompletedAt:"—",fulfillment:"NOT_ISSUED",usageStatus:"UNKNOWN",iccid:"—",saleId:"—",issuedAt:"—",refund:"—",refundSource:"—",refundStartedAt:"",refundAmount:"",refundCompletedAt:"",refundReason:"",refundEligible:false,check:"중복 성공 결제 2건 · 대표 결제 지정 필요",issue:true,paymentAttempts:[{id:"stars-a112…91bc",method:"Stars",status:"COMPLETED",amount:"350 XTR",usd:"$5.00",completedAt:"2026-09-07 11:15"},{id:"stars-b837…22da",method:"Stars",status:"COMPLETED",amount:"350 XTR",usd:"$5.00",completedAt:"2026-09-07 11:16"}]}
+  {order:"ORD-260907-1278",created:"2026-09-07 11:12",customer:"@latepayer",product:"USA 5GB · 15 Days",status:"PAYMENT_FAILED",paymentStatus:"COMPLETED",method:"Stars",paymentId:"stars-a112…91bc",sellingPrice:"$6.00",pointsUsed:"$1.00",amount:"350 XTR",usd:"$5.00",paymentCompletedAt:"2026-09-07 12:21",fulfillment:"NOT_ISSUED",usageStatus:"UNKNOWN",iccid:"—",saleId:"—",issuedAt:"—",refund:"—",refundSource:"—",refundStartedAt:"",refundAmount:"",refundCompletedAt:"",refundReason:"",refundEligible:false,check:"LATE_PAYMENT_AFTER_ORDER_FAILED · 자동 발급 차단",issue:true,latePayment:true}
 ];
 
 const settlementRows = [
@@ -30,7 +30,8 @@ const paymentRows = [
   {paymentId:"stars-361d…1cfe",order:"ORD-260824-1032",created:"2026-08-24 15:49",paymentCompletedAt:"2026-08-24 15:51",customer:"@summertrip",product:"Thailand 1GB · 7 Days",method:"Stars",amount:"60 XTR",usd:"$0.85",paymentStatus:"REFUNDED",refund:"COMPLETED",verify:"NORMAL",issue:false,status:"REFUNDED",pointsUsed:"$0.00 USD",esim:"UNINSTALLED",iccid:"898821…1129",saleId:"SALE-925011"},
   {paymentId:"ton-7718…3c28",order:"ORD-260822-0998",created:"2026-08-22 19:53",paymentCompletedAt:"2026-08-22 19:55",customer:"@onefundevops",product:"China 500MB · 1 Day",method:"TON",amount:"0.74 TON",usd:"$1.07",paymentStatus:"COMPLETED",refund:"—",verify:"NORMAL",issue:false,status:"PAYMENT_PAID",pointsUsed:"$0.00 USD",esim:"UNINSTALLED",iccid:"898821…6402",saleId:"SALE-911742"},
   {paymentId:"fp-a956…0844",order:"ORD-260819-0931",created:"2026-08-19 16:42",paymentCompletedAt:"2026-08-19 16:44",customer:"@forumtraveler",product:"USA 5GB · 15 Days",method:"ForumPay",amount:"10.04 USDT",usd:"$10.04",paymentStatus:"REFUNDED",refund:"COMPLETED",verify:"AMOUNT_MISMATCH",issue:true,status:"REFUNDED",pointsUsed:"$0.00 USD",esim:"UNINSTALLED",iccid:"898821…8841",saleId:"SALE-904844"},
-  {paymentId:"fp-b583…5cc0",order:"ORD-260820-0955",created:"2026-08-20 16:27",paymentCompletedAt:"—",customer:"@globalnomad",product:"France 3GB · 15 Days",method:"ForumPay",amount:"4.57 USDT",usd:"$4.57",paymentStatus:"FAILED",refund:"—",verify:"ORDER_NOT_FOUND",issue:true,status:"PAYMENT_FAILED",pointsUsed:"$0.00 USD",esim:"NOT_ISSUED",iccid:"—",saleId:"—"}
+  {paymentId:"fp-b583…5cc0",order:"ORD-260820-0955",created:"2026-08-20 16:27",paymentCompletedAt:"—",customer:"@globalnomad",product:"France 3GB · 15 Days",method:"ForumPay",amount:"4.57 USDT",usd:"$4.57",paymentStatus:"FAILED",refund:"—",verify:"ORDER_NOT_FOUND",issue:true,status:"PAYMENT_FAILED",pointsUsed:"$0.00 USD",esim:"NOT_ISSUED",iccid:"—",saleId:"—"},
+  {paymentId:"stars-a112…91bc",order:"ORD-260907-1278",created:"2026-09-07 11:13",paymentCompletedAt:"2026-09-07 12:21",customer:"@latepayer",product:"USA 5GB · 15 Days",method:"Stars",amount:"350 XTR",usd:"$5.00",paymentStatus:"COMPLETED",refund:"—",verify:"LATE_PAYMENT_AFTER_ORDER_FAILED",issue:true,status:"PAYMENT_FAILED",pointsUsed:"$1.00 USD",esim:"NOT_ISSUED",iccid:"—",saleId:"—",latePayment:true}
 ];
 
 [...orders,...paymentRows].forEach(row=>Object.assign(row,{notes:row.notes||[],roamingNumber:row.roamingNumber||null,...defaultRateSnapshot(row)}));
@@ -195,15 +196,11 @@ function openDrawer(row){
   document.querySelector("#detailRateMeta").textContent=row.rateMeta||rate.rateMeta;
   document.querySelector("#detailCompletedAt").textContent=row.paymentCompletedAt||row.created||"—";
   const paymentAttempts=row.paymentAttempts||[{id:row.paymentId||"—",method:row.method||row.payment||"—",status:row.paymentStatus||"COMPLETED",amount:row.amount||row.paymentAmount||"—",completedAt:row.paymentCompletedAt||"—"}];
-  const completedAttempts=paymentAttempts.filter(payment=>["COMPLETED","REFUNDED"].includes(payment.status));
-  const ambiguousPayment=completedAttempts.length>1&&!row.purchasePaymentId;
-  const resolvePaymentButton=document.querySelector("#resolvePurchasePayment");resolvePaymentButton.hidden=completedAttempts.length<2;resolvePaymentButton.textContent=row.purchasePaymentId?"대표 결제 변경":"대표 결제 지정";
+  const legacyMultiplePayment=paymentAttempts.length>1;
   document.querySelector("#detailPaymentAttempts").innerHTML=paymentAttempts.map(payment=>{
-    const selected=row.purchasePaymentId===payment.id;
-    const successful=["COMPLETED","REFUNDED"].includes(payment.status);
-    const warning=successful&&completedAttempts.length>1&&!selected;
-    const label=selected?"구매 결제":warning?row.purchasePaymentId?"중복 결제":"대표 결제 지정 필요":payment.status==="FAILED"?"실패 시도":"결제 이력";
-    const action=completedAttempts.length>1&&successful?`<label class="attempt-choice"><input type="radio" name="purchasePaymentChoice" value="${payment.id}" ${selected?"checked":""}><span>${selected?"구매 결제":"구매 결제 선택"}</span></label>`:`<em class="badge ${warning?"check-issue":selected?"paid":"esim-neutral"}">${label}</em>`;
+    const label=legacyMultiplePayment?"LEGACY PAYMENT HISTORY":payment.status==="FAILED"?"FAILED SESSION":"ORDER PAYMENT SESSION";
+    const warning=legacyMultiplePayment||row.latePayment;
+    const action=`<em class="badge ${warning?"check-issue":payment.status==="COMPLETED"?"paid":"esim-neutral"}">${label}</em>`;
     return `<div class="payment-attempt ${warning?"warning":""}"><div><b>${payment.id}</b><span>${payment.method} · ${payment.amount}</span></div><span>${payment.status}<br>${payment.completedAt||"—"}</span>${action}</div>`;
   }).join("");
   document.querySelector("#detailFulfillment").textContent=row.fulfillment||(row.issuedAt&&row.issuedAt!=="—"?"ISSUED":"NOT_ISSUED");
@@ -214,7 +211,7 @@ function openDrawer(row){
   document.querySelector("#detailIssuedAt").textContent=row.issuedAt||"—";
   const method=(row.method||row.payment||"").toUpperCase();
   const refundStatus=row.refund==="—"?"NONE":row.refund;
-  document.querySelector("#detailRefundStatus").innerHTML=`<span class="badge ${refundStatus==="COMPLETED"?"refunded":refundStatus==="NONE"||refundStatus==="CANCELLED"?"esim-neutral":"pending"}">${refundStatusLabel(refundStatus)}</span>`;
+  document.querySelector("#detailRefundStatus").innerHTML=`<span class="badge ${refundStatus==="COMPLETED"?"refunded":refundStatus==="NONE"?"esim-neutral":"pending"}">${refundStatusLabel(refundStatus)}</span>`;
   document.querySelector("#detailRefundSource").textContent=row.refundSource||"—";
   document.querySelector("#detailRefundStartedAt").textContent=row.refundStartedAt||"—";
   document.querySelector("#detailRefundAmount").textContent=row.refundAmount||(row.amount?`${row.amount} / ${row.usd}`:row.paymentAmount||"—");
@@ -222,10 +219,10 @@ function openDrawer(row){
   document.querySelector("#detailRefundCompletedAt").textContent=row.refundCompletedAt||"—";
   document.querySelector("#detailRefundReason").textContent=row.refundReason||"—";
   const paid=["COMPLETED","REFUNDED"].includes(row.paymentStatus||"COMPLETED");
-  const refundable=paid&&refundStatus!=="COMPLETED"&&!ambiguousPayment;
-  const refundButton=document.querySelector("#processRefund");refundButton.disabled=!refundable;refundButton.textContent=ambiguousPayment?"결제 지정 필요":refundStatus==="COMPLETED"?"Refund Completed":refundStatus==="REQUESTED"?"환불 완료 처리":"환불 처리 시작";
-  const cancelRefundButton=document.querySelector("#cancelRefundProcess");cancelRefundButton.hidden=refundStatus!=="REQUESTED";
-  document.querySelector("#refundActionGuide").textContent=ambiguousPayment?"성공 결제가 2건 이상입니다. 구매 성립 결제와 중복 결제를 먼저 구분하기 전에는 주문 환불을 시작할 수 없습니다.":refundStatus==="COMPLETED"?"환불이 완료되었습니다. 주문·결제는 REFUNDED이며 과거 결제 성공 이벤트와 완료일은 보존됩니다.":!paid?"결제가 완료되지 않아 환불을 실행할 수 없습니다.":refundStatus==="REQUESTED"?"환불 처리 중입니다. Stars는 자동환불 성공 후, TON·ForumPay는 외부 수동환불 증빙 확인 후 최종 완료합니다.":row.usageStatus==="ACTIVE"||row.usageStatus==="INSTALLED"?"사용·설치된 eSIM입니다. 환불과 eSIM·SkySIM 상태는 독립이며 관리자가 경고를 확인합니다.":"1차 확인 후 REFUND_REQUESTED(화면: 환불 처리 중)로 전환하며 이 단계에서는 실제 환불을 실행하지 않습니다.";
+  const refundable=paid&&refundStatus!=="COMPLETED"&&!legacyMultiplePayment&&!row.latePayment;
+  const refundInProgress=["REQUESTED","AUTO_PROCESSING","MANUAL_PENDING","FAILED"].includes(refundStatus);
+  const refundButton=document.querySelector("#processRefund");refundButton.disabled=!refundable;refundButton.textContent=legacyMultiplePayment?"레거시 결제 확인 필요":row.latePayment?"지연 결제 대조 필요":refundStatus==="COMPLETED"?"Refund Completed":refundInProgress?(method==="STARS"?"Retry Stars Refund":"Complete Manual Refund"):"Process Refund";
+  document.querySelector("#refundActionGuide").textContent=legacyMultiplePayment?"레거시 복수 결제 이력입니다. 자동 대표 결제 지정 없이 결제 대조 절차에서 실제 수령 건을 먼저 확인합니다.":row.latePayment?"실패 주문에 뒤늦게 수신된 결제입니다. 주문을 되살리거나 eSIM을 자동 발급하지 않고 결제 대조에서 처리합니다.":refundStatus==="COMPLETED"?"환불이 완료되었습니다. 주문·결제는 REFUNDED이며 과거 결제 성공 이벤트와 완료일은 보존됩니다. 완료 상태는 취소하거나 결제 완료로 복원할 수 없습니다.":!paid?"결제가 완료되지 않아 환불을 실행할 수 없습니다.":refundInProgress?"환불 처리 중입니다. Stars는 같은 환불 원장으로 자동환불을 재시도하고, TON·ForumPay는 외부 수동환불 증빙 확인 후 최종 완료합니다. 시작된 환불은 취소할 수 없습니다.":row.usageStatus==="ACTIVE"||row.usageStatus==="INSTALLED"?"사용·설치된 eSIM입니다. 환불과 eSIM·SkySIM 상태는 독립이며 관리자가 경고를 확인합니다. Process Refund에서 2단계 확인 후 진행합니다.":"Process Refund에서 주문·금액·eSIM 상태를 확인하고 2차 비가역 실행을 확인합니다. Stars는 즉시 자동환불하고 TON·ForumPay는 수동환불 대기로 전환합니다.";
   document.querySelector("#supplierStatus").innerHTML=row.cancelStatus?`<span class="badge ${row.cancelStatus==="COMPLETED"?"paid":"pending"}">${cancelLabel(row.cancelStatus)}</span>`:`<span class="badge pending">NOT_RECORDED</span>`;
   document.querySelector("#supplierRequestedAt").textContent=row.cancelRequestedAt||"—";
   document.querySelector("#supplierCancelledAt").textContent=row.cancelDate||"—";
@@ -264,8 +261,8 @@ function saveOrderNote(){
 function openRefundDialog(){
   if(!activeDrawerRow)return;
   const row=activeDrawerRow;const method=(row.method||row.payment||"").toUpperCase();
-  const completing=row.refund==="REQUESTED";
-  document.querySelector("#refundDialogTitle").textContent=completing?"환불 완료 확인":"환불 처리 시작 확인";
+  const completing=["REQUESTED","AUTO_PROCESSING","MANUAL_PENDING","FAILED"].includes(row.refund);
+  document.querySelector("#refundDialogTitle").textContent=completing?(method==="STARS"?"Stars 자동환불 재시도":"수동환불 완료 확인"):"Process Refund";
   document.querySelector("#refundDialogOrder").textContent=row.order;
   document.querySelector("#refundDialogMethod").textContent=method;
   document.querySelector("#refundDialogAmount").textContent=row.refundAmount||(row.amount?`${row.amount} / ${row.usd}`:row.paymentAmount||"—");
@@ -279,33 +276,28 @@ function openRefundDialog(){
   document.querySelector("#tonProofFields").hidden=!completing||method!=="TON";
   document.querySelector("#forumPayProofFields").hidden=!completing||method!=="FORUMPAY";
   const notice=document.querySelector("#refundMethodNotice");
-  if(!completing)notice.innerHTML="<strong>1단계 · 환불 처리 시작</strong><span>확인 시 주문을 REFUND_REQUESTED(화면: 환불 처리 중)로 바꾸고 환불 원장을 생성합니다. 아직 실제 환불과 포인트 반환은 실행하지 않습니다.</span>";
-  else if(method==="STARS")notice.innerHTML="<strong>2단계 · Stars 자동환불</strong><span>Telegram Stars 환불 API가 성공한 경우에만 주문·결제 REFUNDED, 환불 COMPLETED 및 포인트 1회 반환을 확정합니다.</span>";
-  else if(method==="TON")notice.innerHTML="<strong>2단계 · TON 수동환불 완료</strong><span>관리자가 외부 송금을 끝낸 뒤 대상 지갑과 txHash를 입력하고 최종 완료합니다.</span>";
-  else notice.innerHTML="<strong>2단계 · ForumPay 수동환불 완료</strong><span>외부 환불을 끝낸 뒤 포털 참조번호 또는 txid를 입력하고 최종 완료합니다.</span>";
-  document.querySelector("#refundConfirmText").textContent=completing?`${method==="STARS"?"Stars 자동환불 실행":"외부 수동환불 완료와 증빙"}, 주문·결제 REFUNDED 및 포인트 1회 반환을 확인했습니다.`:"환불 처리 시작과 주문 REFUND_REQUESTED 전환을 확인했습니다. 실제 환불은 아직 실행되지 않습니다.";
-  document.querySelector("#executeRefund").textContent=completing?"환불 완료 확정":"환불 처리 시작";
+  if(!completing&&method==="STARS")notice.innerHTML="<strong>1차 정보 확인 → 2차 비가역 실행 확인</strong><span>최종 확인 시 환불 원장을 생성하고 AUTO_PROCESSING으로 전환한 뒤 Telegram Stars 환불 API를 즉시 실행합니다. 성공 응답 후에만 REFUNDED와 포인트 반환을 확정합니다.</span>";
+  else if(!completing)notice.innerHTML=`<strong>1차 정보 확인 → 2차 처리 시작 확인</strong><span>최종 확인 시 주문을 REFUND_REQUESTED, 환불 원장을 MANUAL_PENDING으로 전환합니다. ${method} 실제 환불은 외부에서 수행하고 증빙 입력 후 완료합니다.</span>`;
+  else if(method==="STARS")notice.innerHTML="<strong>Stars 자동환불 재시도</strong><span>기존 환불 원장을 재사용합니다. Telegram Stars 환불 API가 성공한 경우에만 주문·결제 REFUNDED, 환불 COMPLETED 및 포인트 1회 반환을 확정합니다.</span>";
+  else if(method==="TON")notice.innerHTML="<strong>TON 수동환불 완료</strong><span>관리자가 외부 송금을 끝낸 뒤 대상 지갑과 txHash를 입력하고 최종 완료합니다.</span>";
+  else notice.innerHTML="<strong>ForumPay 수동환불 완료</strong><span>외부 환불을 끝낸 뒤 포털 참조번호 또는 txid를 입력하고 최종 완료합니다.</span>";
+  document.querySelector("#refundConfirmText").textContent=completing?`${method==="STARS"?"기존 원장의 Stars 자동환불 재시도":"외부 수동환불 완료와 증빙"}, 성공 시 주문·결제 REFUNDED 및 포인트 1회 반환을 확인했습니다.`:method==="STARS"?"주문·금액·eSIM 상태를 확인했으며 Stars 자동환불을 실제 실행합니다.":`${method} 수동환불 대기 전환과 이후 증빙 완료 절차를 확인했습니다.`;
+  document.querySelector("#executeRefund").textContent=completing?(method==="STARS"?"Retry Stars Refund":"환불 완료 확정"):method==="STARS"?"Stars 자동환불 실행":"환불 처리 시작";
   document.querySelector("#refundDialog").classList.add("open");document.querySelector("#refundDialogBackdrop").classList.add("open");document.querySelector("#refundDialog").setAttribute("aria-hidden","false");
 }
 function closeRefundDialog(){document.querySelector("#refundDialog").classList.remove("open");document.querySelector("#refundDialogBackdrop").classList.remove("open");document.querySelector("#refundDialog").setAttribute("aria-hidden","true")}
 function executeRefund(){
   if(!activeDrawerRow||!document.querySelector("#refundConfirmed").checked){showToast("환불 처리 확인 항목을 선택해 주세요.");return}
   const row=activeDrawerRow;const method=(row.method||row.payment||"").toUpperCase();
-  const completing=row.refund==="REQUESTED";
+  const completing=["REQUESTED","AUTO_PROCESSING","MANUAL_PENDING","FAILED"].includes(row.refund);
   if(!completing){
-    row.refund="REQUESTED";row.status="REFUND_REQUESTED";row.orderStatus="REFUND_REQUESTED";row.refundSource="ADMIN";row.refundStartedAt="2026-09-15 16:10";row.refundReason=document.querySelector("#refundReason").value.trim()||"관리자 환불 처리 시작";row.check="환불 처리 중";
-    closeRefundDialog();openDrawer(row);renderOrders();renderPayments();showToast("환불 처리 중으로 전환했습니다. 이 단계에서는 실제 환불되지 않습니다.");return;
+    row.refund=method==="STARS"?"AUTO_PROCESSING":"MANUAL_PENDING";row.status="REFUND_REQUESTED";row.orderStatus="REFUND_REQUESTED";row.refundSource="ADMIN";row.refundStartedAt="2026-09-15 16:10";row.refundReason=document.querySelector("#refundReason").value.trim()||"관리자 환불 처리 시작";row.check=method==="STARS"?"Stars 자동환불 처리 중":"수동 환불 완료 증빙 대기";
+    if(method!=="STARS"){closeRefundDialog();openDrawer(row);renderOrders();renderPayments();showToast(`${method} 수동환불 대기로 전환했습니다. 외부 환불 완료 후 증빙을 입력해 주세요.`);return}
   }
   if(method==="TON"&&(!document.querySelector("#refundWalletAddress").value.trim()||!document.querySelector("#refundTxHash").value.trim())){showToast("TON 수신 지갑과 txHash가 모두 필요합니다.");return}
   if(method==="FORUMPAY"&&document.querySelector("#refundProofReference").value.trim().length<8){showToast("ForumPay 환불 증빙 참조번호를 8자 이상 입력해 주세요.");return}
   row.refund="COMPLETED";row.status="REFUNDED";row.orderStatus="REFUNDED";row.paymentStatus="REFUNDED";row.refundSource=row.refundSource&&row.refundSource!=="—"?row.refundSource:"ADMIN";row.refundStartedAt=row.refundStartedAt||"2026-09-15 16:10";row.refundCompletedAt="2026-09-15 16:12";row.refundAmount=row.refundAmount||(row.amount?`${row.amount} / ${row.usd}`:row.paymentAmount||"—");row.refundReason=document.querySelector("#refundReason").value.trim()||"관리자 환불 처리";row.refundEligible=false;row.check="환불 완료";
   closeRefundDialog();openDrawer(row);renderOrders();renderPayments();showToast(method==="STARS"?"Stars 자동환불이 완료되고 사용 포인트가 반환되었습니다.":`${method} 수동환불 증빙이 확인되어 완료 처리했습니다.`);
-}
-
-function cancelRefundProcess(){
-  if(!activeDrawerRow||activeDrawerRow.refund!=="REQUESTED")return;
-  const row=activeDrawerRow;row.refund="CANCELLED";row.status="PAYMENT_PAID";row.orderStatus="PAYMENT_PAID";row.refundCompletedAt="";row.refundReason="관리자 환불 처리 취소";row.check="환불 처리 취소";
-  openDrawer(row);renderOrders();showToast("실제 환불 전 처리 단계를 취소했습니다. 결제 완료 상태로 복원했습니다.");
 }
 
 function openCancelDialog(){document.querySelector("#cancelDialog").classList.add("open");document.querySelector("#cancelDialogBackdrop").classList.add("open");document.querySelector("#cancelDialog").setAttribute("aria-hidden","false")}
@@ -400,8 +392,8 @@ function closeOrderStatusGuide(){document.querySelector("#orderStatusGuide").cla
 const operationalStatusGuides={
   payments:{title:"Payments 상태 가이드",eyebrow:"PAYMENTS REFERENCE",sections:[
     {title:"Payment Status",rows:[["PENDING","결제가 생성됐지만 아직 완료되지 않았습니다."],["PROOF_RECEIVED","클라이언트 결제 증빙을 수신했지만 서버 검증은 완료되지 않았습니다."],["ONCHAIN_PENDING","온체인 결제의 최종 확정을 기다리고 있습니다."],["TX_FOUND","결제 트랜잭션을 찾았지만 주문 귀속과 금액 검증이 완료되지 않았습니다."],["CONFIRMED","결제수단 검증은 통과했으며 완료 반영 단계입니다."],["COMPLETED","결제가 정상 완료되어 주문의 구매 성립 결제로 사용할 수 있습니다."],["FAILED","결제 검증 또는 처리에 실패했습니다."],["REFUNDED","해당 결제의 환불이 최종 완료되었습니다."]]},
-    {title:"Refund Status",rows:[["—","해당 결제에 환불 기록이 없습니다."],["PROCESSING","관리자가 환불을 시작했으며 최종 완료 전입니다."],["COMPLETED","자동 또는 수동 환불 확인이 완료되었습니다."],["FAILED","환불 실행이나 외부 처리 확인에 실패했습니다."],["CANCELLED","진행 중이던 환불 처리를 취소하고 이력을 보존한 상태입니다."]]},
-    {title:"Verification",rows:[["NORMAL","결제수단별 필수 검증을 모두 통과했습니다."],["CALLBACK_FAILED","결제 콜백의 서명·형식·처리에 문제가 있어 확인이 필요합니다."],["RETURNED/BOUNCED","TON 전송이 반송되었거나 수신 지갑에 최종 입금되지 않았습니다."],["AMOUNT_MISMATCH","주문 예상 금액과 실제 수령 금액이 일치하지 않습니다."],["ORDER_NOT_FOUND","결제 트랜잭션을 연결할 주문을 찾지 못했습니다."],["CHECK REQUIRED","NORMAL이 아닌 검증 결과를 묶어 조회하는 화면 필터입니다."]]}
+    {title:"Refund Status",rows:[["—","해당 결제에 환불 기록이 없습니다."],["REQUESTED","관리자가 2단계 확인 후 환불 처리를 시작했습니다."],["UNDER_REVIEW","환불 가능 여부와 결제 정보를 검토 중입니다."],["AUTO_PROCESSING","Stars 자동환불 결과를 기다리고 있습니다."],["MANUAL_PENDING","TON 또는 ForumPay 외부 수동환불 완료 증빙을 기다리고 있습니다."],["PARTIALLY_COMPLETED","일부 금액만 환불되어 추가 처리가 필요합니다."],["FAILED","환불 실행이나 외부 처리 확인에 실패해 재검토가 필요합니다."],["COMPLETED","자동 또는 수동 환불 확인이 완료된 종단 상태입니다."]]},
+    {title:"Verification",rows:[["NORMAL","결제수단별 필수 검증을 모두 통과했습니다."],["CALLBACK_FAILED","결제 콜백의 서명·형식·처리에 문제가 있어 확인이 필요합니다."],["RETURNED/BOUNCED","TON 전송이 반송되었거나 수신 지갑에 최종 입금되지 않았습니다."],["AMOUNT_MISMATCH","주문 예상 금액과 실제 수령 금액이 일치하지 않습니다."],["ORDER_NOT_FOUND","결제 트랜잭션을 연결할 주문을 찾지 못했습니다."],["LATE_PAYMENT_AFTER_ORDER_FAILED","실패 종단 주문에서 뒤늦게 확인된 결제입니다. 주문 복원과 eSIM 자동 발급 없이 결제 대조가 필요합니다."],["CHECK REQUIRED","NORMAL이 아닌 검증 결과를 묶어 조회하는 화면 필터입니다."]]}
   ]},
   esims:{title:"eSIM Management 상태 가이드",eyebrow:"ESIM REFERENCE",sections:[
     {title:"Fulfillment",rows:[["NOT_ISSUED","eSIM이 아직 생성되거나 발급되지 않았습니다."],["ISSUING","SkySIM 발급 요청이 처리 중입니다."],["ISSUED","eSIM 발급이 정상 완료되었습니다."],["FAILED","eSIM 발급에 실패해 관리자 확인 또는 재처리가 필요합니다."]]},
@@ -446,16 +438,6 @@ document.querySelectorAll("#esimStartDate,#esimEndDate").forEach(element=>elemen
 document.querySelector("#closeDrawer").addEventListener("click",closeDrawer);
 document.querySelector("#drawerBackdrop").addEventListener("click",closeDrawer);
 document.querySelector("#processRefund").addEventListener("click",openRefundDialog);
-document.querySelector("#resolvePurchasePayment").addEventListener("click",()=>{
-  if(!activeDrawerRow)return;
-  const selectedId=document.querySelector('input[name="purchasePaymentChoice"]:checked')?.value;
-  if(!selectedId){showToast("구매 성립 결제를 선택해 주세요.");return}
-  const payment=activeDrawerRow.paymentAttempts?.find(item=>item.id===selectedId);
-  if(!payment)return;
-  activeDrawerRow.purchasePaymentId=payment.id;activeDrawerRow.paymentId=payment.id;activeDrawerRow.paymentStatus=payment.status;activeDrawerRow.method=payment.method;activeDrawerRow.amount=payment.amount;activeDrawerRow.usd=payment.usd||"—";activeDrawerRow.paymentCompletedAt=payment.completedAt;activeDrawerRow.check="중복 결제 1건 환불 필요";activeDrawerRow.issue=true;
-  openDrawer(activeDrawerRow);renderOrders();showToast("프리뷰에서 구매 성립 결제를 지정했습니다. 실제 구현은 권한·감사로그·서버 검증을 적용합니다.");
-});
-document.querySelector("#cancelRefundProcess").addEventListener("click",cancelRefundProcess);
 document.querySelector("#closeRefundDialog").addEventListener("click",closeRefundDialog);
 document.querySelector("#refundDialogCancel").addEventListener("click",closeRefundDialog);
 document.querySelector("#refundDialogBackdrop").addEventListener("click",closeRefundDialog);

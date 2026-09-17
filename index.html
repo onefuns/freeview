@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>eSIMglobal Admin Preview</title>
   <meta name="description" content="eSIMglobal 주문, 결제, eSIM 발급, 환불 및 SkySIM 정산 통합 관리자 화면 예시">
-  <meta name="admin-preview-revision" content="ADMIN-OPS-R20.3">
+  <meta name="admin-preview-revision" content="ADMIN-OPS-R20.5">
   <link rel="stylesheet" href="./styles.css?v=20.3">
 </head>
 <body>
@@ -35,7 +35,7 @@
     <header class="topbar">
       <button class="mobile-menu" aria-label="메뉴 열기">☰</button>
       <div class="breadcrumb">ADMIN <span>/</span> <strong id="crumb">Orders</strong></div>
-      <div class="top-actions"><button class="icon-button" aria-label="알림">♢</button><span class="environment">PREVIEW R20.3</span></div>
+      <div class="top-actions"><button class="icon-button" aria-label="알림">♢</button><span class="environment">PREVIEW R20.5</span></div>
     </header>
 
     <section id="dashboardView" class="view">
@@ -95,7 +95,7 @@
         <div class="page-actions"><button class="secondary-button" id="openOrderStatusGuide">Status Guide</button><button class="primary-button" id="exportOrders">Export Excel</button></div>
       </div>
 
-      <div class="preview-scope" role="note"><strong>UI/UX 화면설계 프리뷰</strong><span>표시 데이터와 버튼 동작은 화면 흐름 확인용 예시입니다. 실제 API·DB·권한·환불·정산 로직은 R20.3 최종 개발명세를 기준으로 구현합니다.</span></div>
+      <div class="preview-scope" role="note"><strong>UI/UX 화면설계 프리뷰</strong><span>표시 데이터와 버튼 동작은 화면 흐름 확인용 예시입니다. 실제 API·DB·권한·환불·정산 로직은 R20.5 최종 개발명세를 기준으로 구현합니다.</span></div>
 
       <div class="status-tabs" role="tablist" aria-label="주문 상태">
         <button class="status-tab active" data-status="ALL">ALL <b>1,284</b></button>
@@ -327,11 +327,11 @@
       <section class="detail-status"><div><span>Order Status</span><strong id="detailOrderStatus">PAYMENT_PAID</strong></div><div><span>System Check</span><strong id="detailCheck" class="green">NORMAL</strong></div></section>
       <section class="detail-section"><h3>Order</h3><dl><div><dt>Customer</dt><dd id="detailCustomer">@traveler01</dd></div><div><dt>Product</dt><dd id="detailProduct">Japan 5GB · 30 Days</dd></div><div><dt>Created At</dt><dd id="detailCreatedAt">2026-09-03 10:20</dd></div></dl></section>
       <section class="detail-section"><h3>Payment</h3><dl><div><dt>Payment ID</dt><dd id="detailPaymentId">ton-7fa9…ae20</dd></div><div><dt>Method / Status</dt><dd id="detailPayment">TON · COMPLETED</dd></div><div><dt>Selling Price</dt><dd id="detailSellingPrice">$10.00 USD</dd></div><div><dt>Points Used</dt><dd id="detailPointsUsed">$3.00 USD</dd></div><div><dt>Actual Payment</dt><dd id="detailAmount">7.23 TON / $7.00</dd></div><div><dt>Rate Snapshot</dt><dd id="detailRateSnapshot">1 TON = $0.9682 USD</dd></div><div><dt>Rate Source / Captured</dt><dd id="detailRateMeta">AUTO · 2026-09-03 10:20 UTC</dd></div><div><dt>Completed At</dt><dd id="detailCompletedAt">2026-09-03 10:22</dd></div></dl></section>
-      <section class="detail-section"><div class="section-heading"><h3>Payment Attempts</h3><div class="row-actions"><span class="section-caption">모든 결제 시도 보존</span><button class="outline-button" id="resolvePurchasePayment" hidden>대표 결제 지정</button></div></div><div id="detailPaymentAttempts" class="payment-attempts"></div></section>
+      <section class="detail-section"><div class="section-heading"><h3>Payment Session</h3><div class="row-actions"><span class="section-caption">신규 주문 1건 · 레거시 복수 이력은 읽기 전용</span></div></div><div id="detailPaymentAttempts" class="payment-attempts"></div></section>
       <section class="detail-section"><h3>eSIM / SkySIM</h3><dl><div><dt>Fulfillment Status</dt><dd id="detailFulfillment">ISSUED</dd></div><div><dt>Usage Status</dt><dd id="detailUsageStatus">ACTIVE</dd></div><div><dt>ICCID</dt><dd id="detailIccid">898821…7641</dd></div><div><dt>Roaming Number</dt><dd id="detailRoamingNumber">—</dd></div><div><dt>SkySIM Sale ID</dt><dd id="detailSaleId">SALE-938294</dd></div><div><dt>Issued At</dt><dd id="detailIssuedAt">2026-09-03 10:24</dd></div></dl></section>
       <section class="detail-section refund-section">
-        <div class="section-heading"><h3>Admin Refund</h3><div class="row-actions"><button class="secondary-button" id="cancelRefundProcess" hidden>환불 처리 취소</button><button class="danger-button" id="processRefund">환불 처리 시작</button></div></div>
-        <p class="section-note" id="refundActionGuide">관리자가 결제완료 주문을 확인하고 이 화면에서만 환불을 시작합니다.</p>
+        <div class="section-heading"><h3>Admin Refund</h3><div class="row-actions"><button class="danger-button" id="processRefund">Process Refund</button></div></div>
+        <p class="section-note" id="refundActionGuide">관리자가 결제완료 주문을 확인하고 이 화면에서만 환불을 처리합니다. Stars는 최종 확인 후 자동 실행되고 TON·ForumPay는 수동환불 증빙 완료가 필요합니다.</p>
         <dl><div><dt>Refund Status</dt><dd id="detailRefundStatus">환불 없음</dd></div><div><dt>Initiated By</dt><dd id="detailRefundSource">—</dd></div><div><dt>Started At</dt><dd id="detailRefundStartedAt">—</dd></div><div><dt>Refund Amount</dt><dd id="detailRefundAmount">—</dd></div><div><dt>Processing Type</dt><dd id="detailRefundType">—</dd></div><div><dt>Completed At</dt><dd id="detailRefundCompletedAt">—</dd></div><div><dt>Reason</dt><dd id="detailRefundReason">—</dd></div></dl>
       </section>
       <section class="detail-section supplier-section">
@@ -348,8 +348,8 @@
     <div class="dialog-body status-guide-body">
       <section class="status-guide-section"><h3>Order Status</h3>
         <div class="status-guide-row"><span class="badge pending">PAYMENT_PENDING</span><p>주문은 생성됐지만 결제가 아직 완료되지 않은 상태입니다.</p></div>
-        <div class="status-guide-row"><span class="badge paid">PAYMENT_PAID</span><p>결제가 성공했으며 관리자 환불 처리 전인 주문입니다. eSIM 발급 여부와는 별개입니다.</p></div>
-        <div class="status-guide-row"><span class="badge failed">PAYMENT_FAILED</span><p>결제가 실패했거나 성공 결제로 확인되지 않은 주문입니다.</p></div>
+        <div class="status-guide-row"><span class="badge paid">PAYMENT_PAID</span><p>성공 결제 원장을 기준으로 파생한 관리자 표시 상태입니다. 내부 주문이 eSIM 발급 중·발급 완료·발급 실패여도 환불 전이면 PAYMENT_PAID로 표시하고 발급 결과는 Fulfillment에서 구분합니다.</p></div>
+        <div class="status-guide-row"><span class="badge failed">PAYMENT_FAILED</span><p>결제가 최종 실패·만료된 종단 주문입니다. 이 주문으로 재결제하지 않고 신규 주문으로 다시 구매합니다.</p></div>
         <div class="status-guide-row"><span class="badge pending">REFUND_REQUESTED</span><p>관리자가 환불 처리를 시작해 현재 환불 처리 중인 상태입니다.</p></div>
         <div class="status-guide-row"><span class="badge refunded">REFUNDED</span><p>결제수단별 환불 절차가 최종 완료된 주문입니다.</p></div>
       </section>
@@ -407,14 +407,14 @@
     <header><div><span class="eyebrow">ADMIN REFUND</span><h2 id="refundDialogTitle">관리자 환불 처리</h2></div><button id="closeRefundDialog" aria-label="창 닫기">×</button></header>
     <div class="dialog-body">
       <div class="credit-context"><span>Order</span><strong id="refundDialogOrder">—</strong><span>Method</span><strong id="refundDialogMethod">—</strong><span>Refund Amount</span><strong id="refundDialogAmount">—</strong><span>Initiated By</span><strong id="refundDialogSource">ADMIN</strong></div>
-      <div class="notice-box" id="refundMethodNotice"><strong>결제수단별 환불 처리</strong><span>Stars는 자동환불되며 TON과 ForumPay는 외부 수동 환불 증빙이 필요합니다.</span></div>
+      <div class="notice-box" id="refundMethodNotice"><strong>결제수단별 환불 처리</strong><span>1차로 주문·금액·eSIM 상태를 확인하고, 2차 최종 확인 후 Stars는 자동환불되며 TON과 ForumPay는 외부 수동환불 대기로 전환됩니다.</span></div>
       <div class="notice-box" id="refundEligibilityNotice"><strong>eSIM 확인</strong><span>관리자가 eSIM 사용 상태와 운영 정책을 확인한 뒤 환불을 진행합니다.</span></div>
       <label><span>환불 사유</span><textarea id="refundReason" rows="3" placeholder="환불 처리 사유를 입력하세요."></textarea></label>
       <div id="tonProofFields" class="proof-fields"><label><span>TON 환불 수신 지갑</span><input id="refundWalletAddress" type="text" placeholder="환불을 보낸 대상 지갑주소"></label><label><span>TON 환불 txHash</span><input id="refundTxHash" type="text" placeholder="온체인 환불 트랜잭션 해시"></label></div>
       <div id="forumPayProofFields" class="proof-fields"><label><span>ForumPay 환불 증빙 참조번호</span><input id="refundProofReference" type="text" placeholder="포털 참조번호 또는 txid (8자 이상)"></label></div>
-      <label class="confirm-check"><input id="refundConfirmed" type="checkbox"><span id="refundConfirmText">환불 실행 내용을 확인했습니다.</span></label>
+      <label class="confirm-check"><input id="refundConfirmed" type="checkbox"><span id="refundConfirmText">2차 비가역 실행 내용을 확인했습니다.</span></label>
     </div>
-    <footer><button class="secondary-button" id="refundDialogCancel">닫기</button><button class="danger-button" id="executeRefund">환불 처리 실행</button></footer>
+    <footer><button class="secondary-button" id="refundDialogCancel">닫기</button><button class="danger-button" id="executeRefund">Process Refund</button></footer>
   </section>
   <div class="dialog-backdrop" id="adminActionDialogBackdrop"></div>
   <section class="dialog dialog-wide" id="adminActionDialog" role="dialog" aria-modal="true" aria-labelledby="adminActionTitle" aria-hidden="true">
