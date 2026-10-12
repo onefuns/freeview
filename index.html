@@ -95,6 +95,7 @@
     .btn.primary { border-color: var(--blue); color: white; background: linear-gradient(135deg, var(--blue), #168bc4); }
     .btn.danger { color: var(--red); background: var(--red-soft); border-color: #ffd1d1; }
     .btn.small { padding: 7px 10px; border-radius: 9px; font-size: .75rem; }
+    .row-actions { display: flex; align-items: center; gap: 6px; }
 
     .grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
     .metric { position: relative; overflow: hidden; min-height: 130px; padding: 18px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
@@ -147,9 +148,9 @@
     .status { display: inline-flex; align-items: center; gap: 5px; padding: 5px 8px; border-radius: 999px; font-size: .68rem; font-weight: 800; }
     .status::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
     .status.pending { color: var(--amber); background: var(--amber-soft); }
-    .status.available, .status.active, .status.paid { color: var(--green); background: var(--green-soft); }
-    .status.requested { color: var(--purple); background: #f1efff; }
-    .status.rejected, .status.inactive { color: var(--red); background: var(--red-soft); }
+    .status.available, .status.active, .status.paid, .status.completed { color: var(--green); background: var(--green-soft); }
+    .status.requested, .status.hold { color: var(--purple); background: #f1efff; }
+    .status.rejected, .status.inactive, .status.negative { color: var(--red); background: var(--red-soft); }
 
     .referral-card { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 18px; margin-bottom: 16px; padding: 20px; color: white; border-radius: var(--radius); background: linear-gradient(135deg, #0b3046, #0c6f9b); box-shadow: 0 18px 38px rgba(7,29,45,.2); }
     .referral-card label { color: #b9d9e8; font-size: .72rem; font-weight: 760; }
@@ -283,6 +284,7 @@
       admin: [
         ['overview', '대시보드', icons.overview],
         ['marketers', '마케터 관리', icons.people],
+        ['customers', '고객 관리', icons.people],
         ['sales', '판매 내역', icons.orders],
         ['settlements', '정산 관리', icons.payout]
       ],
@@ -290,7 +292,7 @@
         ['overview', '내 실적', icons.overview],
         ['customers', '귀속 고객', icons.people],
         ['sales', '판매 내역', icons.orders],
-        ['withdrawal', '정산 요청', icons.payout]
+        ['settlements', '정산 결과', icons.payout]
       ]
     };
 
@@ -325,55 +327,56 @@
 
     function adminOverview() {
       return pageHead('운영 대시보드', '전체 마케터의 판매와 정산 흐름을 확인합니다.', '<button class="btn" data-go="sales">판매 내역</button><button class="btn primary" data-modal="new-marketer">+ 마케터 생성</button>') +
-        `<div class="grid-4">${metric('레퍼럴 총 판매', '$42,860.40', '지난 30일 대비 +12.8%')}${metric('정산 대기', '$1,284.32', '7일 내 확정 예정 38건', 'amber')}${metric('정산 가능', '$3,906.14', '지급 요청 가능 금액', 'green')}${metric('요청 중', '$1,200.00', '관리자 확인 필요 3건', 'purple')}</div>
+        `<div class="grid-4">${metric('레퍼럴 총 판매', '$42,860.40', '결제 완료 주문 기준')}${metric('정산대기', '$3,490.40', 'PENDING 3건', 'amber')}${metric('정산보류', '$890.00', 'ON_HOLD 1건', 'purple')}${metric('음수 이월', '-$245.60', '다음 회차 우선 상계', 'green')}</div>
         <div class="dashboard-grid">
           <article class="card"><header class="card-head"><div><h3>레퍼럴 매출 추이</h3><span>최근 30일 · USD</span></div><button class="btn small">30일</button></header><div class="card-body chart-wrap"><div class="chart-summary"><strong>$42,860.40</strong><span>+12.8%</span></div>${salesChart()}<div class="chart-labels"><span>9/01</span><span>9/08</span><span>9/15</span><span>9/22</span><span>9/30</span></div></div></article>
-          <article class="card"><header class="card-head"><div><h3>정산 요청</h3><span>처리 대기 3건</span></div><button class="btn small" data-go="settlements">전체 보기</button></header><div class="card-body queue">
-            <div class="queue-item"><div class="queue-top"><strong>Global Connect</strong>${status('요청중','requested')}</div><p>2026-09-30 · USD 계좌</p><div class="queue-meta"><b>$520.00</b><button class="btn small primary" data-modal="settle">처리</button></div></div>
-            <div class="queue-item"><div class="queue-top"><strong>TripNote</strong>${status('요청중','requested')}</div><p>2026-09-29 · USD 계좌</p><div class="queue-meta"><b>$430.00</b><button class="btn small primary" data-modal="settle">처리</button></div></div>
-            <div class="queue-item"><div class="queue-top"><strong>Nomad Kim</strong>${status('요청중','requested')}</div><p>2026-09-28 · USD 계좌</p><div class="queue-meta"><b>$250.00</b><button class="btn small primary" data-modal="settle">처리</button></div></div>
+          <article class="card"><header class="card-head"><div><h3>정산 처리 대상</h3><span>2026년 9월 하반기 · 지급예정 10/05</span></div><button class="btn small" data-go="settlements">전체 보기</button></header><div class="card-body queue">
+            <div class="queue-item"><div class="queue-top"><strong>Global Connect</strong>${status('정산대기','pending')}</div><p>판매 커미션 $2,021.06 · 환불 -$120.00 · 이월 -$80.00</p><div class="queue-meta"><b>$1,821.06</b><button class="btn small primary" data-modal="settle">처리</button></div></div>
+            <div class="queue-item"><div class="queue-top"><strong>TripNote</strong>${status('정산보류','hold')}</div><p>판매 커미션 $940.00 · 환불 -$50.00</p><div class="queue-meta"><b>$890.00</b><button class="btn small primary" data-modal="settle">확인</button></div></div>
+            <div class="queue-item"><div class="queue-top"><strong>Easy Life</strong>${status('음수 이월','negative')}</div><p>판매 커미션 $94.40 · 환불 -$170.00 · 이전 이월 -$170.00</p><div class="queue-meta"><b>-$245.60</b><button class="btn small primary" data-modal="settle">처리</button></div></div>
           </div></article>
         </div>
         ${marketerTable(true)}`;
     }
 
     function marketerTable(summary = false) {
-      return `<article class="card table-card"><header class="card-head"><div><h3>${summary ? '마케터 실적' : '마케터 관리'}</h3><span>활성 마케터 24명</span></div>${summary ? '<button class="btn small" data-go="marketers">관리하기</button>' : '<button class="btn small primary" data-modal="new-marketer">+ 마케터 생성</button>'}</header>${summary ? '' : '<div class="table-tools"><input class="input" placeholder="이름 또는 레퍼럴 코드 검색"><select class="select"><option>전체 상태</option><option>활성</option><option>비활성</option></select></div>'}<div class="table-scroll"><table><thead><tr><th>마케터</th><th>레퍼럴 코드</th><th>수익률</th><th>귀속 고객</th><th>판매액</th><th>정산 가능</th><th>상태</th><th></th></tr></thead><tbody>
-        <tr><td><div class="namecell"><span class="mini-avatar">GC</span><span><strong>Global Connect</strong><small>partner01@email.com</small></span></div></td><td>GLOBAL10</td><td>12%</td><td>384</td><td>$16,842.20</td><td>$1,820.40</td><td>${status('활성','active')}</td><td><button class="btn small" data-modal="marketer">상세</button></td></tr>
+      return `<article class="card table-card"><header class="card-head"><div><h3>${summary ? '마케터 실적' : '마케터 관리'}</h3><span>활성 마케터 24명</span></div>${summary ? '<button class="btn small" data-go="marketers">관리하기</button>' : '<button class="btn small primary" data-modal="new-marketer">+ 마케터 생성</button>'}</header>${summary ? '' : '<div class="table-tools"><input class="input" placeholder="이름 또는 레퍼럴 코드 검색"><select class="select"><option>전체 상태</option><option>활성</option><option>비활성</option></select></div>'}<div class="table-scroll"><table><thead><tr><th>마케터</th><th>레퍼럴 코드</th><th>수익률</th><th>귀속 고객</th><th>판매액</th><th>현재 정산 순액</th><th>상태</th><th></th></tr></thead><tbody>
+        <tr><td><div class="namecell"><span class="mini-avatar">GC</span><span><strong>Global Connect</strong><small>partner01@email.com</small></span></div></td><td>GLOBAL10</td><td>12%</td><td>384</td><td>$16,842.20</td><td>$1,821.06</td><td>${status('활성','active')}</td><td><button class="btn small" data-modal="marketer">상세</button></td></tr>
         <tr><td><div class="namecell"><span class="mini-avatar">TN</span><span><strong>TripNote</strong><small>tripnote@email.com</small></span></div></td><td>TRIPNOTE</td><td>10%</td><td>219</td><td>$9,440.00</td><td>$890.00</td><td>${status('활성','active')}</td><td><button class="btn small" data-modal="marketer">상세</button></td></tr>
         <tr><td><div class="namecell"><span class="mini-avatar">NK</span><span><strong>Nomad Kim</strong><small>nomad@email.com</small></span></div></td><td>NOMADKIM</td><td>8%</td><td>148</td><td>$7,918.20</td><td>$570.44</td><td>${status('활성','active')}</td><td><button class="btn small" data-modal="marketer">상세</button></td></tr>
-        <tr><td><div class="namecell"><span class="mini-avatar">EL</span><span><strong>Easy Life</strong><small>easy@email.com</small></span></div></td><td>EASYLIFE</td><td>10%</td><td>96</td><td>$4,382.00</td><td>$415.30</td><td>${status('비활성','inactive')}</td><td><button class="btn small" data-modal="marketer">상세</button></td></tr>
+        <tr><td><div class="namecell"><span class="mini-avatar">EL</span><span><strong>Easy Life</strong><small>easy@email.com</small></span></div></td><td>EASYLIFE</td><td>10%</td><td>96</td><td>$4,382.00</td><td>-$245.60</td><td>${status('비활성','inactive')}</td><td><button class="btn small" data-modal="marketer">상세</button></td></tr>
       </tbody></table></div></article>`;
     }
 
     function salesTable(own = false) {
       const marketerColumn = own ? '' : '<th>마케터</th>';
       const marketerCells = own ? '' : '<td>Global Connect</td>';
-      return `<article class="card table-card"><div class="table-tools"><input class="input" id="tableSearch" placeholder="주문번호, 고객 또는 상품 검색"><select class="select"><option>전체 커미션 상태</option><option>PENDING</option><option>AVAILABLE</option><option>PAID</option></select>${own ? '' : '<select class="select"><option>전체 마케터</option><option>Global Connect</option><option>TripNote</option></select>'}</div><div class="table-scroll"><table><thead><tr><th>주문</th><th>고객</th><th>상품</th>${marketerColumn}<th>결제금액</th><th>요율</th><th>커미션</th><th>상태</th></tr></thead><tbody>
-        <tr class="search-row"><td>#10582<br><small>09-30 14:24</small></td><td>jo***@gmail.com</td><td>Japan 10GB · 30 Days</td>${marketerCells}<td>$18.50</td><td>12%</td><td>$2.22</td><td>${status('정산대기','pending')}</td></tr>
-        <tr class="search-row"><td>#10576<br><small>09-30 11:05</small></td><td>mi***@naver.com</td><td>Asia 20 · 5GB</td>${own ? '' : '<td>TripNote</td>'}<td>$24.90</td><td>${own ? '12%' : '10%'}</td><td>${own ? '$2.99' : '$2.49'}</td><td>${status('정산가능','available')}</td></tr>
-        <tr class="search-row"><td>#10554<br><small>09-29 19:42</small></td><td>al***@icloud.com</td><td>Europe 20GB · 30 Days</td>${own ? '' : '<td>Nomad Kim</td>'}<td>$36.00</td><td>${own ? '12%' : '8%'}</td><td>${own ? '$4.32' : '$2.88'}</td><td>${status('요청중','requested')}</td></tr>
-        <tr class="search-row"><td>#10521<br><small>09-28 09:16</small></td><td>sa***@gmail.com</td><td>USA Unlimited · 7 Days</td>${own ? '' : '<td>Global Connect</td>'}<td>$21.40</td><td>12%</td><td>$2.57</td><td>${status('지급완료','paid')}</td></tr>
+      const periodTools = own ? '<input class="input" id="salesFrom" type="date" value="2026-09-01" aria-label="판매 조회 시작일"><span class="helper">~</span><input class="input" id="salesTo" type="date" value="2026-10-31" aria-label="판매 조회 종료일"><button class="btn small primary" id="applySalesPeriod">기간 조회</button><button class="btn small" id="resetSalesPeriod">전체 기간</button>' : '';
+      return `<article class="card table-card"><div class="table-tools"><input class="input" id="tableSearch" placeholder="주문번호, 고객 또는 상품 검색">${periodTools}<select class="select"><option>전체 원장 유형</option><option>판매 커미션</option><option>환불 차감</option><option>정산 반영 완료</option></select>${own ? '' : '<select class="select"><option>전체 마케터</option><option>Global Connect</option><option>TripNote</option></select>'}</div><div class="table-scroll"><table><thead><tr><th>주문</th><th>고객</th><th>상품</th>${marketerColumn}<th>결제금액</th><th>요율</th><th>커미션</th><th>상태</th></tr></thead><tbody>
+        <tr class="search-row sales-row" data-date="2026-09-30"><td>#10582<br><small>2026-09-30 14:24</small></td><td>jo***@gmail.com</td><td>Japan 10GB · 30 Days</td>${marketerCells}<td>$18.50</td><td>12%</td><td>$2.22</td><td>${status('정산대기','pending')}</td></tr>
+        <tr class="search-row sales-row" data-date="2026-09-30"><td>#10576<br><small>2026-09-30 11:05</small></td><td>mi***@naver.com</td><td>Asia 20 · 5GB</td>${own ? '' : '<td>TripNote</td>'}<td>$24.90</td><td>${own ? '12%' : '10%'}</td><td>${own ? '$2.99' : '$2.49'}</td><td>${status('정산대기','pending')}</td></tr>
+        <tr class="search-row sales-row" data-date="2026-10-02"><td>#10554-R1<br><small>2026-10-02 09:18</small></td><td>al***@icloud.com</td><td>Europe 20GB · 부분 환불</td>${own ? '' : '<td>Nomad Kim</td>'}<td>-$12.00</td><td>${own ? '12%' : '8%'}</td><td>${own ? '-$1.44' : '-$0.96'}</td><td>${status('환불차감','negative')}</td></tr>
+        <tr class="search-row sales-row" data-date="2026-09-28"><td>#10521<br><small>2026-09-28 09:16</small></td><td>sa***@gmail.com</td><td>USA Unlimited · 7 Days</td>${own ? '' : '<td>Global Connect</td>'}<td>$21.40</td><td>12%</td><td>$2.57</td><td>${status('정산처리완료','completed')}</td></tr>
       </tbody></table></div></article>`;
     }
 
     function settlements() {
-      return pageHead('정산 관리', '마케터 출금 요청을 확인하고 외부 송금 결과를 기록합니다.', '<button class="btn">정산 내역 다운로드</button>') +
-        `<div class="grid-4">${metric('요청 중', '$1,200.00', '3건 처리 필요', 'purple')}${metric('이번 달 지급', '$4,860.20', '완료 12건', 'green')}${metric('정산 가능 총액', '$3,906.14', '전체 마케터 합계')}${metric('관리자 부담 손실', '$184.70', '7일 이후 환불 4건', 'amber')}</div>
-        <article class="card table-card"><div class="table-tools"><input class="input" placeholder="마케터 또는 요청번호 검색"><select class="select"><option>요청중</option><option>전체 상태</option><option>지급완료</option><option>반려</option></select></div><div class="table-scroll"><table><thead><tr><th>요청번호</th><th>마케터</th><th>요청일</th><th>지급계좌</th><th>금액</th><th>포함 커미션</th><th>상태</th><th></th></tr></thead><tbody>
-          <tr><td>ST-240930-03</td><td>Global Connect</td><td>2026-09-30</td><td>USD · **** 4821</td><td><strong>$520.00</strong></td><td>42건</td><td>${status('요청중','requested')}</td><td><button class="btn small primary" data-modal="settle">처리</button></td></tr>
-          <tr><td>ST-240929-01</td><td>TripNote</td><td>2026-09-29</td><td>USD · **** 1932</td><td><strong>$430.00</strong></td><td>31건</td><td>${status('요청중','requested')}</td><td><button class="btn small primary" data-modal="settle">처리</button></td></tr>
-          <tr><td>ST-240928-02</td><td>Nomad Kim</td><td>2026-09-28</td><td>USD · **** 8850</td><td><strong>$250.00</strong></td><td>18건</td><td>${status('요청중','requested')}</td><td><button class="btn small primary" data-modal="settle">처리</button></td></tr>
-          <tr><td>ST-240920-01</td><td>Global Connect</td><td>2026-09-20</td><td>USD · **** 4821</td><td><strong>$610.00</strong></td><td>51건</td><td>${status('지급완료','paid')}</td><td><button class="btn small" data-modal="settle-detail">내역</button></td></tr>
+      return pageHead('정산 관리', '월 2회 정산 배치를 검토하고 수동 지급 또는 음수 이월 결과를 기록합니다.', '<button class="btn">정산 내역 다운로드</button>') +
+        `<div class="grid-4">${metric('정산대기', '$3,490.40', 'PENDING 3건', 'amber')}${metric('정산보류', '$890.00', 'ON_HOLD 1건', 'purple')}${metric('정산처리완료', '$4,860.20', 'COMPLETED 12건', 'green')}${metric('음수 이월', '-$245.60', '다음 회차 상계 예정')}</div>
+        <article class="card table-card"><div class="table-tools"><input class="input" placeholder="마케터 또는 정산 회차 검색"><select class="select"><option>전체 상태</option><option>정산대기</option><option>정산보류</option><option>정산처리완료</option></select><select class="select"><option>2026년 9월 하반기</option><option>2026년 9월 상반기</option></select></div><div class="table-scroll"><table><thead><tr><th>정산 회차</th><th>마케터</th><th>판매 커미션</th><th>환불 차감</th><th>이전 이월</th><th>관리자 조정</th><th>최종 지급액</th><th>지급예정일</th><th>상태</th><th>작업</th></tr></thead><tbody>
+          <tr><td>SET-202609-H2</td><td>Global Connect</td><td>$2,021.06</td><td>-$120.00</td><td>-$80.00</td><td>$0.00</td><td><strong>$1,821.06</strong></td><td>2026-10-05</td><td>${status('정산대기','pending')}</td><td><div class="row-actions"><button class="btn small" data-modal="settlement-detail" data-settlement="SET-202609-H2" data-marketer="Global Connect">상세</button><button class="btn small primary" data-modal="settle">처리</button></div></td></tr>
+          <tr><td>SET-202609-H2</td><td>TripNote</td><td>$940.00</td><td>-$50.00</td><td>$0.00</td><td>$0.00</td><td><strong>$890.00</strong></td><td>2026-10-05</td><td>${status('정산보류','hold')}</td><td><div class="row-actions"><button class="btn small" data-modal="settlement-detail" data-settlement="SET-202609-H2" data-marketer="TripNote">상세</button><button class="btn small primary" data-modal="settle">확인</button></div></td></tr>
+          <tr><td>SET-202609-H2</td><td>Easy Life</td><td>$94.40</td><td>-$170.00</td><td>-$170.00</td><td>$0.00</td><td><strong>$0.00</strong><br><small>이월 -$245.60</small></td><td>2026-10-05</td><td>${status('정산대기','pending')}</td><td><div class="row-actions"><button class="btn small" data-modal="settlement-detail" data-settlement="SET-202609-H2" data-marketer="Easy Life">상세</button><button class="btn small primary" data-modal="settle">처리</button></div></td></tr>
+          <tr><td>SET-202609-H1</td><td>Nomad Kim</td><td>$620.44</td><td>-$50.00</td><td>$0.00</td><td>$0.00</td><td><strong>$570.44</strong></td><td>2026-09-20</td><td>${status('정산처리완료','completed')}</td><td><button class="btn small" data-modal="settlement-detail" data-settlement="SET-202609-H1" data-marketer="Nomad Kim">상세</button></td></tr>
         </tbody></table></div></article>`;
     }
 
     function marketerOverview() {
-      return pageHead('내 레퍼럴 실적', '추천 고객의 판매와 정산 현황을 확인합니다.', '<button class="btn" data-go="sales">상세 판매</button><button class="btn primary" data-go="withdrawal">정산 요청</button>') +
+      return pageHead('내 레퍼럴 실적', '추천 고객의 판매와 정기 정산 결과를 확인합니다.', '<button class="btn" data-go="sales">상세 판매</button><button class="btn primary" data-go="settlements">정산 결과</button>') +
         `<section class="referral-card"><div><label>나의 추천 주소</label><strong id="referralUrl">https://evoesim.myshopify.com/?ref=GLOBAL10</strong><span class="rate-chip">현재 수익쉐어율 12%</span></div><button class="copy-btn" id="copyLink">주소 복사</button></section>
-        <div class="grid-4">${metric('총 판매금액', '$16,842.20', '귀속 고객 384명')}${metric('정산 대기', '$586.32', '7일 내 확정 예정', 'amber')}${metric('정산 가능', '$1,820.40', '지금 출금 요청 가능', 'green')}${metric('요청 중', '$520.00', '관리자 처리 대기', 'purple')}</div>
+        <div class="grid-4">${metric('총 판매금액', '$16,842.20', '귀속 고객 384명')}${metric('판매 커미션', '$2,021.06', '2026년 9월 하반기', 'green')}${metric('환불·이월 차감', '-$200.00', '환불 -$120 · 이월 -$80', 'amber')}${metric('정산 예정액', '$1,821.06', '지급예정 2026-10-05', 'purple')}</div>
         <div class="dashboard-grid"><article class="card"><header class="card-head"><div><h3>나의 판매 추이</h3><span>최근 30일 · USD</span></div><button class="btn small">30일</button></header><div class="card-body chart-wrap"><div class="chart-summary"><strong>$16,842.20</strong><span>+18.4%</span></div>${salesChart()}<div class="chart-labels"><span>9/01</span><span>9/08</span><span>9/15</span><span>9/22</span><span>9/30</span></div></div></article>
-        <article class="card"><header class="card-head"><div><h3>정산 현황</h3><span>최근 요청</span></div></header><div class="card-body queue"><div class="queue-item"><div class="queue-top"><strong>ST-240930-03</strong>${status('요청중','requested')}</div><p>2026-09-30 요청 · 42건</p><div class="queue-meta"><b>$520.00</b><span class="helper">처리 대기</span></div></div><div class="queue-item"><div class="queue-top"><strong>ST-240920-01</strong>${status('지급완료','paid')}</div><p>2026-09-20 요청 · 51건</p><div class="queue-meta"><b>$610.00</b><span class="helper">09-22 지급</span></div></div></div></article></div>
+        <article class="card"><header class="card-head"><div><h3>정산 현황</h3><span>최근 정산 회차</span></div></header><div class="card-body queue"><div class="queue-item"><div class="queue-top"><strong>2026년 9월 하반기</strong>${status('정산대기','pending')}</div><p>판매 $2,021.06 · 환불 -$120.00 · 이월 -$80.00</p><div class="queue-meta"><b>$1,821.06</b><span class="helper">10/05 지급예정</span></div></div><div class="queue-item"><div class="queue-top"><strong>2026년 9월 상반기</strong>${status('정산처리완료','completed')}</div><p>판매 $690.00 · 환불 -$80.00</p><div class="queue-meta"><b>$610.00</b><span class="helper">09/20 지급</span></div></div></div></article></div>
         ${salesTable(true)}`;
     }
 
@@ -387,10 +390,19 @@
         </tbody></table></div></article>`;
     }
 
-    function withdrawal() {
-      return pageHead('정산 요청', '정산 가능한 금액 범위에서 출금을 요청합니다.') +
-        `<div class="balance-panel"><section class="balance-hero"><label>현재 정산 가능 금액</label><strong id="availableBalance">$1,820.40</strong><p>PENDING $586.32 · REQUESTED $520.00</p></section><section class="card form-card"><h3>출금 요청</h3><div class="field"><label for="withdrawAmount">요청 금액 (USD)</label><input id="withdrawAmount" type="number" min="1" max="1820.40" step="0.01" placeholder="0.00"><span class="helper">최대 $1,820.40까지 요청할 수 있습니다.</span></div><div class="field"><label for="payoutAccount">지급 계좌</label><select id="payoutAccount"><option>USD 계좌 · **** 4821</option></select></div><button class="btn primary" id="requestWithdrawal">정산 요청하기</button></section></div>
-        <article class="card table-card"><header class="card-head"><div><h3>정산 요청 내역</h3><span>최근 6개월</span></div></header><div class="table-scroll"><table><thead><tr><th>요청번호</th><th>요청일</th><th>금액</th><th>포함 커미션</th><th>처리일</th><th>상태</th></tr></thead><tbody><tr><td>ST-240930-03</td><td>2026-09-30</td><td>$520.00</td><td>42건</td><td>—</td><td>${status('요청중','requested')}</td></tr><tr><td>ST-240920-01</td><td>2026-09-20</td><td>$610.00</td><td>51건</td><td>2026-09-22</td><td>${status('지급완료','paid')}</td></tr><tr><td>ST-240904-02</td><td>2026-09-04</td><td>$480.50</td><td>38건</td><td>2026-09-06</td><td>${status('지급완료','paid')}</td></tr></tbody></table></div></article>`;
+    function adminCustomers() {
+      return pageHead('고객 관리', '고객별 주문·환불·특이사항을 확인하고 관리자 운영 메모를 기록합니다.', '<button class="btn">고객 목록 다운로드</button>') +
+        `<article class="card table-card"><div class="table-tools"><input class="input" id="tableSearch" placeholder="고객 이메일, ID 또는 주문번호 검색"><select class="select"><option>전체 고객</option><option>환불 확인 필요</option><option>특이사항 있음</option><option>메모 없음</option></select></div><div class="table-scroll"><table><thead><tr><th>고객</th><th>귀속 마케터</th><th>주문</th><th>누적 결제</th><th>환불</th><th>최근 주문</th><th>관리자 메모</th><th></th></tr></thead><tbody>
+          <tr class="search-row"><td><div class="namecell"><span class="mini-avatar">J</span><span><strong>jo***@gmail.com</strong><small>고객 ID **** 9341</small></span></div></td><td>Global Connect</td><td>6건</td><td>$142.80</td><td>$0.00</td><td>#10582 · Japan 10GB</td><td>장기체류 고객</td><td><button class="btn small" data-modal="admin-customer-note" data-customer="jo***@gmail.com" data-order="#10582" data-note="장기체류 고객. 이전 문의 이력 확인 필요.">메모</button></td></tr>
+          <tr class="search-row"><td><div class="namecell"><span class="mini-avatar">A</span><span><strong>al***@icloud.com</strong><small>고객 ID **** 1002</small></span></div></td><td>Nomad Kim</td><td>2건</td><td>$58.40</td><td>-$12.00</td><td>#10554 · Europe 20GB</td><td><span class="status negative">부분 환불</span></td><td><button class="btn small primary" data-modal="admin-customer-note" data-customer="al***@icloud.com" data-order="#10554" data-note="2026-10-02 부분 환불 $12.00 처리. 다음 정산 차감 대상.">메모</button></td></tr>
+          <tr class="search-row"><td><div class="namecell"><span class="mini-avatar">M</span><span><strong>mi***@naver.com</strong><small>고객 ID **** 2280</small></span></div></td><td>TripNote</td><td>3건</td><td>$76.20</td><td>$0.00</td><td>#10576 · Asia 20</td><td>재구매 고객</td><td><button class="btn small" data-modal="admin-customer-note" data-customer="mi***@naver.com" data-order="#10576" data-note="재구매 고객. 특이사항 없음.">메모</button></td></tr>
+        </tbody></table></div></article>`;
+    }
+
+    function marketerSettlements() {
+      return pageHead('정산 결과', '관리자가 월 2회 처리한 정산 내역과 환불 차감·음수 이월을 조회합니다.') +
+        `<div class="grid-4">${metric('누적 판매 커미션', '$8,940.20', '결제 완료 주문 기준')}${metric('누적 환불 차감', '-$438.40', '환불 성공일 기준', 'amber')}${metric('지급 완료', '$6,680.74', '최근 6개월', 'green')}${metric('현재 정산 순액', '$1,821.06', '지급예정 2026-10-05', 'purple')}</div>
+        <article class="card table-card"><header class="card-head"><div><h3>정산 회차별 결과</h3><span>조회 전용</span></div></header><div class="table-tools"><select class="select" id="settlementYear" aria-label="정산 조회 연도"><option value="2026">2026년</option><option value="2025">2025년</option></select><select class="select" id="settlementMonth" aria-label="정산 조회 월"><option value="all">전체 월</option><option value="09">9월</option><option value="08">8월</option></select><select class="select"><option>전체 상태</option><option>정산대기</option><option>정산보류</option><option>정산처리완료</option></select><button class="btn small primary" id="applySettlementPeriod">조회</button></div><div class="table-scroll"><table><thead><tr><th>정산 회차</th><th>대상 기간</th><th>판매 커미션</th><th>환불 차감</th><th>이전 이월</th><th>최종 지급액</th><th>다음 이월</th><th>처리일</th><th>상태</th><th></th></tr></thead><tbody><tr class="settlement-row" data-year="2026" data-month="09"><td>SET-202609-H2</td><td>09/16~09/30</td><td>$2,021.06</td><td>-$120.00</td><td>-$80.00</td><td><strong>$1,821.06</strong></td><td>$0.00</td><td>지급예정 10/05</td><td>${status('정산대기','pending')}</td><td><button class="btn small" data-modal="settlement-detail" data-settlement="SET-202609-H2" data-marketer="Global Connect">상세 보기</button></td></tr><tr class="settlement-row" data-year="2026" data-month="09"><td>SET-202609-H1</td><td>09/01~09/15</td><td>$690.00</td><td>-$80.00</td><td>$0.00</td><td><strong>$610.00</strong></td><td>$0.00</td><td>2026-09-20</td><td>${status('정산처리완료','completed')}</td><td><button class="btn small" data-modal="settlement-detail" data-settlement="SET-202609-H1" data-marketer="Global Connect">상세 보기</button></td></tr><tr class="settlement-row" data-year="2026" data-month="08"><td>SET-202608-H2</td><td>08/16~08/31</td><td>$510.50</td><td>-$30.00</td><td>$0.00</td><td><strong>$480.50</strong></td><td>$0.00</td><td>2026-09-05</td><td>${status('정산처리완료','completed')}</td><td><button class="btn small" data-modal="settlement-detail" data-settlement="SET-202608-H2" data-marketer="Global Connect">상세 보기</button></td></tr></tbody></table></div></article>`;
     }
 
     function renderContent() {
@@ -398,13 +410,14 @@
       if (role === 'admin') {
         if (currentView === 'overview') html = adminOverview();
         if (currentView === 'marketers') html = pageHead('마케터 관리', '계정·레퍼럴 코드·수익쉐어 요율을 관리합니다.', '<button class="btn primary" data-modal="new-marketer">+ 마케터 생성</button>') + marketerTable(false);
+        if (currentView === 'customers') html = adminCustomers();
         if (currentView === 'sales') html = pageHead('전체 판매 내역', '고객·상품·마케터별 판매와 커미션 상태를 조회합니다.', '<button class="btn">판매 내역 다운로드</button>') + salesTable(false);
         if (currentView === 'settlements') html = settlements();
       } else {
         if (currentView === 'overview') html = marketerOverview();
         if (currentView === 'customers') html = customers();
         if (currentView === 'sales') html = pageHead('나의 판매 내역', '귀속 고객 주문과 커미션 상태를 확인합니다.') + salesTable(true);
-        if (currentView === 'withdrawal') html = withdrawal();
+        if (currentView === 'settlements') html = marketerSettlements();
       }
       document.getElementById('content').innerHTML = html;
       bindActions();
@@ -431,7 +444,7 @@
       showToast.timer = setTimeout(() => toast.classList.remove('show'), 2600);
     }
 
-    function openModal(type) {
+    function openModal(type, context = {}) {
       const title = document.getElementById('modalTitle');
       const body = document.getElementById('modalBody');
       const foot = document.getElementById('modalFoot');
@@ -440,9 +453,29 @@
         body.innerHTML = '<div class="field"><label>마케터명</label><input placeholder="예: Travel Creator"></div><div class="field"><label>로그인 이메일</label><input type="email" placeholder="partner@email.com"></div><div class="field"><label>레퍼럴 코드</label><input placeholder="TRAVELCREATOR"></div><div class="field"><label>수익쉐어 요율 (%)</label><input type="number" min="0" max="100" value="10"></div><div class="field"><label>적용 시작일</label><input type="date" value="2026-10-01"></div>';
         foot.innerHTML = '<button class="btn" data-close>취소</button><button class="btn primary" data-confirm="마케터 계정이 생성되었습니다.">생성</button>';
       } else if (type === 'settle') {
-        title.textContent = '정산 요청 처리';
-        body.innerHTML = '<div class="queue-item"><div class="queue-top"><strong>Global Connect</strong>' + status('요청중','requested') + '</div><p>ST-240930-03 · 42개 커미션</p><div class="queue-meta"><b>$520.00</b><span>USD · **** 4821</span></div></div><div class="field" style="margin-top:16px"><label>외부 지급 참조</label><input placeholder="송금번호 또는 메모"></div><div class="field"><label>관리자 메모</label><textarea placeholder="처리 기록을 입력하세요"></textarea></div>';
-        foot.innerHTML = '<button class="btn danger" data-confirm="정산 요청을 반려했습니다.">반려</button><button class="btn primary" data-confirm="지급 완료로 처리했습니다.">지급완료</button>';
+        title.textContent = '정산 처리';
+        body.innerHTML = '<div class="queue-item"><div class="queue-top"><strong>Global Connect · 2026년 9월 하반기</strong>' + status('정산대기','pending') + '</div><p>판매 커미션 $2,021.06 · 환불 -$120.00 · 이전 이월 -$80.00</p><div class="queue-meta"><b>최종 지급액 $1,821.06</b><span>지급예정 2026-10-05</span></div></div><div class="field" style="margin-top:16px"><label>실제 지급일</label><input type="date" value="2026-10-05"></div><div class="field"><label>지급 참조번호 또는 메모</label><input placeholder="송금번호 또는 운영 메모"></div><div class="field"><label>보류 사유</label><textarea placeholder="보류 처리할 때 사유를 입력하세요"></textarea></div>';
+        foot.innerHTML = '<button class="btn danger" data-confirm="정산보류 상태로 변경했습니다.">정산보류</button><button class="btn primary" data-confirm="정산처리완료 상태로 변경했습니다.">정산처리완료</button>';
+      } else if (type === 'settlement-detail') {
+        const cycle = context.settlement || 'SET-202609-H2';
+        const marketer = context.marketer || 'Global Connect';
+        const isCompleted = cycle !== 'SET-202609-H2';
+        title.textContent = '정산 상세 내역';
+        body.innerHTML = `<div class="queue-item"><div class="queue-top"><strong>${cycle} · ${marketer}</strong>${status(isCompleted ? '정산처리완료' : '정산대기', isCompleted ? 'completed' : 'pending')}</div><p>정산 대상 주문, 환불 차감, 이전 이월 및 관리자 조정 내역</p><div class="queue-meta"><b>${isCompleted ? '최종 지급액 $610.00' : '최종 지급액 $1,821.06'}</b><span>${isCompleted ? '처리일 2026-09-20' : '지급예정 2026-10-05'}</span></div></div>
+          <div class="table-scroll" style="margin-top:16px"><table><thead><tr><th>구분</th><th>참조</th><th>처리일</th><th>기준금액</th><th>요율</th><th>커미션 반영</th></tr></thead><tbody>
+          <tr><td>판매</td><td>#10582 · Japan 10GB</td><td>2026-09-30</td><td>$18.50</td><td>12%</td><td>+$2.22</td></tr>
+          <tr><td>판매</td><td>#10576 · Asia 20</td><td>2026-09-30</td><td>$24.90</td><td>12%</td><td>+$2.99</td></tr>
+          <tr><td>환불 차감</td><td>#10554-R1 · 부분 환불</td><td>2026-10-02</td><td>-$12.00</td><td>12%</td><td>-$1.44</td></tr>
+          <tr><td>이전 이월</td><td>SET-202609-H1</td><td>2026-09-20</td><td>—</td><td>—</td><td>-$80.00</td></tr>
+          </tbody></table></div><p class="helper" style="margin-top:12px">미리보기 데이터입니다. 실제 화면에서는 해당 정산 회차에 포함된 전체 판매·환불·이월·관리자 조정 원장을 페이지 단위로 조회합니다.</p>`;
+        foot.innerHTML = '<button class="btn" data-close>닫기</button><button class="btn" data-confirm="정산 상세 내역을 다운로드합니다.">상세 내역 다운로드</button>';
+      } else if (type === 'admin-customer-note') {
+        const customer = context.customer || 'jo***@gmail.com';
+        const order = context.order || '#10582';
+        const note = context.note || '';
+        title.textContent = '고객 운영 메모';
+        body.innerHTML = `<div class="queue-item"><div class="queue-top"><strong>${customer}</strong><span class="status active">관리자 전용</span></div><p>최근 주문 ${order} · 귀속 및 정산 데이터에는 영향을 주지 않습니다.</p></div><div class="field" style="margin-top:16px"><label>메모 분류</label><select><option>일반 특이사항</option><option>환불</option><option>고객 문의</option><option>부정사용 확인</option><option>정산 확인</option></select></div><div class="field"><label>연결 주문</label><input value="${order}"></div><div class="field"><label>환불·특이사항 메모</label><textarea>${note}</textarea></div><div class="queue-item"><div class="queue-top"><strong>최근 기록</strong><span class="helper">Admin · 2026-10-02 09:30</span></div><p>부분 환불 여부와 다음 정산 차감 반영 상태를 확인함.</p></div><span class="helper">관리자 메모는 마케터와 고객에게 공개되지 않으며 작성자·작성시각과 함께 변경 이력을 보존합니다.</span>`;
+        foot.innerHTML = '<button class="btn" data-close>취소</button><button class="btn primary" data-confirm="고객 운영 메모를 저장했습니다.">메모 저장</button>';
       } else if (type === 'marketer') {
         title.textContent = '마케터 상세';
         body.innerHTML = '<div class="field"><label>마케터명</label><input value="Global Connect"></div><div class="field"><label>레퍼럴 코드</label><input value="GLOBAL10" readonly></div><div class="field"><label>현재 수익쉐어 요율 (%)</label><input type="number" min="0" max="100" value="12"></div><div class="field"><label>상태</label><select><option>활성</option><option>비활성</option></select></div><span class="helper">요율 변경은 이후 주문부터 적용되며 기존 주문에는 소급되지 않습니다.</span>';
@@ -451,9 +484,13 @@
         title.textContent = '고객 마킹 및 메모';
         body.innerHTML = '<div class="queue-item"><div class="queue-top"><strong>jo***@gmail.com</strong><span class="status available">VIP</span></div><p>귀속일 2026-08-11 · 누적 구매 $142.80</p></div><div class="field" style="margin-top:16px"><label>업무 태그</label><select><option>VIP</option><option>재구매</option><option>관심</option><option>신규</option></select></div><div class="field"><label>개인 메모</label><textarea>일본 장기체류 상품에 관심. 다음 여행 전 연락 예정.</textarea></div><span class="helper">메모는 본인에게만 표시되며 고객 귀속에는 영향을 주지 않습니다.</span>';
         foot.innerHTML = '<button class="btn" data-close>취소</button><button class="btn primary" data-confirm="고객 메모를 저장했습니다.">저장</button>';
-      } else {
+      } else if (type === 'settle-detail') {
         title.textContent = '정산 처리 내역';
-        body.innerHTML = '<div class="queue-item"><div class="queue-top"><strong>ST-240920-01</strong>' + status('지급완료','paid') + '</div><p>Global Connect · 51개 커미션</p><div class="queue-meta"><b>$610.00</b><span>2026-09-22 지급</span></div></div><p class="helper" style="margin-top:14px">외부 지급참조: WIRE-20260922-1048<br>처리자: Admin · 처리시간 2026-09-22 10:48 UTC</p>';
+        body.innerHTML = '<div class="queue-item"><div class="queue-top"><strong>SET-202609-H1</strong>' + status('정산처리완료','completed') + '</div><p>Global Connect · 2026-09-01~09-15</p><div class="queue-meta"><b>$610.00</b><span>2026-09-20 지급</span></div></div><p class="helper" style="margin-top:14px">판매 커미션 $690.00 · 환불 차감 -$80.00 · 이전 이월 $0.00<br>지급참조: WIRE-20260920-1048<br>처리자: Admin · 처리시간 2026-09-20 10:48 UTC</p>';
+        foot.innerHTML = '<button class="btn" data-close>닫기</button>';
+      } else {
+        title.textContent = '상세';
+        body.innerHTML = '<p class="helper">표시할 상세 정보가 없습니다.</p>';
         foot.innerHTML = '<button class="btn" data-close>닫기</button>';
       }
       document.getElementById('modalBackdrop').classList.remove('hidden');
@@ -468,13 +505,34 @@
 
     function bindActions() {
       document.querySelectorAll('[data-go]').forEach(button => button.addEventListener('click', () => { currentView = button.dataset.go; renderNav(); renderContent(); }));
-      document.querySelectorAll('[data-modal]').forEach(button => button.addEventListener('click', () => openModal(button.dataset.modal)));
+      document.querySelectorAll('[data-modal]').forEach(button => button.addEventListener('click', () => openModal(button.dataset.modal, button.dataset)));
       const copy = document.getElementById('copyLink');
       if (copy) copy.addEventListener('click', async () => { const value = document.getElementById('referralUrl').textContent; try { await navigator.clipboard.writeText(value); showToast('추천 주소를 복사했습니다.'); } catch { showToast('추천 주소: ' + value); } });
       const search = document.getElementById('tableSearch');
-      if (search) search.addEventListener('input', () => { const query = search.value.toLowerCase(); document.querySelectorAll('.search-row').forEach(row => row.classList.toggle('hidden', !row.textContent.toLowerCase().includes(query))); });
-      const request = document.getElementById('requestWithdrawal');
-      if (request) request.addEventListener('click', () => { const amount = Number(document.getElementById('withdrawAmount').value); if (!amount || amount <= 0) return showToast('요청 금액을 입력해주세요.'); if (amount > 1820.40) return showToast('정산 가능 금액을 초과했습니다.'); showToast(`$${amount.toFixed(2)} 정산 요청을 접수했습니다.`); document.getElementById('withdrawAmount').value = ''; });
+      const applySalesFilters = () => {
+        const query = search ? search.value.toLowerCase() : '';
+        const from = document.getElementById('salesFrom')?.value || '';
+        const to = document.getElementById('salesTo')?.value || '';
+        document.querySelectorAll('.search-row').forEach(row => {
+          const rowDate = row.dataset.date || '';
+          const matchesText = !query || row.textContent.toLowerCase().includes(query);
+          const matchesFrom = !from || !rowDate || rowDate >= from;
+          const matchesTo = !to || !rowDate || rowDate <= to;
+          row.classList.toggle('hidden', !(matchesText && matchesFrom && matchesTo));
+        });
+      };
+      if (search) search.addEventListener('input', applySalesFilters);
+      const applySalesPeriod = document.getElementById('applySalesPeriod');
+      if (applySalesPeriod) applySalesPeriod.addEventListener('click', () => { applySalesFilters(); showToast('선택한 기간의 판매 내역을 조회했습니다.'); });
+      const resetSalesPeriod = document.getElementById('resetSalesPeriod');
+      if (resetSalesPeriod) resetSalesPeriod.addEventListener('click', () => { document.getElementById('salesFrom').value = ''; document.getElementById('salesTo').value = ''; applySalesFilters(); showToast('전체 기간으로 초기화했습니다.'); });
+      const applySettlementPeriod = document.getElementById('applySettlementPeriod');
+      if (applySettlementPeriod) applySettlementPeriod.addEventListener('click', () => {
+        const year = document.getElementById('settlementYear').value;
+        const month = document.getElementById('settlementMonth').value;
+        document.querySelectorAll('.settlement-row').forEach(row => row.classList.toggle('hidden', row.dataset.year !== year || (month !== 'all' && row.dataset.month !== month)));
+        showToast(`${year}년 ${month === 'all' ? '전체 월' : Number(month) + '월'} 정산 내역을 조회했습니다.`);
+      });
     }
 
     document.querySelectorAll('.role-button').forEach(button => button.addEventListener('click', () => setRole(button.dataset.role)));
