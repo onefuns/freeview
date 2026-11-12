@@ -4,9 +4,9 @@
 
 | 산출물 | 파일 | 현재 버전 | 기준일 | 상태 |
 |---|---|---|---|---|
-| 관리자 개발명세 | `ADMIN_SPEC.md` | `v4.6.0-draft` | 2026-11-11 | 검토 중 |
-| 관리자 HTML 프리뷰 | `legacy-admin-preview/index.html` | `v4.6.0-preview.1` | 2026-11-11 | 검토용 |
-| 쇼핑몰 프론트 개발명세 | `STOREFRONT_SPEC.md` | `v4.8.0-draft` | 2026-11-11 | 검토 중 |
+| 관리자 개발명세 | `ADMIN_SPEC.md` | `v4.7.0-draft` | 2026-11-12 | 검토 중 |
+| 관리자 HTML 프리뷰 | `legacy-admin-preview/index.html` | `v4.7.0-preview.1` | 2026-11-12 | 검토용 |
+| 쇼핑몰 프론트 개발명세 | `STOREFRONT_SPEC.md` | `v4.9.0-draft` | 2026-11-12 | 검토 중 |
 | 쇼핑몰 HTML 프리뷰 | `html-preview/index.html` | `v4.8.0-preview.1` | 2026-11-11 | 검토용 |
 
 ## 버전 규칙
