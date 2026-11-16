@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" viewBox="0 0 720 420" role="img" aria-labelledby="title desc">
+  <title id="title">프리뷰용 결제 안내 이미지</title>
+  <desc id="desc">실제 계좌 정보가 아닌 디자인 검토용 이미지</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eff6ff"/>
+      <stop offset="1" stop-color="#dbeafe"/>
+    </linearGradient>
+  </defs>
+  <rect width="720" height="420" rx="32" fill="url(#bg)"/>
+  <rect x="48" y="45" width="624" height="330" rx="24" fill="#fff" stroke="#bfdbfe" stroke-width="2"/>
+  <circle cx="104" cy="104" r="26" fill="#2563eb"/>
+  <path d="M90 106c16-18 34-18 50 0M97 116c10-11 23-11 33 0" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+  <text x="148" y="99" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#1e3a8a">ALPHA WIFI</text>
+  <text x="148" y="126" font-family="Arial, sans-serif" font-size="14" fill="#64748b">PAYMENT GUIDE · DEMO</text>
+  <text x="80" y="190" font-family="Arial, sans-serif" font-size="17" fill="#64748b">결제 안내</text>
+  <text x="80" y="235" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#0f172a">샘플은행 000-0000-0000</text>
+  <text x="80" y="271" font-family="Arial, sans-serif" font-size="18" fill="#334155">예금주  알파와이파이</text>
+  <rect x="80" y="305" width="560" height="42" rx="12" fill="#eff6ff"/>
+  <text x="360" y="332" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#2563eb">프리뷰용 샘플 · 실제 입금계좌가 아닙니다</text>
+</svg>
