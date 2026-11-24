@@ -1,6 +1,6 @@
 # Roam WiFi Store HTML Preview
 
-이 프리뷰는 에그라우터 Telegram Mini App 쇼핑몰의 공식 프론트 검토본이다. 대응 개발명세는 `../project-spec/STOREFRONT_SPEC.md`, 통합 버전과 변경이력은 `../project-spec/VERSION.md`, `../project-spec/CHANGELOG.md`를 따른다.
+이 프리뷰는 에그라우터 Telegram Mini App 쇼핑몰의 공식 프론트 검토본이다. 대응 개발명세는 `../../project-spec/STOREFRONT_SPEC.md`, 통합 버전과 변경이력은 `../../project-spec/VERSION.md`, `../../project-spec/CHANGELOG.md`를 따른다.
 
 LTE/5G 라우터, 포켓 와이파이, 데이터 eSIM 고객 쇼핑몰을 시연하기 위한 독립형 HTML 프리뷰입니다.
 
@@ -12,7 +12,7 @@ LTE/5G 라우터, 포켓 와이파이, 데이터 eSIM 고객 쇼핑몰을 시연
 
 ### 정적 서버 사용
 
-원하는 정적 파일 서버의 루트를 `html-preview`로 지정한 뒤 `index.html`을 엽니다. npm 설치나 빌드 과정은 없습니다.
+원하는 정적 파일 서버의 루트를 `preview/storefront`로 지정한 뒤 `index.html`을 엽니다. npm 설치나 빌드 과정은 없습니다.
 
 ## 포함된 시연 기능
 
